@@ -16,6 +16,8 @@ npm install -save mongodb-backup
 
 npm install dotenv --save
 
+npm install --save mongoose
+
 npm install --save body-parser
 install-peerdeps --dev eslint-config-airbnb
 

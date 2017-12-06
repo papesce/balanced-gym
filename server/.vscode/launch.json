@@ -7,6 +7,12 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch",
+            "program": "${workspaceFolder}/src/server.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Backup Local",
             "program": "${workspaceFolder}/src/backup/backup.js"
         }

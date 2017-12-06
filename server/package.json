@@ -28,6 +28,7 @@
     "express": "4.16.2",
     "mongodb-backup": "1.6.9",
     "mongodb-restore": "1.6.2",
+    "mongoose": "4.13.6",
     "path": "0.12.7"
   }
 }
