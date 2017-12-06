@@ -1,8 +1,18 @@
 # Balanced Gym - Server
 
+## Commands:
 
+`npm start`  starts the server in http://localhost:5000 against the mongodb localhost database
 
-## Commands to recreate 
+`npm start:prod`  starts the server in http://localhost:5000 but against the remote mongodb database
+
+`npm run backup`  backup the local mongodb database
+
+`npm run backup:remote`  backup the remote database
+
+`npm run restore`  restore the local database using the remote data 
+
+## Commands to recreate the app
 npm init
 
 npm install --save express
