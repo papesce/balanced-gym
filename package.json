@@ -1,0 +1,19 @@
+{
+  "name": "balanced-gym",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm install --prefix client && npm run build --prefix client && npm install --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/papesce/balanced-gym.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/papesce/balanced-gym/issues"
+  },
+  "homepage": "https://github.com/papesce/balanced-gym#readme"
+}
