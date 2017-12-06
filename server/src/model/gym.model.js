@@ -1,6 +1,6 @@
 const routineModel = require("./routine.model");
-require("./exercise.model");
-require("./serie.model");
+const exerciseModel = require("./exercise.model");
+const serieModel = require("./serie.model");
 
 const addLastUpdated = routineResult => {
   const routine = routineResult;
@@ -80,8 +80,54 @@ const getRoutine = async routineId => {
   return routineResult;
 };
 
-const updateExercise = (exid) => {
-  debugger;
-}
+const newSerie = async exerciseId => {
+  const SerieModel = serieModel.getModel();
+  const nSerie = await new SerieModel({ reps: 10, weight: 1 }).save();
+  const ExerciseModel = exerciseModel.getModel();
+  const ex = await ExerciseModel.findById(exerciseId).exec();
+  ex.series.push(nSerie);
+  ex.lastUpdated = nSerie.createdAt;
+  // temporary hack"
+  if (!ex.target) ex.target = "to complete";
+  if (!ex.gifURL) ex.gifURL = "http://www.exrx.net/";
+  await ex.save();
+  return newSerie;
+};
 
-module.exports = { getRoutines, getRoutine, updateExercise };
+const updateExercise = async (exId, exUpdate) => {
+  // in the future see node-mongoose-es7 starter book
+  const ExerciseModel = exerciseModel.getModel();
+  const exQuery = ExerciseModel.findOneAndUpdate({ _id: exId }, exUpdate, {
+    new: true
+  });
+  const exResult = await exQuery.lean().exec();
+  return exResult;
+};
+
+const updateSerie = async (serieId, serieUpdate) => {
+  // in the future see node-mongoose-es7 starter book
+  const SerieModel = serieModel.getModel();
+  const serieQuery = SerieModel.findOneAndUpdate(
+    { _id: serieId },
+    serieUpdate,
+    { new: true }
+  );
+  const serieResult = await serieQuery.lean().exec();
+  return serieResult;
+};
+
+const deleteSerie = async serieId => {
+  const SerieModel = serieModel.getModel();
+  const serieQuery = SerieModel.findOneAndRemove({ _id: serieId });
+  const serieResult = await serieQuery.lean().exec();
+  return serieResult;
+};
+
+module.exports = {
+  getRoutines,
+  getRoutine,
+  updateExercise,
+  deleteSerie,
+  updateSerie,
+  newSerie
+};

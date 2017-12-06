@@ -1,10 +1,11 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const gym = require("./model/gym.model");
+const api = require("./api");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const bodyParser = require("body-parser");
+
 
 let MONGODB_API;
 if (process.env.NODE_ENV === "production") {
@@ -20,21 +21,8 @@ mongoose.Promise = Promise;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get("/routine", async (req, res) => {
-  const routines = await gym.getRoutines();
-  res.send(routines);
-});
+api(app);
 
-app.get("/routine/:id", async (req, res) => {
-  const routines = await gym.getRoutine(req.params.id);
-  res.send(routines);
-});
-
-app.patch("/exercise/:id", (req, res) => {
-  debugger;
-  gym.updateExercise(req.params.id);
-});
 /**
  * Express configuration.
  */
