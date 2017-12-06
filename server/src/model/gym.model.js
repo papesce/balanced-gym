@@ -81,6 +81,7 @@ const getRoutine = async routineId => {
 };
 
 const newSerie = async exerciseId => {
+  debugger
   const SerieModel = serieModel.getModel();
   const nSerie = await new SerieModel({ reps: 10, weight: 1 }).save();
   const ExerciseModel = exerciseModel.getModel();
@@ -91,7 +92,7 @@ const newSerie = async exerciseId => {
   if (!ex.target) ex.target = "to complete";
   if (!ex.gifURL) ex.gifURL = "http://www.exrx.net/";
   await ex.save();
-  return newSerie;
+  return nSerie;
 };
 
 const updateExercise = async (exId, exUpdate) => {

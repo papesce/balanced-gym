@@ -27,12 +27,10 @@ const api = app => {
     res.send(deletedSerie);
   });
 
-  app.post("'/newSerie/:exerciseId'", async (req, res) => {
+  app.post("/newSerie/:exerciseId", async (req, res) => {
     const serie = await gym.newSerie(req.params.exerciseId);
     res.send(serie);
   });
-
-
 };
 
 module.exports = api;
