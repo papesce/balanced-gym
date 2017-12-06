@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm install --prefix client && npm install --prefix server && npm run build:server --prefix client",
-    "start": "npm start --prefix server" 
+    "start": "npm start --prefix server"
   },
   "engines": {
     "node": "8.9.0",
@@ -21,4 +21,5 @@
     "url": "https://github.com/papesce/balanced-gym/issues"
   },
   "homepage": "https://github.com/papesce/balanced-gym#readme"
+  
 }
