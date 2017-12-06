@@ -1,23 +1,32 @@
-const express = require('express')
-const path = require('path')
-const app = express()
+const express = require("express");
+const path = require("path");
+const app = express();
 
 // respond with "hello world" when a GET request is made to the homepage
-app.get('/routine', function (req, res) {
-  res.send('hello world')
-})
+app.get("/routine", function(req, res) {
+  res.send("hello world");
+});
 
 /**
  * Express configuration.
  */
 app.set("port", process.env.PORT || 3000);
 
-app.use(express.static(path.join(__dirname, "../../client/build"), { maxAge: 31557600000 }));
+console.log(__dirname);
+app.use(
+  express.static(path.join(__dirname, "../build"), {
+    maxAge: 31557600000
+  })
+);
 
 /**
  * Start Express server.
  */
 app.listen(app.get("port"), () => {
-  console.log(("  App is running at http://localhost:%d in %s mode"), app.get("port"), app.get("env"));
+  console.log(
+    "  App is running at http://localhost:%d in %s mode",
+    app.get("port"),
+    app.get("env")
+  );
   console.log("  Press CTRL-C to stop\n");
 });
