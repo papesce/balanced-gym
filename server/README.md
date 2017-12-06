@@ -6,13 +6,18 @@
 npm init
 
 npm install --save express
+npm install --save path
 npm install --save-dev nodemon
 npm install --save-dev eslint
 npm install --save-dev eslint-config-airbnb eslint-plugin-react eslint-plugin-import eslint-plugin-jsx-a11y 
 
+npm install -save mongodb-restore
+npm install -save mongodb-backup
 
+npm install dotenv --save
 
 npm install --save body-parser
+install-peerdeps --dev eslint-config-airbnb
 
 
 ## links
@@ -26,6 +31,13 @@ $ cat ~/.npmrc
 
 ## Help
 git push heroku dev:master
+
+## Setup
+
+EsLint
+npm install -g install-peerdeps
+
+
 ## Changelog
 
 __0.1.0__

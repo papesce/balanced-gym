@@ -6,7 +6,11 @@
   "scripts": {
     "watch": "nodemon src/server.js",
     "start": "node src/server.js",
-    "start:prod": "NODE_ENV=production npm start"
+    "start:prod": "NODE_ENV=production npm start",
+    "backup": "node src/backup/backup.js",
+    "backup:remote": "NODE_ENV=production npm run backup",
+    "restore": "node src/backup/restore.js",
+    "restore:remote": ""
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +23,11 @@
     "nodemon": "1.12.5"
   },
   "dependencies": {
-    "express": "4.16.2"
+    "babel-eslint": "8.0.3",
+    "dotenv": "4.0.0",
+    "express": "4.16.2",
+    "mongodb-backup": "1.6.9",
+    "mongodb-restore": "1.6.2",
+    "path": "0.12.7"
   }
 }
