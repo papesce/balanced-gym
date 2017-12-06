@@ -49,7 +49,7 @@ const groupByMuscleGroup = routineResult => {
   }
 };
 
-const getRoutines2 = async () => {
+const getRoutines = async () => {
   const RoutineModel = routineModel.getModel();
   const routinesQuery = RoutineModel.find().populate({
     path: "exercises",
@@ -65,4 +65,23 @@ const getRoutines2 = async () => {
   return routines;
 };
 
-module.exports = { getRoutines2 };
+const getRoutine = async routineId => {
+  // bug fix case of routine not found
+  const RoutineModel = routineModel.getModel();
+  const routineQuery = RoutineModel.findOne({ _id: routineId }).populate({
+    path: "exercises",
+    populate: { path: "series" }
+  });
+  const routineResult = await routineQuery.lean().exec();
+  addLastUpdated(routineResult);
+  groupByMuscleGroup(routineResult);
+  // sort exercises by muscleGroup
+  // routineResult.exercises.sort(this.sortByMuscleGroup);
+  return routineResult;
+};
+
+const updateExercise = (exid) => {
+  debugger;
+}
+
+module.exports = { getRoutines, getRoutine, updateExercise };
