@@ -1,22 +1,39 @@
-# Balanced Gym server 
+# Balanced Gym - Server
 
 
-## Installed packages 
 
-git clone --depth=1 https://github.com/Microsoft/TypeScript-Node-Starter.git server
-npm install --save-dev typescript
+## Commands to recreate 
+npm init
 
 npm install --save express
-
-npm install --save-dev @types/express
-
-
-npm install --save-dev ts-lint
-
-npm install --save-dev concurrently
-
 npm install --save-dev nodemon
+npm install --save-dev eslint
+npm install --save-dev eslint-config-airbnb eslint-plugin-react eslint-plugin-import eslint-plugin-jsx-a11y 
+
+
+
+npm install --save body-parser
+
 
 ## links
-- [Node JS with Typescript with Heroku](hhttps://github.com/clundie/hello-world-node-typescript-heroku)
-- [Typescript Node Starter](https://github.com/Microsoft/TypeScript-Node-Starter)
+[1](https://medium.com/@StevenLeiva1/configuring-eslint-on-a-nodejs-app-92903cb21038)
+
+#Setup development
+(from heroku)
+$ npm config set save=true
+$ npm config set save-exact=true
+$ cat ~/.npmrc 
+
+## Help
+git push heroku dev:master
+## Changelog
+
+__0.1.0__
+
+- Initial release
+
+## License
+
+Copyright (c) 2016
+
+Licensed under the [MIT license](LICENSE).
