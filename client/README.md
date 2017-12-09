@@ -7,3 +7,40 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [Create react app with a server](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/)
 
+
+
+## Packages installed
+
+npm install --save react-bootstrap bootstrap@3
+npm install --save @types/react-bootstrap
+
+
+npm install --save redux
+npm install --save rxjs
+
+npm install react-router --save
+
+npm install react-redux --save
+npm install @type/react-redux --save
+
+npm install react-router-redux --save
+
+npm install --save redux-observable
+
+npm i --save @types/react @types/react-dom @types/react-redux
+
+ npm install --save redux-actions
+
+npm install --save-dev redux-devtools-extension
+
+## Examples 
+
+https://github.com/redux-observable/redux-observable/blob/master/examples/redux-observable-shopping-cart/js/main.js
+https://github.com/mbalex99/redux-observable-react-typescript/tree/master/src
+
+
+https://github.com/piotrwitek/react-redux-typescript-guide
+
+
+Action creation:
+https://github.com/jaysoo/todomvc-redux-react-typescript/tree/master/client/todos
