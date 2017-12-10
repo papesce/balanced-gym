@@ -33,6 +33,9 @@ npm i --save @types/react @types/react-dom @types/react-redux
 
 npm install --save-dev redux-devtools-extension
 
+npm install --save redux-form
+npm install @types/redux-form
+
 ## Examples 
 
 https://github.com/redux-observable/redux-observable/blob/master/examples/redux-observable-shopping-cart/js/main.js
@@ -44,3 +47,6 @@ https://github.com/piotrwitek/react-redux-typescript-guide
 
 Action creation:
 https://github.com/jaysoo/todomvc-redux-react-typescript/tree/master/client/todos
+
+redux-form types:
+https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/redux-form/redux-form-tests.tsx

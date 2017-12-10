@@ -29,7 +29,7 @@ export class Home extends React.Component {
             </Row>
             <Row>
               <Col xs={12} md={12}>
-                <NewExerciseC />
+                <NewExerciseC/>
               </Col>
             </Row>
           </Grid>

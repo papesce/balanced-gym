@@ -1,15 +1,25 @@
 import { combineReducers } from "redux";
 import { NEW_EXERCISE_STARTED, NEW_EXERCISE_SUCCEEDED } from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
+import { reducer as formReducer } from "redux-form";
 
 export type Exercise = {
   // id?: number;
+  routineId?: string;
   started?: boolean;
   name?: string;
 };
 
+export type ExerciseForm = {
+  values: Exercise;
+};
+
+type AppForms = {
+  newExerciseForm: ExerciseForm;
+};
+
 export type State = {
-  exercise: Exercise;
+   form: AppForms
 };
 
 const exerciseReducer = handleActions<Exercise>(
@@ -24,13 +34,13 @@ const exerciseReducer = handleActions<Exercise>(
       state: Exercise,
       action: Action<Exercise>
     ): Exercise => {
-      return { };
+      return {};
     }
   },
-  {}  // initial State
- );
+  {} // initial State
+);
 
 export const rootReducer = combineReducers({
-  exercise: exerciseReducer
-  // form: formReducer
+  exercise: exerciseReducer,
+  form: formReducer
 });
