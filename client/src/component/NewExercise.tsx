@@ -12,6 +12,13 @@ export class NewExercise extends Component<NewExerciseProps> {
     return (
       <form className="new-exercise">
         <FormGroup>
+          <ControlLabel>Routine:</ControlLabel>
+          <FormControl componentClass="select" >
+           <option value="59ee3ddc243a5977dab96c2b">Chest Triceps Forearms</option>
+          <option value="59f0c59d4e55c40d38868034">Thighs Shoulders Calves Hips</option>
+      </FormControl>
+          </FormGroup>
+        <FormGroup>
           <ControlLabel>Name:</ControlLabel>
           <FormControl
             type="text"
