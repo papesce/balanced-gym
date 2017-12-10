@@ -12,7 +12,8 @@ const URL: string = "/newExercise/";
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
   return action$.ofType(NEW_EXERCISE_STARTED).pipe(
     mergeMap(action => {
-      const routineId = ""; // action.payload.routineId;
+      const routineId = "";
+      debugger; // action.payload.routineId;
       return ajax.post( `${URL}${routineId}`, action.payload, {
         "Content-Type": "application/json"
       });

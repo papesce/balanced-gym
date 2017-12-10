@@ -1,27 +1,51 @@
 import * as React from "react";
 import { NewExercise } from "../component/NewExercise";
 import { connect, Dispatch } from "react-redux";
-import { State } from "../redux/reducers";
+import { State, Exercise } from "../redux/reducers";
 import { newExercise } from "../redux/actions";
 
 interface NewExerciseRCProps {
+  onClick: () => void;
+  newExerciseForm?: Exercise;
+}
+
+interface StateToProps {
+   // newExerciseForm: Exercise;
+}
+
+interface DispatchToProps {
   onClick: () => void;
 }
 
 export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
   render() {
-    return <NewExercise handleClick={this.props.onClick} />;
+    const {onClick} = this.props; 
+    return <NewExercise handleClick={onClick} />;
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<State>) => {
+const mapStateToProps = (state: State) => {
+  debugger;
+  return {
+    newExerciseForm: state.form.newExerciseForm
+     ? state.form.newExerciseForm.values
+      : {}
+  };
+};
+
+const mapDispatchToProps = (
+  dispatch: Dispatch<State>
+) => {
   return {
     onClick: () => { 
-        dispatch(newExercise("New Exercise"));
+      debugger;
+      dispatch(newExercise("routineId"));
     }
   };
 };
 
-const NewExerciseC = connect(undefined, mapDispatchToProps)(NewExerciseRC);
+const NewExerciseC = connect<StateToProps, DispatchToProps>(mapStateToProps, mapDispatchToProps)(
+  NewExerciseRC
+);
 
 export { NewExerciseC };
