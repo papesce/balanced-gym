@@ -17,6 +17,7 @@
     "function-paren-newline": "off",
     "import/newline-after-import": "off",
     "no-restricted-syntax": "off",
-    "arrow-parens":"off"
+    "arrow-parens":"off",
+    "no-underscore-dangle":"off"
   }
 }

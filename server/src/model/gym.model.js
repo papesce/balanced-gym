@@ -81,7 +81,6 @@ const getRoutine = async routineId => {
 };
 
 const newSerie = async exerciseId => {
-  debugger
   const SerieModel = serieModel.getModel();
   const nSerie = await new SerieModel({ reps: 10, weight: 1 }).save();
   const ExerciseModel = exerciseModel.getModel();
@@ -124,11 +123,38 @@ const deleteSerie = async serieId => {
   return serieResult;
 };
 
+const getRoutineById = async routineId => {
+  const RoutineModel = routineModel.getModel();
+  const routine = await RoutineModel.findOne({ _id: routineId });
+  return routine;
+};
+
+// const getRoutineByName = async routineId => {
+//   const RoutineModel = routineModel.getModel();
+//   const routine = await RoutineModel.findOne({ name: routineId });
+//   return routine;
+// };
+
+const newExercise = async (routineId, exercise) => {
+  const routine = await getRoutineById(routineId);
+  const ExerciseModel = exerciseModel.getModel();
+  const exe = await new ExerciseModel({
+    name: exercise.name,
+    series: [],
+    muscleGroup: exercise.muscleGroup,
+    target: exercise.target,
+    gifURL: exercise.gifURL
+  }).save();
+  routine.exercises.push(exe._id);
+  await routine.save();
+};
+
 module.exports = {
   getRoutines,
   getRoutine,
   updateExercise,
   deleteSerie,
   updateSerie,
-  newSerie
+  newSerie,
+  newExercise
 };

@@ -17,12 +17,17 @@ const api = app => {
     res.send(updatedExercise);
   });
 
+  app.post("/newExercise/:routineId", async (req, res) => {
+    const exercise = await gym.newExercise(req.params.routineId, req.body);
+    res.send(exercise);
+  });
+
   app.patch("/serie/:id", async (req, res) => {
     const updatedSerie = await gym.updateSerie(req.params.id, req.body);
     res.send(updatedSerie);
   });
 
-  app.del("/serie/:id", async (req, res) => {
+  app.delete("/serie/:id", async (req, res) => {
     const deletedSerie = await gym.deleteSerie(req.params.id);
     res.send(deletedSerie);
   });
