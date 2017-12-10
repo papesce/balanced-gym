@@ -47,6 +47,7 @@ class RoutineComponent extends Component<
 
 class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
+    // debugger;
     return (
       <form className="new-exercise">
         <Field name="routineId" component={RoutineComponent} />
