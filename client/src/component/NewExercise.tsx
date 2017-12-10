@@ -1,17 +1,20 @@
 import * as React from "react";
 import { Component } from "react";
-import { FormControl, FormGroup, ControlLabel, Button } from "react-bootstrap";
-import {
-  Field,
-  reduxForm,
-  InjectedFormProps,
-  WrappedFieldProps,
-  GenericFieldHTMLAttributes
-} from "redux-form";
+import { Button } from "react-bootstrap";
+import { Field, reduxForm, InjectedFormProps } from "redux-form";
+import { RoutineSelect } from "./newexercise/RoutineSelect";
+import { NameField } from "./newexercise/NameField";
+import { MuscleGroupField } from "./newexercise/MuscleGroupField";
+import { TargetField } from "./newexercise/TargetField";
+import { GifURLField } from "./newexercise/GifURLField";
 import "./NewExercise.css";
 
 interface NewExerciseFormData {
   routineId: string;
+  name: string;
+  muscleGroup: string;
+  target: string;
+  gifURL: string;
 }
 
 export interface NewExerciseProps {
@@ -20,46 +23,16 @@ export interface NewExerciseProps {
 
 type InjectedProps = InjectedFormProps<NewExerciseFormData, NewExerciseProps>;
 
-class RoutineComponent extends Component<
-  WrappedFieldProps & GenericFieldHTMLAttributes
-> {
-  render() {
-    // debugger;
-    return (
-      <FormGroup>
-        <ControlLabel>Routine:</ControlLabel>
-        <FormControl
-          componentClass="select"
-          onChange={this.props.input.onChange}
-          defaultValue={this.props.input.value}
-        >
-          <option value="59ee3ddc243a5977dab96c2b">
-            Chest Triceps Forearms
-          </option>
-          <option value="59f0c59d4e55c40d38868034">
-            Thighs Shoulders Calves Hips
-          </option>
-        </FormControl>
-      </FormGroup>
-    );
-  }
-}
-
 class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
     // debugger;
     return (
       <form className="new-exercise">
-        <Field name="routineId" component={RoutineComponent} />
-        <FormGroup>
-          <ControlLabel>Name:</ControlLabel>
-          <FormControl
-            type="text"
-            defaultValue="this.state.value"
-            placeholder="Enter exercise name"
-          />
-          <FormControl.Feedback />
-        </FormGroup>
+        <Field name="routineId" component={RoutineSelect} />
+        <Field name="name" component={NameField} />
+        <Field name="muscleGroup" component={MuscleGroupField} />
+        <Field name="target" component={TargetField} />
+        <Field name="gifURL" component={GifURLField} />
         <Button bsStyle="primary" onClick={this.props.handleClick}>
           Add exercise
         </Button>
@@ -70,7 +43,13 @@ class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
 
 const NewExercise = reduxForm<NewExerciseFormData, NewExerciseProps>({
   form: "newExerciseForm",
-  initialValues: {routineId: "59f0c59d4e55c40d38868034"}
+  initialValues: {
+    routineId: "59f0c59d4e55c40d38868034",
+    name: "",
+    target: "",
+    muscleGroup: "",
+    gifURL: ""
+  }
 })(NewExerciseForm);
 
 export { NewExercise };
