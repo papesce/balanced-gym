@@ -6,7 +6,7 @@ import {
   Exercise,
   ExerciseForm,
   NewExerciseStatus
-} from "../redux/reducers";
+} from "../redux/model";
 import { newExerciseStarted } from "../redux/actions";
 
 interface NewExerciseRCProps {

@@ -1,10 +1,7 @@
 import * as React from "react";
 import { Grid, Navbar, Jumbotron, Row, Col } from "react-bootstrap";
 import { NewExerciseC } from "../container/NewExerciseC";
-// import { createEpicMiddleware } from "redux-observable";
-// import { rootEpic } from "../redux/epics";
-
-// const epicMiddleware = createEpicMiddleware(rootEpic);
+import { ExerciseListC } from "../container/ExerciseListC";
 
 export class Home extends React.Component {
   render() {
@@ -29,7 +26,13 @@ export class Home extends React.Component {
             </Row>
             <Row>
               <Col xs={12} md={12}>
-                <NewExerciseC/>
+                <NewExerciseC />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={12}>
+               <h3>Routines</h3>
+                <ExerciseListC/>
               </Col>
             </Row>
           </Grid>

@@ -20,13 +20,14 @@
     "react-router": "4.2.0",
     "react-router-redux": "4.0.8",
     "react-scripts-ts": "2.8.0",
+    "reactstrap": "5.0.0-alpha.4",
     "redux": "3.7.2",
     "redux-actions": "2.2.1",
+    "redux-devtools-extension": "2.13.2",
     "redux-form": "7.2.0",
     "redux-observable": "0.17.0",
     "rxjs": "5.5.5",
-    "throttle-debounce": "1.0.1",
-    "redux-devtools-extension": "2.13.2"
+    "throttle-debounce": "1.0.1"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -35,7 +36,6 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "proxy": "http://localhost:5000"
 }

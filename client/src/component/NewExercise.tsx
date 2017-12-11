@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import { RoutineSelect } from "./newexercise/RoutineSelect";
 import { TextField } from "./newexercise/TextField";
-import { Exercise } from "../redux/reducers";
+import { Exercise } from "../redux/model";
 import "./NewExercise.css";
 
 export interface NewExerciseProps {

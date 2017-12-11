@@ -1,32 +1,12 @@
 import { combineReducers } from "redux";
-import { NEW_EXERCISE_STARTED, NEW_EXERCISE_SUCCEEDED } from "./actionTypes";
+import {
+  NEW_EXERCISE_STARTED,
+  NEW_EXERCISE_SUCCEEDED,
+  GET_EXERCISES_SUCCEEDED
+} from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
 import { reducer as formReducer } from "redux-form";
-
-export type NewExerciseStatus = {
-  started?: boolean;
-};
-
-export interface Exercise {
-  routineId: string;
-  name: string;
-  muscleGroup: string;
-  target: string;
-  gifURL: string;
-}
-
-export type ExerciseForm = {
-  values: Exercise;
-};
-
-type AppForms = {
-  newExerciseForm: ExerciseForm;
-};
-
-export type State = {
-   newExerciseStatus: NewExerciseStatus,
-   form: AppForms
-};
+import { NewExerciseStatus, Exercise } from "./model";
 
 const exerciseReducer = handleActions<NewExerciseStatus, Exercise>(
   {
@@ -46,7 +26,20 @@ const exerciseReducer = handleActions<NewExerciseStatus, Exercise>(
   {} // initial State
 );
 
+const exercisesReducer = handleActions(
+  {
+    [GET_EXERCISES_SUCCEEDED]: (
+      state: Array<Exercise>,
+      action: Action<Array<Exercise>>
+    ): Array<Exercise> => {
+      return action.payload ? action.payload : [];
+    }
+  },
+  []
+);
+
 export const rootReducer = combineReducers({
   newExerciseStatus: exerciseReducer,
+  exercises: exercisesReducer,
   form: formReducer
 });
