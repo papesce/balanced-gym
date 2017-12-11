@@ -136,6 +136,7 @@ const getRoutineById = async routineId => {
 // };
 
 const newExercise = async (routineId, exercise) => {
+  debugger;
   const routine = await getRoutineById(routineId);
   const ExerciseModel = exerciseModel.getModel();
   const exe = await new ExerciseModel({
