@@ -3,12 +3,17 @@ import { NEW_EXERCISE_STARTED, NEW_EXERCISE_SUCCEEDED } from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
 import { reducer as formReducer } from "redux-form";
 
-export type Exercise = {
-  // id?: number;
-  routineId?: string;
+export type NewExerciseStatus = {
   started?: boolean;
-  name?: string;
 };
+
+export interface Exercise {
+  routineId: string;
+  name: string;
+  muscleGroup: string;
+  target: string;
+  gifURL: string;
+}
 
 export type ExerciseForm = {
   values: Exercise;
@@ -19,21 +24,22 @@ type AppForms = {
 };
 
 export type State = {
+   newExerciseStatus: NewExerciseStatus,
    form: AppForms
 };
 
-const exerciseReducer = handleActions<Exercise>(
+const exerciseReducer = handleActions<NewExerciseStatus, Exercise>(
   {
     [NEW_EXERCISE_STARTED]: (
-      state: Exercise,
+      state: NewExerciseStatus,
       action: Action<Exercise>
-    ): Exercise => {
+    ): NewExerciseStatus => {
       return { started: true };
     },
     [NEW_EXERCISE_SUCCEEDED]: (
-      state: Exercise,
+      state: NewExerciseStatus,
       action: Action<Exercise>
-    ): Exercise => {
+    ): NewExerciseStatus => {
       return {};
     }
   },
@@ -41,6 +47,6 @@ const exerciseReducer = handleActions<Exercise>(
 );
 
 export const rootReducer = combineReducers({
-  exercise: exerciseReducer,
+  newExerciseStatus: exerciseReducer,
   form: formReducer
 });

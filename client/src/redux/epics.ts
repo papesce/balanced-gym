@@ -18,7 +18,10 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
       });
     }),
     map(response => {
-      return newExerciseSucceeded();
+      debugger;
+      const newExercise = {routineId: "", name: "", muscleGroup: "",
+      target: "", gifURL: ""};
+      return newExerciseSucceeded(newExercise);
     })
   );
 };

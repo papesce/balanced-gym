@@ -1,16 +1,23 @@
 import * as React from "react";
 import { NewExercise } from "../component/NewExercise";
 import { connect, Dispatch } from "react-redux";
-import { State, Exercise } from "../redux/reducers";
-import { newExercise } from "../redux/actions";
+import {
+  State,
+  Exercise,
+  ExerciseForm,
+  NewExerciseStatus
+} from "../redux/reducers";
+import { newExerciseStarted } from "../redux/actions";
 
 interface NewExerciseRCProps {
   onClick: (ex: Exercise) => void;
-  newExerciseForm?: Exercise;
+  newExerciseForm?: ExerciseForm;
+  newExerciseStatus?: NewExerciseStatus;
 }
 
 interface StateToProps {
-  newExerciseForm?: Exercise;
+  newExerciseStatus?: NewExerciseStatus;
+  newExerciseForm?: ExerciseForm;
 }
 
 interface DispatchToProps {
@@ -23,37 +30,41 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
-     const ex = this.props.newExerciseForm ? this.props.newExerciseForm : {};
-     this.props.onClick(ex);
+    if (this.props.newExerciseForm) {
+      const ex: ExerciseForm = this.props.newExerciseForm;
+      this.props.onClick(ex.values);
+    }
   }
   render() {
     // debugger;
-    // const {onClick} = this.props; 
-    return <NewExercise handleClick={this.handleClick} />;
+    const { newExerciseStatus } = this.props;
+    const started: boolean = newExerciseStatus ? newExerciseStatus.started === true : false;
+    return <NewExercise handleClick={this.handleClick} started={started} />;
   }
 }
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: State): StateToProps => {
   // debugger;
   return {
+    newExerciseStatus: state.newExerciseStatus,
     newExerciseForm: state.form.newExerciseForm
-     ? state.form.newExerciseForm.values
-      : {}
   };
 };
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<State>, ownProps: NewExerciseRCProps
+  dispatch: Dispatch<State>,
+  ownProps: NewExerciseRCProps
 ) => {
   return {
-    onClick: (newExerciseForm: Exercise) => { 
-      dispatch(newExercise(newExerciseForm));
+    onClick: (newExerciseForm: Exercise) => {
+      dispatch(newExerciseStarted(newExerciseForm));
     }
   };
 };
 
-const NewExerciseC = connect<StateToProps, DispatchToProps>(mapStateToProps, mapDispatchToProps)(
-  NewExerciseRC
-);
+const NewExerciseC = connect<StateToProps, DispatchToProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewExerciseRC);
 
 export { NewExerciseC };
