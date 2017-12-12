@@ -1,12 +1,7 @@
 import * as React from "react";
 import { Component } from "react";
 import { WrappedFieldProps, GenericFieldHTMLAttributes } from "redux-form";
-import {
-  FormControl,
-  FormGroup,
-  ControlLabel,
-  HelpBlock
-} from "react-bootstrap";
+import { FormFeedback, Label, Input, FormGroup } from "reactstrap";
 
 interface CustomProps {
   label: string;
@@ -19,19 +14,20 @@ class TextField extends Component<FieldProps> {
   render() {
     // debugger;
     const { label } = this.props;
-    const { error} = this.props.meta;
+    const { error } = this.props.meta;
     const showError = error;
+    /**/  
     return (
-      <FormGroup {...(showError ? { validationState: "error" } : {})}>
-        <ControlLabel>{label}</ControlLabel>
-        <FormControl
+      <FormGroup >
+        <Label>{label}</Label>
+        <Input 
+          {...(showError ? { valid: false } : {})}
           type="text"
           defaultValue={this.props.input.value}
           placeholder={this.props.placeholder}
           onChange={this.props.input.onChange}
         />
-        <FormControl.Feedback />
-        {showError && <HelpBlock>{error}</HelpBlock>}
+        {showError && <FormFeedback>{error}</FormFeedback>} 
       </FormGroup>
     );
   }

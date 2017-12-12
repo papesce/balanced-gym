@@ -11,8 +11,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Packages installed
 
-npm install --save react-bootstrap bootstrap@3
-npm install --save @types/react-bootstrap
 
 
 npm install --save redux
@@ -35,6 +33,10 @@ npm install --save-dev redux-devtools-extension
 
 npm install --save redux-form
 npm install @types/redux-form
+
+npm install --save reactrap
+
+npm install react-stack-grid
 
 ## Examples 
 

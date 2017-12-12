@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "reactstrap";
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import { RoutineSelect } from "./newexercise/RoutineSelect";
 import { TextField } from "./newexercise/TextField";
@@ -32,8 +32,8 @@ class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
     // debugger;
     const { started, valid } = this.props;
     return (
-      <form className="new-exercise">
-        <Field name="routineId" component={RoutineSelect} />
+      <Form className="new-exercise">
+         <Field name="routineId" component={RoutineSelect} /> 
         <Field
           name="name"
           validate={[required]}
@@ -59,17 +59,17 @@ class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
           name="gifURL"
           validate={[required]}
           component={TextField}
-          label="GifUrl"
+          label="Gif URL"
           placeholder="Enter Gif URL"
-        />
+        /> 
         <Button
-          bsStyle="primary"
+          color="primary"
           disabled={started || !valid}
           onClick={this.props.handleClick}
         >
           Add exercise
         </Button>
-      </form>
+      </Form>
     );
   }
 }

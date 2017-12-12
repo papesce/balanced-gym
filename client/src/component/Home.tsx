@@ -1,43 +1,39 @@
 import * as React from "react";
-import { Grid, Navbar, Jumbotron, Row, Col } from "react-bootstrap";
-import { NewExerciseC } from "../container/NewExerciseC";
+import { Navbar, NavbarBrand, Container, Row, Col } from "reactstrap";
+// import { NewExerciseC } from "../container/NewExerciseC";
 import { ExerciseListC } from "../container/ExerciseListC";
+import "./Home.css";
+import  sizeMe from "react-sizeme";
 
-export class Home extends React.Component {
+class HomeC extends React.Component {
   render() {
     return (
       <div>
-        <Navbar inverse={true} fixedTop={true}>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/">Balanced Gym</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-          </Grid>
+         <Navbar dark={true} color="dark" >
+          <NavbarBrand href="/">Balanced Gym</NavbarBrand>
         </Navbar>
-        <Jumbotron>
-          <Grid>
-            <Row>
+          <Container>
+            {/* <Row>
               <Col md={12}>
-                <h3>Add a new exercise:</h3>
+                <h4 className={"newExercise"}>Add a new exercise:</h4>
               </Col>
             </Row>
             <Row>
               <Col xs={12} md={12}>
                 <NewExerciseC />
               </Col>
-            </Row>
+            </Row> */}
             <Row>
               <Col xs={12} md={12}>
-               <h3>Routines</h3>
-                <ExerciseListC/>
+               <h3>Exercises</h3>
+                {/* <ExerciseListC/> */}
               </Col>
-            </Row>
-          </Grid>
-        </Jumbotron>
+            </Row> 
+          </Container>
+          <ExerciseListC/>
       </div>
     );
   }
 }
+const Home = sizeMe()(HomeC);
+export { Home };

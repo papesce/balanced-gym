@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Component } from "react";
 import { WrappedFieldProps, GenericFieldHTMLAttributes } from "redux-form";
-import { FormControl, FormGroup, ControlLabel } from "react-bootstrap";
+import { Label, FormGroup, Input } from "reactstrap";
 
 class RoutineSelect extends Component<
   WrappedFieldProps & GenericFieldHTMLAttributes
@@ -10,9 +10,9 @@ class RoutineSelect extends Component<
     // debugger;
     return (
       <FormGroup>
-        <ControlLabel>Routine:</ControlLabel>
-        <FormControl
-          componentClass="select"
+        <Label>Routine:</Label>
+        <Input
+          type="select"
           onChange={this.props.input.onChange}
           defaultValue={this.props.input.value}
         >
@@ -25,7 +25,7 @@ class RoutineSelect extends Component<
           <option value="59f3a4fb73da258989f47cf0">
             Back Biceps Waist Neck
           </option>
-        </FormControl>
+        </Input>
       </FormGroup>
     );
   }
