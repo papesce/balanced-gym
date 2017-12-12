@@ -3,10 +3,12 @@ import { ExerciseList } from "../component/ExerciseList";
 import { connect, Dispatch } from "react-redux";
 import { Exercise, State } from "../redux/model";
 import { getExercisesStarted } from "../redux/actions";
+import { push } from "react-router-redux";
 
 interface ExerciseListRCProps {
   exercises?: [Exercise];
   getRoutinesStarted?: () => void;
+  editExercise?: (exId: String) => void;
 }
 
 class ExerciseListRC extends React.Component<ExerciseListRCProps> {
@@ -16,8 +18,8 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
     }
   }
   render() {
-    const { exercises = [] } = this.props;
-    return <ExerciseList exercises={exercises} />;
+    const { exercises = [], editExercise = x => x } = this.props;
+    return <ExerciseList exercises={exercises} editExercise={editExercise} />;
   }
 }
 
@@ -27,7 +29,8 @@ const mapStateToProps = (state: State): ExerciseListRCProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch<State>): ExerciseListRCProps => {
   return {
-    getRoutinesStarted: () => dispatch(getExercisesStarted())
+    getRoutinesStarted: () => dispatch(getExercisesStarted()),
+    editExercise: (exId: string) => dispatch(push(`/editExercise/${exId}`))
   };
 };
 

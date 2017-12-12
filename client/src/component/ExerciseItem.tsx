@@ -12,25 +12,20 @@ import {
 
 interface ExerciseItemProps {
   exercise: Exercise;
+  editExercise: (exId: string) => void;
 }
 
 class ExerciseItem extends React.Component<ExerciseItemProps> {
-  constructor(props: ExerciseItemProps) {
-    super(props);
-    this.editExercise = this.editExercise.bind(this);
-  }
-  editExercise() {
-    debugger;
-  }
   render() {
-    const { exercise } = this.props;
+    const { exercise, editExercise } = this.props;
     return (
       <Card key={exercise._id}>
-        <CardImg
+        <CardImg 
           top={true}
-          width="100%"
+          width="250px"
+          height="100%"
           src={exercise.gifURL}
-          alt="Card image cap"
+          alt="No Image"
         />
         <CardBody>
           <CardTitle>{exercise.name}</CardTitle>
@@ -40,7 +35,7 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
           <CardText>
             <b>Target:</b> {exercise.target}
           </CardText>
-          <Button onClick={this.editExercise}>Edit</Button>
+          <Button onClick={() => editExercise(exercise._id)}>Edit</Button>
         </CardBody>
       </Card>
     );

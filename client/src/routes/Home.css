@@ -1,0 +1,16 @@
+.newExercise {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.title {
+    margin-top: 10px; 
+}
+
+.row.app-row {
+    margin-left: 0px;
+}
+
+.container.app-container {
+    margin-left: 20px;
+}

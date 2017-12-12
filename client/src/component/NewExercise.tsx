@@ -10,6 +10,7 @@ import "./NewExercise.css";
 export interface NewExerciseProps {
   handleClick: () => void;
   started: boolean;
+  buttonLabel: string;
 }
 
 type InjectedProps = InjectedFormProps<Exercise, NewExerciseProps>;
@@ -30,7 +31,7 @@ const required = value => {
 class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
     // debugger;
-    const { started, valid } = this.props;
+    const { started, valid, buttonLabel } = this.props;
     return (
       <Form className="new-exercise">
          <Field name="routineId" component={RoutineSelect} /> 
@@ -67,7 +68,7 @@ class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
           disabled={started || !valid}
           onClick={this.props.handleClick}
         >
-          Add exercise
+          {buttonLabel}
         </Button>
       </Form>
     );
@@ -76,16 +77,6 @@ class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
 
 const NewExercise = reduxForm<Exercise, NewExerciseProps>({
   form: "newExerciseForm",
-  initialValues: {
-    routineId: "59f0c59d4e55c40d38868034",
-    name: "",
-    target: "",
-    muscleGroup: "",
-    gifURL: ""
-  }
-  // validate
-  // asyncValidate,
-  // asyncBlurFields
 })(NewExerciseForm);
 
 export { NewExercise };

@@ -36,10 +36,18 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
     }
   }
   render() {
-    // debugger;
+    debugger;
     const { newExerciseStatus } = this.props;
-    const started: boolean = newExerciseStatus ? newExerciseStatus.started === true : false;
-    return <NewExercise handleClick={this.handleClick} started={started} />;
+    const started: boolean = newExerciseStatus
+      ? newExerciseStatus.started === true
+      : false;
+    return (
+      <NewExercise
+        handleClick={this.handleClick}
+        started={started}
+        buttonLabel="Add new Exercise"
+      />
+    );
   }
 }
 

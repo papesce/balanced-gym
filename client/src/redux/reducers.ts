@@ -1,22 +1,19 @@
 import { combineReducers } from "redux";
-import {
-  NEW_EXERCISE_STARTED,
-  NEW_EXERCISE_SUCCEEDED,
-  GET_EXERCISES_SUCCEEDED
-} from "./actionTypes";
+import * as T from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
 import { reducer as formReducer } from "redux-form";
-import { NewExerciseStatus, Exercise } from "./model";
+import { NewExerciseStatus, GetExerciseStatus, Exercise } from "./model";
+import { routerReducer } from "react-router-redux";
 
-const exerciseReducer = handleActions<NewExerciseStatus, Exercise>(
+const newExerciseReducer = handleActions<NewExerciseStatus, Exercise>(
   {
-    [NEW_EXERCISE_STARTED]: (
+    [T.NEW_EXERCISE_STARTED]: (
       state: NewExerciseStatus,
       action: Action<Exercise>
     ): NewExerciseStatus => {
       return { started: true };
     },
-    [NEW_EXERCISE_SUCCEEDED]: (
+    [T.NEW_EXERCISE_SUCCEEDED]: (
       state: NewExerciseStatus,
       action: Action<Exercise>
     ): NewExerciseStatus => {
@@ -26,9 +23,39 @@ const exerciseReducer = handleActions<NewExerciseStatus, Exercise>(
   {} // initial State
 );
 
+const getExerciseReducer = handleActions<GetExerciseStatus, Exercise>(
+  {
+    [T.GET_EXERCISE_STARTED]: (
+      state: GetExerciseStatus,
+      action: Action<any>
+    ): GetExerciseStatus => {
+      return { loading: true };
+    },
+    [T.GET_EXERCISE_SUCCEEDED]: (
+      state: GetExerciseStatus,
+      action: Action<Exercise>
+    ): GetExerciseStatus => {
+      return {exercise: action.payload};
+    },
+    [T.EDIT_EXERCISE_STARTED]: (
+      state: GetExerciseStatus,
+      action: Action<Exercise>
+    ): GetExerciseStatus => {
+      return { exercise: state.exercise, started: true };
+    },
+    [T.EDIT_EXERCISE_SUCCEEDED]: (
+      state: GetExerciseStatus,
+      action: Action<Exercise>
+    ): GetExerciseStatus => {
+      return {exercise: action.payload};
+    },
+  },
+  { loading: true } // initial State
+);
+
 const exercisesReducer = handleActions(
   {
-    [GET_EXERCISES_SUCCEEDED]: (
+    [T.GET_EXERCISES_SUCCEEDED]: (
       state: Array<Exercise>,
       action: Action<Array<Exercise>>
     ): Array<Exercise> => {
@@ -39,7 +66,9 @@ const exercisesReducer = handleActions(
 );
 
 export const rootReducer = combineReducers({
-  newExerciseStatus: exerciseReducer,
+  newExerciseStatus: newExerciseReducer,
+  getExerciseStatus: getExerciseReducer,
   exercises: exercisesReducer,
-  form: formReducer
+  form: formReducer,
+  router: routerReducer
 });

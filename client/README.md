@@ -35,8 +35,17 @@ npm install --save redux-form
 npm install @types/redux-form
 
 npm install --save reactrap
+npm install --save @types/reactstrap
+
+bootstrap@4.0.0-beta.2
+npm install --save jquery@1.9.1
 
 npm install react-stack-grid
+
+npm install --save react-router-redux@next
+npm install --save @types/react-router-redux
+
+npm install --save history
 
 ## Examples 
 

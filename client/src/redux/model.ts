@@ -2,6 +2,12 @@ export type NewExerciseStatus = {
   started?: boolean;
 };
 
+export type GetExerciseStatus = {
+  loading?: boolean;
+  exercise?: Exercise;
+  started?: boolean;
+};
+
 export interface Exercise {
   routineId: string;
   _id: string;
@@ -21,6 +27,7 @@ type AppForms = {
 
 export type State = {
   newExerciseStatus: NewExerciseStatus;
+  getExerciseStatus: GetExerciseStatus;
   exercises: [Exercise];
   form: AppForms;
 };

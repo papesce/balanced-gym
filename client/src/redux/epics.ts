@@ -1,36 +1,47 @@
 import { combineEpics, ActionsObservable } from "redux-observable";
 import { map } from "rxjs/operators/map";
 import { mergeMap } from "rxjs/operators/mergeMap";
-import { NEW_EXERCISE_STARTED, GET_EXERCISES_STARTED } from "./actionTypes";
-import { newExerciseSucceeded, getExercisesSucceeded } from "./actions";
+import * as T from "./actionTypes";
+import {
+  newExerciseSucceeded,
+  getExercisesSucceeded,
+  getExerciseSucceeded
+} from "./actions";
 import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
 import { Exercise } from "./model";
 
 const NEW_EXERCISE_URL: string = "/newExercise";
 const GET_EXERCISES_URL: string = "/exercise";
+const GET_EXERCISE_URL: string = "/exercise";
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
-  return action$.ofType(NEW_EXERCISE_STARTED).pipe(
-    mergeMap( action => {
+  return action$.ofType(T.NEW_EXERCISE_STARTED).pipe(
+    mergeMap(action => {
       const routineId = action.payload ? action.payload.routineId : "";
-      return ajax.post( `${NEW_EXERCISE_URL}/${routineId}`, action.payload, {
+      return ajax.post(`${NEW_EXERCISE_URL}/${routineId}`, action.payload, {
         "Content-Type": "application/json"
       });
     }),
     map(response => {
       debugger;
-      const newExercise = {_id : "", routineId: "", name: "", muscleGroup: "",
-      target: "", gifURL: ""};
+      const newExercise = {
+        _id: "",
+        routineId: "",
+        name: "",
+        muscleGroup: "",
+        target: "",
+        gifURL: ""
+      };
       return newExerciseSucceeded(newExercise);
     })
   );
 };
 
 const getExercises = (action$: ActionsObservable<Action<any>>) => {
-  return action$.ofType(GET_EXERCISES_STARTED).pipe(
-    mergeMap( action => {
-      return ajax.get( `${GET_EXERCISES_URL}`, {
+  return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
+    mergeMap(action => {
+      return ajax.get(`${GET_EXERCISES_URL}`, {
         "Content-Type": "application/json"
       });
     }),
@@ -41,6 +52,42 @@ const getExercises = (action$: ActionsObservable<Action<any>>) => {
   );
 };
 
+const getExercise = (action$: ActionsObservable<Action<any>>) => {
+  return action$.ofType(T.GET_EXERCISE_STARTED).pipe(
+    mergeMap(action => {
+      // debugger;
+      const exId = action.payload ? action.payload : "";
+      return ajax.get(`${GET_EXERCISE_URL}/${exId}`, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      const exercise = resp.response;
+      return getExerciseSucceeded(exercise);
+    })
+  );
+};
+
+const editExercise = (action$: ActionsObservable<Action<any>>) => {
+  return action$.ofType(T.EDIT_EXERCISE_STARTED).pipe(
+    mergeMap(action => {
+      // debugger;
+      const exId = action.payload ? action.payload._id : "";
+      return ajax.patch(`${GET_EXERCISE_URL}/${exId}`, action.payload ,  {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      debugger;
+      const exercise = resp.response;
+      return getExerciseSucceeded(exercise);
+    })
+  );
+};
+
 export const rootEpic = combineEpics(
   addExercise,
-  getExercises);
+  getExercises,
+  getExercise,
+  editExercise
+);
