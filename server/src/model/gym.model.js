@@ -94,6 +94,32 @@ const newSerie = async exerciseId => {
   return nSerie;
 };
 
+const getExercises = async () => {
+  const ExerciseModel = exerciseModel.getModel();
+  const exQuery = ExerciseModel.find();
+  exQuery.select({
+    name: 1,
+    muscleGroup: 1,
+    target: 1,
+    gifURL: 1
+  });
+  const exResult = await exQuery.lean().exec();
+  return exResult;
+};
+
+const getExercise = async (exId) => {
+  const ExerciseModel = exerciseModel.getModel();
+  const exQuery = ExerciseModel.findOne({ _id: exId });
+  exQuery.select({
+    name: 1,
+    muscleGroup: 1,
+    target: 1,
+    gifURL: 1
+  });
+  const exResult = await exQuery.lean().exec();
+  return exResult;
+};
+
 const updateExercise = async (exId, exUpdate) => {
   // in the future see node-mongoose-es7 starter book
   const ExerciseModel = exerciseModel.getModel();
@@ -136,7 +162,6 @@ const getRoutineById = async routineId => {
 // };
 
 const newExercise = async (routineId, exercise) => {
-  debugger;
   const routine = await getRoutineById(routineId);
   const ExerciseModel = exerciseModel.getModel();
   const exe = await new ExerciseModel({
@@ -153,6 +178,8 @@ const newExercise = async (routineId, exercise) => {
 module.exports = {
   getRoutines,
   getRoutine,
+  getExercises,
+  getExercise,
   updateExercise,
   deleteSerie,
   updateSerie,

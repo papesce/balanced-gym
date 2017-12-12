@@ -12,6 +12,16 @@ const api = app => {
     res.send(routines);
   });
 
+  app.get("/exercise", async (req, res) => {
+    const exercises = await gym.getExercises();
+    res.send(exercises);
+  });
+
+  app.get("/exercise/:id", async (req, res) => {
+    const exercises = await gym.getExercise(req.params.id);
+    res.send(exercises);
+  });
+
   app.patch("/exercise/:id", async (req, res) => {
     const updatedExercise = await gym.updateExercise(req.params.id, req.body);
     res.send(updatedExercise);
