@@ -102,7 +102,7 @@ const getExercises = async () => {
     muscleGroup: 1,
     target: 1,
     gifURL: 1
-  });
+  }).sort({ muscleGroup: 1 });
   const exResult = await exQuery.lean().exec();
   return exResult;
 };
