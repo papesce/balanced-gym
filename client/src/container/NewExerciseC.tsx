@@ -46,6 +46,7 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
         handleClick={this.handleClick}
         started={started}
         buttonLabel="Add new Exercise"
+        initialValues={{routineId: "59f0c59d4e55c40d38868034"}}
       />
     );
   }
