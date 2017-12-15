@@ -15,13 +15,13 @@ const addLastUpdated = routineResult => {
       exercise.lastReps = exerciseResult.series[0].reps;
       exercise.lastWeight = exerciseResult.series[0].weight;
       // exerciseResult.series = newSeries;
+      if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
+        maxLastUpdated = exercise.lastUpdated;
+      }
     } else {
       exercise.lastUpdated = exerciseResult.createdAt;
       exercise.lastReps = 0;
       exercise.lastWeight = 0;
-    }
-    if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
-      maxLastUpdated = exercise.lastUpdated;
     }
   });
   routine.lastUpdated = maxLastUpdated;
