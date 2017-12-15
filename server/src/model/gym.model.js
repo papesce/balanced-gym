@@ -27,7 +27,7 @@ const addLastUpdated = routineResult => {
   routine.lastUpdated = maxLastUpdated;
 };
 
-const compareExercises = ((ex1, ex2) => {
+const compareExercises = (ex1, ex2) => {
   // return ex1.lastReps - ex2.lastReps;
   if (ex1.lastReps === 0) {
     return -1;
@@ -42,12 +42,25 @@ const compareExercises = ((ex1, ex2) => {
     return ex1.series.length > ex2.series.length;
   }
   return ex1.lastUpdated > ex2.lastUpdated;
-});
-
+};
 
 const sortExercises = exercises => {
   exercises.sort(compareExercises);
   return exercises;
+};
+
+const computeSuggestedSerie = targetGroup => {
+  let serie = {};
+  let maxserie = {};
+  targetGroup.forEach(ex => {
+    if (ex.series.length > 0) {
+      [serie] = ex.series;
+      if (serie.weight > maxserie.weight) {
+        maxserie = serie;
+      }
+    }
+  });
+  return serie;
 };
 
 const sortByTarget = exercises => {
@@ -62,22 +75,30 @@ const sortByTarget = exercises => {
     }
     targetGroups[target].push(exercise);
   });
+  // add suggested serie to each exercise
   for (const key in targetGroups) {
     if (key) {
+      const groupedExercises = targetGroups[key];
+      const suggestedSerie = computeSuggestedSerie(groupedExercises);
+      groupedExercises.forEach(ex => {
+        const exerc = ex;
+        exerc.suggestedSerie = suggestedSerie;
+      });
       targets.push({
         target: key,
-        exercises: sortExercises(targetGroups[key])
+        exercises: sortExercises(groupedExercises)
       });
     }
   }
   // sort by target roup
-  targets.sort(
-    (tg1, tg2) => compareExercises(tg1.exercises[0], tg2.exercises[0])
+  targets.sort((tg1, tg2) =>
+    compareExercises(tg1.exercises[0], tg2.exercises[0])
   );
   // flatMap
   let flatMap = [];
   targets.forEach(tg => {
-    flatMap = flatMap.concat(tg.exercises);
+    const exs = tg.exercises;
+    flatMap = flatMap.concat(exs);
   });
   return flatMap;
 };
