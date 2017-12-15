@@ -51,16 +51,16 @@ const sortExercises = exercises => {
 
 const computeSuggestedSerie = targetGroup => {
   let serie = {};
-  let maxserie = {};
+  let maxserie;
   targetGroup.forEach(ex => {
     if (ex.series.length > 0) {
       [serie] = ex.series;
-      if (serie.weight > maxserie.weight) {
+      if (maxserie === undefined || serie.weight > maxserie.weight) {
         maxserie = serie;
       }
     }
   });
-  return serie;
+  return maxserie;
 };
 
 const sortByTarget = exercises => {
