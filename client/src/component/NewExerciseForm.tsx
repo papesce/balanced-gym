@@ -2,10 +2,10 @@ import * as React from "react";
 import { Component } from "react";
 import { Button, Form } from "reactstrap";
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
-import { RoutineSelect } from "./newexercise/RoutineSelect";
-import { TextField } from "./newexercise/TextField";
+import { RoutineSelect } from "./formitems/RoutineSelect";
+import { TextField } from "./formitems/TextField";
 import { Exercise } from "../redux/model";
-import "./NewExercise.css";
+import "./NewExerciseForm.css";
 
 export interface NewExerciseProps {
   handleClick: () => void;
@@ -28,7 +28,7 @@ const required = value => {
 //   return result;
 // };
 
-class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
+class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
     // debugger;
     const { started, valid, buttonLabel } = this.props;
@@ -75,8 +75,8 @@ class NewExerciseForm extends Component<NewExerciseProps & InjectedProps, {}> {
   }
 }
 
-const NewExercise = reduxForm<Exercise, NewExerciseProps>({
+const NewExerciseForm = reduxForm<Exercise, NewExerciseProps>({
   form: "newExerciseForm",
-})(NewExerciseForm);
+})(NewExerciseFormU);
 
-export { NewExercise };
+export { NewExerciseForm };

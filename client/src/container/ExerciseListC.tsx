@@ -1,20 +1,23 @@
 import * as React from "react";
 import { ExerciseList } from "../component/ExerciseList";
 import { connect, Dispatch } from "react-redux";
-import { Exercise, State } from "../redux/model";
+import { Exercise, State, ExerciseQuery } from "../redux/model";
 import { getExercisesStarted } from "../redux/actions";
 import { push } from "react-router-redux";
 
 interface ExerciseListRCProps {
   exercises?: [Exercise];
-  getRoutinesStarted?: () => void;
+  exerciseQuery?: ExerciseQuery;
+  getExercisesStarted?: (exerciseQuery: ExerciseQuery) => void;
   editExercise?: (exId: String) => void;
+
 }
 
 class ExerciseListRC extends React.Component<ExerciseListRCProps> {
   componentDidMount() {
-    if (this.props.getRoutinesStarted) {
-      this.props.getRoutinesStarted();
+    if (this.props.getExercisesStarted && this.props.exerciseQuery) {
+      // debugger;
+      this.props.getExercisesStarted(this.props.exerciseQuery);
     }
   }
   render() {
@@ -24,12 +27,16 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
 }
 
 const mapStateToProps = (state: State): ExerciseListRCProps => {
-  return { exercises: state.exercises };
+  // debugger;
+  return { 
+    exercises: state.exercises,
+    exerciseQuery: state.form.muscleGroupForm.values
+  };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<State>): ExerciseListRCProps => {
   return {
-    getRoutinesStarted: () => dispatch(getExercisesStarted()),
+    getExercisesStarted: (exerciseQuery: ExerciseQuery) => dispatch(getExercisesStarted(exerciseQuery)),
     editExercise: (exId: string) => dispatch(push(`/editExercise/${exId}`))
   };
 };

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NewExercise } from "../component/NewExercise";
+import { NewExerciseForm } from "../component/NewExerciseForm";
 import { connect, Dispatch } from "react-redux";
 import {
   State,
@@ -55,7 +55,7 @@ export class NewExerciseRC extends React.Component<EditExerciseRCProps> {
     if (getExerciseStatus.exercise) {
       const exercise: Exercise = getExerciseStatus.exercise;
       return (
-      <NewExercise
+      <NewExerciseForm
         handleClick={this.handleClick}
         started={started}
         buttonLabel="Save"
@@ -65,21 +65,6 @@ export class NewExerciseRC extends React.Component<EditExerciseRCProps> {
     return (<div>Error !</div>); 
   }
 }
-
-// const getExerciseFromState = (state: State, exId: string): Exercise => {
-//   if (state.exercises.length > 0) {
-//     return state.exercises[0];
-//   } else {
-//     return {
-//       _id: "",
-//       name: "",
-//       routineId: "",
-//       target: "",
-//       muscleGroup: "",
-//       gifURL: ""
-//     };
-//   }
-// };
 
 const mapStateToProps = (
   state: State,

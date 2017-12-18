@@ -9,7 +9,7 @@ import {
   EDIT_EXERCISE_SUCCEEDED
 } from "./actionTypes";
 import { createAction } from "redux-actions";
-import { Exercise } from "./model";
+import { Exercise, ExerciseQuery } from "./model";
 
 export const newExerciseStarted = createAction<Exercise>(NEW_EXERCISE_STARTED);
 export const newExerciseSucceeded = createAction<Exercise>(
@@ -26,7 +26,7 @@ export const editExerciseSucceeded = createAction<Exercise>(
   EDIT_EXERCISE_SUCCEEDED
 );
 
-export const getExercisesStarted = createAction(GET_EXERCISES_STARTED);
+export const getExercisesStarted = createAction<ExerciseQuery>(GET_EXERCISES_STARTED);
 export const getExercisesSucceeded = createAction<Array<Exercise>>(
   GET_EXERCISES_SUCCEEDED
 );

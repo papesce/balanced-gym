@@ -2,6 +2,8 @@ import { combineEpics, ActionsObservable } from "redux-observable";
 import { map } from "rxjs/operators/map";
 import { mergeMap } from "rxjs/operators/mergeMap";
 import * as T from "./actionTypes";
+import URLQueryBuilder from "url-query-builder";
+
 import {
   newExerciseSucceeded,
   getExercisesSucceeded,
@@ -24,7 +26,7 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
       });
     }),
     map(response => {
-      debugger;
+      // debugger;
       const newExercise = {
         _id: "",
         routineId: "",
@@ -41,7 +43,12 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
 const getExercises = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
     mergeMap(action => {
-      return ajax.get(`${GET_EXERCISES_URL}`, {
+      debugger;
+      let QUERY_URL = GET_EXERCISES_URL; 
+      if (action.payload.muscleGroup && action.payload.muscleGroup !== "") { 
+           QUERY_URL = new URLQueryBuilder(GET_EXERCISES_URL, action.payload).getUrl();
+      }
+      return ajax.get(`${QUERY_URL}`, {
         "Content-Type": "application/json"
       });
     }),

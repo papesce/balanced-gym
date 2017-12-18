@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NewExercise } from "../component/NewExercise";
+import { NewExerciseForm } from "../component/NewExerciseForm";
 import { connect, Dispatch } from "react-redux";
 import {
   State,
@@ -42,7 +42,7 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
       ? newExerciseStatus.started === true
       : false;
     return (
-      <NewExercise
+      <NewExerciseForm
         handleClick={this.handleClick}
         started={started}
         buttonLabel="Add new Exercise"
