@@ -171,9 +171,9 @@ const newSerie = async exerciseId => {
   return nSerie;
 };
 
-const getExercises = async () => {
+const getExercises = async (query) => {
   const ExerciseModel = exerciseModel.getModel();
-  const exQuery = ExerciseModel.find();
+  const exQuery = ExerciseModel.find(query);
   exQuery
     .select({
       name: 1,

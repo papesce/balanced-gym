@@ -13,7 +13,7 @@ const api = app => {
   });
 
   app.get("/exercise", async (req, res) => {
-    const exercises = await gym.getExercises();
+    const exercises = await gym.getExercises(req.query);
     res.send(exercises);
   });
 
