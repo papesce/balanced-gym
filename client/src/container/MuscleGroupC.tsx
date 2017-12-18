@@ -1,36 +1,36 @@
 import * as React from "react";
 import { MuscleGroupForm } from "../component/MuscleGroupForm";
 import { connect, Dispatch } from "react-redux";
-import {
-  State
-} from "../redux/model";
+import { State, ExerciseQuery } from "../redux/model";
+import { getExercisesStarted } from "../redux/actions";
 
 interface MuscleGroupRCProps {
-}
-
-interface StateToProps {
-}
-
-interface DispatchToProps {
+    getExercisesStarted?: (exerciseQuery: ExerciseQuery) => void;
 }
 
 export class MuscleGroupRC extends React.Component<MuscleGroupRCProps> {
   constructor(props: MuscleGroupRCProps) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange = value => {
+      if (this.props.getExercisesStarted) {
+         this.props.getExercisesStarted({muscleGroup: value});
+     }
   }
   render() {
-   // debugger;
+    // debugger;
     return (
       <MuscleGroupForm
-        initialValues={{muscleGroup: ""}}
+        defaultValue={""}
+        handleChange={this.handleChange}
       />
     );
   }
 }
 
-const mapStateToProps = (state: State): StateToProps => {
-  return {
-  };
+const mapStateToProps = (state: State): MuscleGroupRCProps => {
+  return {};
 };
 
 const mapDispatchToProps = (
@@ -38,10 +38,12 @@ const mapDispatchToProps = (
   ownProps: MuscleGroupRCProps
 ) => {
   return {
+    getExercisesStarted: (exerciseQuery: ExerciseQuery) =>
+      dispatch(getExercisesStarted(exerciseQuery))
   };
 };
 
-const MuscleGroupC = connect<StateToProps, DispatchToProps>(
+const MuscleGroupC = connect<MuscleGroupRCProps>(
   mapStateToProps,
   mapDispatchToProps
 )(MuscleGroupRC);

@@ -21,17 +21,12 @@ export interface ExerciseQuery {
   muscleGroup: string;
 }  
 
-export interface ExerciseFormQuery {
-  values: ExerciseQuery;
-}
-
 export type ExerciseForm = {
   values: Exercise;
 };
 
 type AppForms = {
   newExerciseForm: ExerciseForm;
-  muscleGroupForm: ExerciseFormQuery;
 };
 
 export type State = {

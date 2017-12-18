@@ -16,7 +16,6 @@ interface ExerciseListRCProps {
 class ExerciseListRC extends React.Component<ExerciseListRCProps> {
   componentDidMount() {
     if (this.props.getExercisesStarted && this.props.exerciseQuery) {
-      // debugger;
       this.props.getExercisesStarted(this.props.exerciseQuery);
     }
   }
@@ -30,7 +29,7 @@ const mapStateToProps = (state: State): ExerciseListRCProps => {
   // debugger;
   return { 
     exercises: state.exercises,
-    exerciseQuery: state.form.muscleGroupForm.values
+    exerciseQuery: { muscleGroup: ""}
   };
 };
 
