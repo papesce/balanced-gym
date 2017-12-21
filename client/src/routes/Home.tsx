@@ -14,11 +14,10 @@ class HomeC extends React.Component {
         </Navbar>
           <Container className="app-container">
             <Row className="app-row">
-              <Col xs={4} md={4}>
+              <Col xs={10} md={4}>
                <h3 className={"title"}>Exercises</h3>
-                {/* <ExerciseListC/> */}
               </Col>
-              <Col xs={6} md={6}>
+              <Col xs={10} md={6}>
                 <MuscleGroupC/>
               </Col>
               </Row>
