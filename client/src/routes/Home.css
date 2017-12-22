@@ -15,3 +15,8 @@
 .container.app-container {
     margin-left: 20px;
 }
+
+.navbar-toggler-plus {
+    vertical-align: middle;
+    padding: 0.2em;
+}
