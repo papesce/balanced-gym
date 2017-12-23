@@ -8,7 +8,8 @@ import {
   newExerciseSucceeded,
   getExercisesSucceeded,
   getExerciseSucceeded,
-  getMuscleGroupsSucceeded
+  getMuscleGroupsSucceeded,
+  getTargetsSucceeded
 } from "./actions";
 import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
@@ -18,6 +19,7 @@ const NEW_EXERCISE_URL: string = "/newExercise";
 const GET_EXERCISES_URL: string = "/exercise";
 const GET_EXERCISE_URL: string = "/exercise";
 const GET_MUSCLE_GROUPS_URL: string = "/muscleGroup";
+const GET_TARGETS_URL: string = "/target";
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
   return action$.ofType(T.NEW_EXERCISE_STARTED).pipe(
@@ -47,7 +49,7 @@ const getExercises = (action$: ActionsObservable<Action<any>>) => {
     mergeMap(action => {
       // debugger;
       let QUERY_URL = GET_EXERCISES_URL;
-      if (action.payload.muscleGroup && action.payload.muscleGroup !== "") {
+      if (action.payload) {
         QUERY_URL = new URLQueryBuilder(
           GET_EXERCISES_URL,
           action.payload
@@ -114,10 +116,28 @@ const getMuscleGroups = (action$: ActionsObservable<Action<any>>) => {
   );
 };
 
+const getTargets = (action$: ActionsObservable<Action<any>>) => {
+  return action$.ofType(T.GET_TARGETS_STARTED).pipe(
+    mergeMap(action => {
+      // debugger;
+      let QUERY_URL = GET_TARGETS_URL;
+      return ajax.get(`${QUERY_URL}`, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      // debugger;
+      const targets = resp.response;
+      return getTargetsSucceeded(targets);
+   })
+  );
+};
+
 export const rootEpic = combineEpics(
   addExercise,
   getExercises,
   getExercise,
   editExercise,
-  getMuscleGroups
+  getMuscleGroups,
+  getTargets
 );

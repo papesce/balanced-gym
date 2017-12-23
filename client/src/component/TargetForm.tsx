@@ -2,15 +2,15 @@ import * as React from "react";
 import { Component } from "react";
 import { Label, FormGroup, Input, Form } from "reactstrap";
 
-export interface MuscleGroupFormProps {
+export interface TargetFormProps {
   handleChange: (value: string) => void;
   defaultValue: string;
-  muscleGroups: Array<string>;
+  targets: Array<string>;
   loading: boolean;
 }
 
-class MuscleGroupForm extends Component<MuscleGroupFormProps> {
-  constructor(props: MuscleGroupFormProps) {
+class TargetForm extends Component<TargetFormProps> {
+  constructor(props: TargetFormProps) {
     super(props);
     this.onChange = this.onChange.bind(this);
   }
@@ -19,11 +19,11 @@ class MuscleGroupForm extends Component<MuscleGroupFormProps> {
     this.props.handleChange(event.target.value);
   }
   render() {
-    const { muscleGroups, defaultValue = "", loading } = this.props;
+    const { targets, defaultValue = "", loading } = this.props;
     return (
-      <Form>
+      <Form className="muscle-group-form">
         <FormGroup>
-          <Label>Group:</Label>
+          <Label>Target:</Label>
           {loading && <div>loading...</div>}
           {!loading &&
           <Input
@@ -34,7 +34,7 @@ class MuscleGroupForm extends Component<MuscleGroupFormProps> {
             <option value="">
               All
             </option>
-            {muscleGroups.map((muscleGroup, index) => (
+            {targets.map((muscleGroup, index) => (
               <option
                 key={index}
                 value={muscleGroup}
@@ -49,4 +49,4 @@ class MuscleGroupForm extends Component<MuscleGroupFormProps> {
   }
 }
 
-export { MuscleGroupForm };
+export { TargetForm };

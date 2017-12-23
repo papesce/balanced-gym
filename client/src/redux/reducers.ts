@@ -2,7 +2,15 @@ import { combineReducers, Reducer } from "redux";
 import * as T from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
 import { reducer as formReducer } from "redux-form";
-import { NewExerciseStatus, GetExerciseStatus, Exercise, State, MuscleGroupsResult } from "./model";
+import {
+  NewExerciseStatus,
+  GetExerciseStatus,
+  Exercise,
+  State,
+  MuscleGroupsResult,
+  TargetsResult,
+  Filter
+} from "./model";
 import { routerReducer } from "react-router-redux";
 
 const newExerciseReducer = handleActions<NewExerciseStatus, Exercise>(
@@ -80,18 +88,45 @@ const muscleGroupsReducer = handleActions(
       state: MuscleGroupsResult,
       action: Action<MuscleGroupsResult>
     ): MuscleGroupsResult => {
-      return action.payload ? { muscleGroups: action.payload } : {} ;
+      return action.payload ? { muscleGroups: action.payload } : {};
     }
   },
   { loading: true }
 );
 
+const targetReducer = handleActions(
+  {
+    [T.SET_TARGET]: (state: string, action: Action<string>): string => {
+      return action.payload ? action.payload : "";
+    }
+  },
+  ""
+);
+
+const targetsReducer = handleActions(
+  {
+    [T.GET_TARGETS_SUCCEEDED]: (
+      state: TargetsResult,
+      action: Action<TargetsResult>
+    ): TargetsResult => {
+      return action.payload ? { targets: action.payload } : {};
+    }
+  },
+  { loading: true }
+);
+
+const filterReducer: Reducer<Filter> = combineReducers({
+  targets: targetsReducer,
+  muscleGroups: muscleGroupsReducer,
+  selectedMuscleGroup: muscleGroupReducer,
+  selectedTarget: targetReducer,
+});
+
 export const rootReducer: Reducer<State> = combineReducers({
   newExerciseStatus: newExerciseReducer,
   getExerciseStatus: getExerciseReducer,
   exercises: exercisesReducer,
-  selectedMuscleGroup: muscleGroupReducer,
-  muscleGroups: muscleGroupsReducer,
   form: formReducer,
+  filter: filterReducer,
   router: routerReducer
 });

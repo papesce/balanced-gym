@@ -15,6 +15,7 @@ interface ExerciseListRCProps {
 class ExerciseListRC extends React.Component<ExerciseListRCProps> {
   componentDidMount() {
     if (this.props.getExercisesStarted && this.props.exerciseQuery) {
+      // debugger;
       this.props.getExercisesStarted(this.props.exerciseQuery);
     }
   }
@@ -26,11 +27,16 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
 
 const mapStateToProps = (state: State): ExerciseListRCProps => {
   // debugger;
+  const exerciseQuery: ExerciseQuery = {};
+  if (state.filter.selectedMuscleGroup !== "") {
+    exerciseQuery.muscleGroup = state.filter.selectedMuscleGroup;
+  }
+  if (state.filter.selectedTarget !== "") {
+    exerciseQuery.target = state.filter.selectedTarget;
+  }  
   return {
     exercises: state.exercises,
-    exerciseQuery: {
-      muscleGroup: state.selectedMuscleGroup ? state.selectedMuscleGroup : ""
-    }
+    exerciseQuery: exerciseQuery
   };
 };
 

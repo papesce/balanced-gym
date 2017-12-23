@@ -18,27 +18,46 @@ export interface Exercise {
 }
 
 export interface ExerciseQuery {
-  muscleGroup: string;
-}  
+  muscleGroup?: string;
+  target?: string;
+}
 
 export type ExerciseForm = {
   values: Exercise;
-};
-
-export type MuscleGroupsResult = {
-  muscleGroups?: Array<string>,
-  loading?: boolean
 };
 
 type AppForms = {
   newExerciseForm: ExerciseForm;
 };
 
+export type MuscleGroupsResult = {
+  muscleGroups?: Array<string>;
+  loading?: boolean;
+};
+
+export type TargetsResult = {
+  targets?: Array<string>;
+  loading?: boolean;
+};
+
+export type Filter = {
+  selectedTarget: string;
+  selectedMuscleGroup: string;
+  targets?: TargetsResult;
+  muscleGroups?: MuscleGroupsResult;
+};
+
+export const DEFAULT_STATE: State = {
+  filter: {
+    selectedMuscleGroup: "",
+    selectedTarget: ""
+  }
+};
+
 export type State = {
   newExerciseStatus?: NewExerciseStatus;
   getExerciseStatus?: GetExerciseStatus;
   exercises?: [Exercise];
-  selectedMuscleGroup: string;
-  muscleGroups?: MuscleGroupsResult
+  filter: Filter;
   form?: AppForms;
 };

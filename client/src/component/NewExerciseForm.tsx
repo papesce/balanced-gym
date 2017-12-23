@@ -5,7 +5,6 @@ import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import { RoutineSelect } from "./formitems/RoutineSelect";
 import { TextField } from "./formitems/TextField";
 import { Exercise } from "../redux/model";
-import "./NewExerciseForm.css";
 
 export interface NewExerciseProps {
   handleClick: () => void;
@@ -33,7 +32,7 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
     // debugger;
     const { started, valid, buttonLabel } = this.props;
     return (
-      <Form className="new-exercise">
+      <Form>
          <Field name="routineId" component={RoutineSelect} /> 
         <Field
           name="name"

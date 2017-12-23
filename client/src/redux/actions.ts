@@ -26,3 +26,8 @@ export const setMuscleGroup = createAction<string>(Types.SET_MUSCLE_GROUP);
 
 export const getMuscleGroupsStarted = createAction(Types.GET_MUSCLE_GROUPS_STARTED);
 export const getMuscleGroupsSucceeded = createAction<Array<string>>(Types.GET_MUSCLE_GROUPS_SUCCEEDED);
+
+export const setTarget = createAction<string>(Types.SET_TARGET);
+
+export const getTargetsStarted = createAction(Types.GET_TARGETS_STARTED);
+export const getTargetsSucceeded = createAction<Array<string>>(Types.GET_TARGETS_SUCCEEDED);

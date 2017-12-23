@@ -1,12 +1,11 @@
 import * as React from "react";
 import { MuscleGroupForm } from "../component/MuscleGroupForm";
 import { connect, Dispatch } from "react-redux";
-import { State, ExerciseQuery } from "../redux/model";
-import { setMuscleGroup, getExercisesStarted, getMuscleGroupsStarted } from "../redux/actions";
+import { State } from "../redux/model";
+import { setMuscleGroup, getMuscleGroupsStarted } from "../redux/actions";
 
 interface MuscleGroupRCProps {
     setMuscleGroup?: (value: string) => void;
-    getExercisesStarted?: (exerciseQuery: ExerciseQuery) => void;
     getMuscleGroupsStarted?: () => void;
     selectedMuscleGroup: string;
     loading?: boolean;
@@ -27,9 +26,6 @@ export class MuscleGroupRC extends React.Component<MuscleGroupRCProps> {
       if (this.props.setMuscleGroup) {
          this.props.setMuscleGroup(value);
       }
-      if (this.props.getExercisesStarted) {
-        this.props.getExercisesStarted({muscleGroup: value});
-    }
   }
   render() {
     // debugger;
@@ -46,11 +42,10 @@ export class MuscleGroupRC extends React.Component<MuscleGroupRCProps> {
 }
 
 const mapStateToProps = (state: State): MuscleGroupRCProps => {
-  // debugger;
   return {
-    selectedMuscleGroup: state.selectedMuscleGroup,
-    loading: state.muscleGroups ? state.muscleGroups.loading : false,
-    muscleGroups: state.muscleGroups ? state.muscleGroups.muscleGroups : []
+    selectedMuscleGroup: state.filter.selectedMuscleGroup,
+    loading: state.filter.muscleGroups ? state.filter.muscleGroups.loading : false,
+    muscleGroups: state.filter.muscleGroups ? state.filter.muscleGroups.muscleGroups : []
   };
 };
 
@@ -61,8 +56,6 @@ const mapDispatchToProps = (
   return {
     setMuscleGroup: (value: string) =>
       dispatch(setMuscleGroup(value)),
-    getExercisesStarted: (exerciseQuery: ExerciseQuery) =>
-      dispatch(getExercisesStarted(exerciseQuery)),
     getMuscleGroupsStarted: () => dispatch(getMuscleGroupsStarted())  
   };
 };

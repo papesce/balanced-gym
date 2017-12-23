@@ -3,14 +3,12 @@ import {
   Navbar,
   NavbarBrand,
   Container,
-  Row,
-  Col,
   NavLink
 } from "reactstrap";
 import { ExerciseListC } from "../container/ExerciseListC";
-import { MuscleGroupC } from "../container/MuscleGroupC";
 import "./Home.css";
 import sizeMe from "react-sizeme";
+import { FiltersC } from "../container/FiltersC";
 
 interface HomeCProps {}
 
@@ -39,14 +37,7 @@ class HomeC extends React.Component<HomeCProps, HomeCState> {
           </NavLink>
         </Navbar>
         <Container className="app-container">
-          <Row className="app-row">
-            <Col xs={10} md={4}>
-              <h3 className={"title"}>Exercises</h3>
-            </Col>
-            <Col xs={10} md={6}>
-              <MuscleGroupC />
-            </Col>
-          </Row>
+          <FiltersC /> 
         </Container>
         <ExerciseListC />
       </div>
