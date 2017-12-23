@@ -74,7 +74,7 @@ const mapStateToProps = (
   return {
     // exercise: getExerciseFromState(state, ownProps.exerciseId),
     getExerciseStatus: state.getExerciseStatus,
-    newExerciseForm: state.form.newExerciseForm
+    newExerciseForm: state.form ? state.form.newExerciseForm : state.form
   };
 };
 

@@ -10,7 +10,6 @@ interface ExerciseListRCProps {
   exerciseQuery?: ExerciseQuery;
   getExercisesStarted?: (exerciseQuery: ExerciseQuery) => void;
   editExercise?: (exId: String) => void;
-
 }
 
 class ExerciseListRC extends React.Component<ExerciseListRCProps> {
@@ -27,15 +26,18 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
 
 const mapStateToProps = (state: State): ExerciseListRCProps => {
   // debugger;
-  return { 
+  return {
     exercises: state.exercises,
-    exerciseQuery: { muscleGroup: ""}
+    exerciseQuery: {
+      muscleGroup: state.selectedMuscleGroup ? state.selectedMuscleGroup : ""
+    }
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<State>): ExerciseListRCProps => {
   return {
-    getExercisesStarted: (exerciseQuery: ExerciseQuery) => dispatch(getExercisesStarted(exerciseQuery)),
+    getExercisesStarted: (exerciseQuery: ExerciseQuery) =>
+      dispatch(getExercisesStarted(exerciseQuery)),
     editExercise: (exId: string) => dispatch(push(`/editExercise/${exId}`))
   };
 };

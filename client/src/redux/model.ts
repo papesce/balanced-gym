@@ -25,13 +25,20 @@ export type ExerciseForm = {
   values: Exercise;
 };
 
+export type MuscleGroupsResult = {
+  muscleGroups?: Array<string>,
+  loading?: boolean
+};
+
 type AppForms = {
   newExerciseForm: ExerciseForm;
 };
 
 export type State = {
-  newExerciseStatus: NewExerciseStatus;
-  getExerciseStatus: GetExerciseStatus;
-  exercises: [Exercise];
-  form: AppForms;
+  newExerciseStatus?: NewExerciseStatus;
+  getExerciseStatus?: GetExerciseStatus;
+  exercises?: [Exercise];
+  selectedMuscleGroup: string;
+  muscleGroups?: MuscleGroupsResult
+  form?: AppForms;
 };

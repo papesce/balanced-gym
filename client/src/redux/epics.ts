@@ -7,7 +7,8 @@ import URLQueryBuilder from "url-query-builder";
 import {
   newExerciseSucceeded,
   getExercisesSucceeded,
-  getExerciseSucceeded
+  getExerciseSucceeded,
+  getMuscleGroupsSucceeded
 } from "./actions";
 import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
@@ -16,6 +17,7 @@ import { Exercise } from "./model";
 const NEW_EXERCISE_URL: string = "/newExercise";
 const GET_EXERCISES_URL: string = "/exercise";
 const GET_EXERCISE_URL: string = "/exercise";
+const GET_MUSCLE_GROUPS_URL: string = "/muscleGroup";
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
   return action$.ofType(T.NEW_EXERCISE_STARTED).pipe(
@@ -44,9 +46,12 @@ const getExercises = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
     mergeMap(action => {
       // debugger;
-      let QUERY_URL = GET_EXERCISES_URL; 
-      if (action.payload.muscleGroup && action.payload.muscleGroup !== "") { 
-           QUERY_URL = new URLQueryBuilder(GET_EXERCISES_URL, action.payload).getUrl();
+      let QUERY_URL = GET_EXERCISES_URL;
+      if (action.payload.muscleGroup && action.payload.muscleGroup !== "") {
+        QUERY_URL = new URLQueryBuilder(
+          GET_EXERCISES_URL,
+          action.payload
+        ).getUrl();
       }
       return ajax.get(`${QUERY_URL}`, {
         "Content-Type": "application/json"
@@ -55,7 +60,7 @@ const getExercises = (action$: ActionsObservable<Action<any>>) => {
     map(resp => {
       const exercises = resp.response;
       return getExercisesSucceeded(exercises);
-    })
+})
   );
 };
 
@@ -80,7 +85,7 @@ const editExercise = (action$: ActionsObservable<Action<any>>) => {
     mergeMap(action => {
       // debugger;
       const exId = action.payload ? action.payload._id : "";
-      return ajax.patch(`${GET_EXERCISE_URL}/${exId}`, action.payload ,  {
+      return ajax.patch(`${GET_EXERCISE_URL}/${exId}`, action.payload, {
         "Content-Type": "application/json"
       });
     }),
@@ -92,9 +97,27 @@ const editExercise = (action$: ActionsObservable<Action<any>>) => {
   );
 };
 
+const getMuscleGroups = (action$: ActionsObservable<Action<any>>) => {
+  return action$.ofType(T.GET_MUSCLE_GROUPS_STARTED).pipe(
+    mergeMap(action => {
+      // debugger;
+      let QUERY_URL = GET_MUSCLE_GROUPS_URL;
+      return ajax.get(`${QUERY_URL}`, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      // debugger;
+      const muscleGroups = resp.response;
+      return getMuscleGroupsSucceeded(muscleGroups);
+   })
+  );
+};
+
 export const rootEpic = combineEpics(
   addExercise,
   getExercises,
   getExercise,
-  editExercise
+  editExercise,
+  getMuscleGroups
 );

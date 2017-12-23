@@ -56,7 +56,7 @@ const mapStateToProps = (state: State): StateToProps => {
   // debugger;
   return {
     newExerciseStatus: state.newExerciseStatus,
-    newExerciseForm: state.form.newExerciseForm
+    newExerciseForm: state.form ? state.form.newExerciseForm : undefined
   };
 };
 

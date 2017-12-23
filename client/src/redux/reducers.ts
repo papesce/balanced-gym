@@ -1,8 +1,8 @@
-import { combineReducers } from "redux";
+import { combineReducers, Reducer } from "redux";
 import * as T from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
 import { reducer as formReducer } from "redux-form";
-import { NewExerciseStatus, GetExerciseStatus, Exercise } from "./model";
+import { NewExerciseStatus, GetExerciseStatus, Exercise, State, MuscleGroupsResult } from "./model";
 import { routerReducer } from "react-router-redux";
 
 const newExerciseReducer = handleActions<NewExerciseStatus, Exercise>(
@@ -35,7 +35,7 @@ const getExerciseReducer = handleActions<GetExerciseStatus, Exercise>(
       state: GetExerciseStatus,
       action: Action<Exercise>
     ): GetExerciseStatus => {
-      return {exercise: action.payload};
+      return { exercise: action.payload };
     },
     [T.EDIT_EXERCISE_STARTED]: (
       state: GetExerciseStatus,
@@ -47,8 +47,8 @@ const getExerciseReducer = handleActions<GetExerciseStatus, Exercise>(
       state: GetExerciseStatus,
       action: Action<Exercise>
     ): GetExerciseStatus => {
-      return {exercise: action.payload};
-    },
+      return { exercise: action.payload };
+    }
   },
   { loading: true } // initial State
 );
@@ -65,10 +65,33 @@ const exercisesReducer = handleActions(
   []
 );
 
-export const rootReducer = combineReducers({
+const muscleGroupReducer = handleActions(
+  {
+    [T.SET_MUSCLE_GROUP]: (state: string, action: Action<string>): string => {
+      return action.payload ? action.payload : "";
+    }
+  },
+  ""
+);
+
+const muscleGroupsReducer = handleActions(
+  {
+    [T.GET_MUSCLE_GROUPS_SUCCEEDED]: (
+      state: MuscleGroupsResult,
+      action: Action<MuscleGroupsResult>
+    ): MuscleGroupsResult => {
+      return action.payload ? { muscleGroups: action.payload } : {} ;
+    }
+  },
+  { loading: true }
+);
+
+export const rootReducer: Reducer<State> = combineReducers({
   newExerciseStatus: newExerciseReducer,
   getExerciseStatus: getExerciseReducer,
   exercises: exercisesReducer,
+  selectedMuscleGroup: muscleGroupReducer,
+  muscleGroups: muscleGroupsReducer,
   form: formReducer,
   router: routerReducer
 });
