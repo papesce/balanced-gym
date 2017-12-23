@@ -46,6 +46,11 @@ const api = app => {
     const serie = await gym.newSerie(req.params.exerciseId);
     res.send(serie);
   });
+
+  app.get("/muscleGroup", async (req, res) => {
+    const muscleGroups = await gym.getMuscleGroups();
+    res.send(muscleGroups);
+  });
 };
 
 module.exports = api;

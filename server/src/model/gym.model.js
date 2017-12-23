@@ -254,6 +254,19 @@ const newExercise = async (routineId, exercise) => {
   await routine.save();
 };
 
+const getMuscleGroups = async () => {
+  const ExerciseModel = exerciseModel.getModel();
+  const exQuery = ExerciseModel.find();
+  exQuery.distinct("muscleGroup")
+  // exQuery.select(
+  //  {
+  //    _id: 0, muscleGroup: 1,
+  //  })
+  //  .sort({ muscleGroup: 1 });
+  const exResult = await exQuery.lean().exec();
+  return exResult.sort();
+};
+
 module.exports = {
   getRoutines,
   getRoutine,
@@ -263,5 +276,6 @@ module.exports = {
   deleteSerie,
   updateSerie,
   newSerie,
-  newExercise
+  newExercise,
+  getMuscleGroups
 };
