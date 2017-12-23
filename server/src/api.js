@@ -51,6 +51,16 @@ const api = app => {
     const muscleGroups = await gym.getMuscleGroups();
     res.send(muscleGroups);
   });
+
+  app.get("/target", async (req, res) => {
+    const targets = await gym.getTargets();
+    res.send(targets);
+  });
+
+  app.get("/filter", async (req, res) => {
+    const filters = await gym.getFilters();
+    res.send(filters);
+  });
 };
 
 module.exports = api;

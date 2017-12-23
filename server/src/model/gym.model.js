@@ -257,14 +257,31 @@ const newExercise = async (routineId, exercise) => {
 const getMuscleGroups = async () => {
   const ExerciseModel = exerciseModel.getModel();
   const exQuery = ExerciseModel.find();
-  exQuery.distinct("muscleGroup")
-  // exQuery.select(
-  //  {
-  //    _id: 0, muscleGroup: 1,
-  //  })
-  //  .sort({ muscleGroup: 1 });
+  exQuery.distinct("muscleGroup");
   const exResult = await exQuery.lean().exec();
   return exResult.sort();
+};
+
+const getTargets = async () => {
+  const ExerciseModel = exerciseModel.getModel();
+  const exQuery = ExerciseModel.find();
+  exQuery.distinct("target"); // , { muscleGroup: "Chest" });
+  const exResult = await exQuery.lean().exec();
+  return exResult.sort();
+};
+
+const getFilters = async () => {
+  const ExerciseModel = exerciseModel.getModel();
+  const exQuery = ExerciseModel.find();
+  exQuery.distinct("target", { muscleGroup: "Chest" });
+  const exResult = await exQuery.lean().exec();
+  const result = {};
+  result.muscleGroups = exResult.sort();
+  const exQuery2 = ExerciseModel.find();
+  exQuery2.distinct("muscleGroup", { target: "Sternal, Pectoralis Major" });
+  const exResult2 = await exQuery2.lean().exec();
+  result.targets = exResult2.sort();
+  return result;
 };
 
 module.exports = {
@@ -277,5 +294,7 @@ module.exports = {
   updateSerie,
   newSerie,
   newExercise,
-  getMuscleGroups
+  getMuscleGroups,
+  getTargets,
+  getFilters
 };
