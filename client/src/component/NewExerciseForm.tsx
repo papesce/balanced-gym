@@ -5,6 +5,7 @@ import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import { RoutineSelect } from "./formitems/RoutineSelect";
 import { TextField } from "./formitems/TextField";
 import { Exercise } from "../redux/model";
+import { EquipmentSelect } from "./formitems/EquipmentSelect";
 
 export interface NewExerciseProps {
   handleClick: () => void;
@@ -62,10 +63,7 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
          /> 
          <Field
           name="equipment"
-          validate={[required]}
-          component={TextField}
-          label="Equipment"
-          placeholder="Enter the equipment (Dumbbell, Barbell Long, Barbell Short, None)"
+          component={EquipmentSelect}
          /> 
         <Button
           color="primary"

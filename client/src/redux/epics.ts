@@ -92,7 +92,7 @@ const editExercise = (action$: ActionsObservable<Action<any>>) => {
       });
     }),
     map(resp => {
-      debugger;
+      // debugger;
       const exercise = resp.response;
       return getExerciseSucceeded(exercise);
     })
