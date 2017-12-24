@@ -1,0 +1,16 @@
+.exercise-card {
+
+}
+
+
+.exercise-card .card-title {
+    font-size: 16px;
+}
+
+.exercise-card .card-subtitle {
+    font-size: 12px;
+}
+
+.exercise-card .card-text {
+    font-size: 12px;
+}

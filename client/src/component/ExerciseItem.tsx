@@ -9,6 +9,7 @@ import {
   CardSubtitle,
   CardText
 } from "reactstrap";
+import "./ExerciseItem.css";
 
 interface ExerciseItemProps {
   exercise: Exercise;
@@ -19,7 +20,7 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
   render() {
     const { exercise, editExercise } = this.props;
     return (
-      <Card key={exercise._id}>
+      <Card className="exercise-card" key={exercise._id}>
         <CardImg 
           top={true}
           width="250px"
@@ -33,7 +34,8 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
             <b>Group:</b> {exercise.muscleGroup}
           </CardSubtitle>
           <CardText>
-            <b>Target:</b> {exercise.target}
+            <b>Target:</b> {exercise.target}<br/>
+            <b>Equipment:</b> {exercise.equipment}  ({exercise.multiplier})
           </CardText>
           <Button onClick={() => editExercise(exercise._id)}>Edit</Button>
         </CardBody>

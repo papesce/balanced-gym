@@ -15,6 +15,8 @@ export interface Exercise {
   muscleGroup: string;
   target: string;
   gifURL: string;
+  multiplier?: number;
+  equipment?: string;
 }
 
 export interface ExerciseQuery {
