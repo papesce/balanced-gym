@@ -17,6 +17,10 @@ export interface Exercise {
   gifURL: string;
   multiplier?: number;
   equipment?: string;
+  lastReps?: string;
+  lastWeight?: string;
+  normalizedWeight?: string;
+  suggestedSerie?: any;
 }
 
 export interface ExerciseQuery {

@@ -30,10 +30,9 @@ const normalizeWeight = (weight, exercise) => {
   return (weight + extraWeight) * multiplier;
 };
 
-const addLastUpdated = routineResult => {
-  const routine = routineResult;
+const addLastUpdatedToExercises = exercises => {
   let maxLastUpdated;
-  routineResult.exercises.forEach(exerciseResult => {
+  exercises.forEach(exerciseResult => {
     const exercise = exerciseResult;
     if (exerciseResult.series.length > 0) {
       exerciseResult.series.sort((s1, s2) => s1.createdAt < s2.createdAt);
@@ -55,6 +54,12 @@ const addLastUpdated = routineResult => {
       exercise.normalizedWeight = 0;
     }
   });
+  return maxLastUpdated;
+};
+
+const addLastUpdatedToRoutine = routineResult => {
+  const routine = routineResult;
+  const maxLastUpdated = addLastUpdatedToExercises(routineResult.exercises);
   routine.lastUpdated = maxLastUpdated;
 };
 
@@ -173,7 +178,7 @@ const getRoutines = async () => {
   // routinesQuery.sort({ lastUpdated: 0 });
   const routines = await routinesQuery.lean().exec();
   routines.forEach(routineResult => {
-    addLastUpdated(routineResult);
+    addLastUpdatedToRoutine(routineResult);
     // sort exercises by muscleGroup
     // routineResult.exercises.sort(this.sortByMuscleGroup);
     groupByMuscleGroup(routineResult);
@@ -189,7 +194,7 @@ const getRoutine = async routineId => {
     populate: { path: "series" }
   });
   const routineResult = await routineQuery.lean().exec();
-  addLastUpdated(routineResult);
+  addLastUpdatedToRoutine(routineResult);
   groupByMuscleGroup(routineResult);
   // sort exercises by muscleGroup
   // routineResult.exercises.sort(this.sortByMuscleGroup);
@@ -212,10 +217,12 @@ const newSerie = async exerciseId => {
 
 const getExercises = async query => {
   const ExerciseModel = exerciseModel.getModel();
-  const exQuery = ExerciseModel.find(query);
+  const exQuery = ExerciseModel.find(query).populate({
+    path: "series" });
   exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();
-  return exResult;
+  addLastUpdatedToExercises(exResult);
+  return sortByTarget(exResult);
 };
 
 const getExercise = async exId => {

@@ -19,6 +19,7 @@ interface ExerciseItemProps {
 class ExerciseItem extends React.Component<ExerciseItemProps> {
   render() {
     const { exercise, editExercise } = this.props;
+    // debugger;
     return (
       <Card className="exercise-card" key={exercise._id}>
         <CardImg 
@@ -35,7 +36,12 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
           </CardSubtitle>
           <CardText>
             <b>Target:</b> {exercise.target}<br/>
-            <b>Equipment:</b> {exercise.equipment}  ({exercise.multiplier})
+            <b>Equipment:</b> {exercise.equipment}  ({exercise.multiplier})<br/>
+            <b>Last Reps:</b> {exercise.lastReps} 
+            <b> Last Weight:</b> {exercise.lastWeight}<br/>
+            <b> Normalized Weight:</b> {exercise.normalizedWeight}<br/>
+            <b> Suggested:</b> <b>Reps:</b> {exercise.suggestedSerie.reps} 
+             <b> Weight:</b> {exercise.suggestedSerie.weight} 
           </CardText>
           <Button onClick={() => editExercise(exercise._id)}>Edit</Button>
         </CardBody>
