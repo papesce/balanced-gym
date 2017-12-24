@@ -9,7 +9,9 @@ const exerciseSchema = new mongoose.Schema(
     muscleGroup: { type: String, required: true },
     target: { type: String, required: true },
     series: [{ type: mongoose.Schema.Types.ObjectId, ref: "serie" }],
-    gifURL: { type: String, required: true }
+    gifURL: { type: String, required: true },
+    multiplier: { type: Number, required: true },
+    equipment: { type: String, required: true }
     // lastUpdated: Date  //last date of creation of the series
   },
   { timestamps: true }

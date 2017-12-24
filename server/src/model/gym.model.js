@@ -2,6 +2,34 @@ const routineModel = require("./routine.model");
 const exerciseModel = require("./exercise.model");
 const serieModel = require("./serie.model");
 
+const computeExtraWeight = equip => {
+  if (equip === "Barbell Long") {
+    return 6;
+  }
+  switch (equip) {
+    case "Dumbbell":
+      return 2;
+    case "Barbell Long":
+      return 6;
+    case "Barbell Short":
+      return 1;
+    default:
+      return 0;
+  }
+};
+
+const denormalizeWeight = (weight, exercise) => {
+  const multiplier = exercise.multiplier ? exercise.multiplier : 1;
+  const extraWeight = computeExtraWeight(exercise.equipment);
+  return (weight / multiplier) - extraWeight;
+};
+
+const normalizeWeight = (weight, exercise) => {
+  const multiplier = exercise.multiplier ? exercise.multiplier : 1;
+  const extraWeight = computeExtraWeight(exercise.equipment);
+  return (weight + extraWeight) * multiplier;
+};
+
 const addLastUpdated = routineResult => {
   const routine = routineResult;
   let maxLastUpdated;
@@ -12,8 +40,10 @@ const addLastUpdated = routineResult => {
       exercise.lastUpdated = exerciseResult.series[0].createdAt;
       // let newSeries = exerciseResult.series.map((serie) => {return {_id: serie._id}});
       // exerciseResult.seriesSize = newSeries.length;
-      exercise.lastReps = exerciseResult.series[0].reps;
-      exercise.lastWeight = exerciseResult.series[0].weight;
+      const bestSerie = exerciseResult.series[0];
+      exercise.lastReps = bestSerie.reps;
+      exercise.lastWeight = bestSerie.weight;
+      exercise.normalizedWeight = normalizeWeight(bestSerie.weight, exercise);
       // exerciseResult.series = newSeries;
       if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
         maxLastUpdated = exercise.lastUpdated;
@@ -22,6 +52,7 @@ const addLastUpdated = routineResult => {
       exercise.lastUpdated = exerciseResult.createdAt;
       exercise.lastReps = 0;
       exercise.lastWeight = 0;
+      exercise.normalizedWeight = 0;
     }
   });
   routine.lastUpdated = maxLastUpdated;
@@ -51,12 +82,14 @@ const sortExercises = exercises => {
 
 const computeSuggestedSerie = targetGroup => {
   let serie = {};
-  let maxserie;
+  const maxserie = { reps: 0, weight: 0 };
   targetGroup.forEach(ex => {
     if (ex.series.length > 0) {
       [serie] = ex.series;
-      if (maxserie === undefined || serie.weight > maxserie.weight) {
-        maxserie = serie;
+      const nweight = normalizeWeight(serie.weight, ex);
+      if (nweight > maxserie.weight) {
+        maxserie.weight = nweight;
+        maxserie.reps = serie.reps;
       }
     }
   });
@@ -82,7 +115,13 @@ const sortByTarget = exercises => {
       const suggestedSerie = computeSuggestedSerie(groupedExercises);
       groupedExercises.forEach(ex => {
         const exerc = ex;
-        exerc.suggestedSerie = suggestedSerie;
+        if (suggestedSerie) {
+          const denormalizedSerie = {
+            reps: suggestedSerie.reps,
+            weight: denormalizeWeight(suggestedSerie.weight, exerc)
+          };
+          exerc.suggestedSerie = denormalizedSerie;
+        }
       });
       targets.push({
         target: key,
@@ -171,17 +210,10 @@ const newSerie = async exerciseId => {
   return nSerie;
 };
 
-const getExercises = async (query) => {
+const getExercises = async query => {
   const ExerciseModel = exerciseModel.getModel();
   const exQuery = ExerciseModel.find(query);
-  exQuery
-    .select({
-      name: 1,
-      muscleGroup: 1,
-      target: 1,
-      gifURL: 1
-    })
-    .sort({ muscleGroup: 1, target: 1 });
+  exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();
   return exResult;
 };
@@ -189,12 +221,6 @@ const getExercises = async (query) => {
 const getExercise = async exId => {
   const ExerciseModel = exerciseModel.getModel();
   const exQuery = ExerciseModel.findOne({ _id: exId });
-  exQuery.select({
-    name: 1,
-    muscleGroup: 1,
-    target: 1,
-    gifURL: 1
-  });
   const exResult = await exQuery.lean().exec();
   return exResult;
 };

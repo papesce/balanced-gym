@@ -18,15 +18,6 @@ const required = value => {
   return value ? undefined : "Required";
 };
 
-// const validate = (values: Exercise): FormErrors<Exercise> => {
-//   // debugger;
-//   const result: FormErrors<Exercise> = {};
-//   if (values.name.length > 0) {
-//     result.name = "too short";
-//   }
-//   return result;
-// };
-
 class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
     // debugger;
@@ -62,6 +53,20 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           label="Gif URL"
           placeholder="Enter Gif URL"
         /> 
+         <Field
+          name="multiplier"
+          validate={[required]}
+          component={TextField}
+          label="Multiplier"
+          placeholder="Enter the multiplier"
+         /> 
+         <Field
+          name="equipment"
+          validate={[required]}
+          component={TextField}
+          label="Equipment"
+          placeholder="Enter the equipment (Dumbbell, Barbell Long, Barbell Short, None)"
+         /> 
         <Button
           color="primary"
           disabled={started || !valid}
