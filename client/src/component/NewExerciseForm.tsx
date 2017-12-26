@@ -21,8 +21,8 @@ const required = value => {
 
 class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
-    // debugger;
-    const { started, valid, buttonLabel } = this.props;
+    const { started, valid, buttonLabel, initialValues } = this.props;
+    const { gifURL = "" } = initialValues; 
     return (
       <Form>
          <Field name="routineId" component={RoutineSelect} /> 
@@ -54,6 +54,7 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           label="Gif URL"
           placeholder="Enter Gif URL"
         /> 
+         <img style={{width:"200px", height:"200px"}} src={gifURL}/>
          <Field
           name="multiplier"
           validate={[required]}

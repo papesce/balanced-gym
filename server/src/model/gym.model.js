@@ -169,35 +169,32 @@ const groupByMuscleGroup = routineResult => {
   }
 };
 
+const addExercisesToRoutine = async (routine) => {
+  const ExerciseModel = exerciseModel.getModel();
+  const exercisesQuery = ExerciseModel.find({routineId: routine._id}).populate({
+    path: "series"
+  });
+  const exercisesResult = await exercisesQuery.lean().exec();
+  routine.exercises = exercisesResult;
+  addLastUpdatedToRoutine(routine);
+  groupByMuscleGroup(routine);
+};
+
 const getRoutines = async () => {
   const RoutineModel = routineModel.getModel();
-  const routinesQuery = RoutineModel.find().populate({
-    path: "exercises",
-    populate: { path: "series" }
-  });
-  // routinesQuery.sort({ lastUpdated: 0 });
+  const routinesQuery = RoutineModel.find();
   const routines = await routinesQuery.lean().exec();
-  routines.forEach(routineResult => {
-    addLastUpdatedToRoutine(routineResult);
-    // sort exercises by muscleGroup
-    // routineResult.exercises.sort(this.sortByMuscleGroup);
-    groupByMuscleGroup(routineResult);
-  });
+  for (let routineResult of routines) {
+    await addExercisesToRoutine(routineResult);
+  };
   return routines;
 };
 
 const getRoutine = async routineId => {
-  // bug fix case of routine not found
   const RoutineModel = routineModel.getModel();
-  const routineQuery = RoutineModel.findOne({ _id: routineId }).populate({
-    path: "exercises",
-    populate: { path: "series" }
-  });
+  const routineQuery = RoutineModel.findOne({ _id: routineId });
   const routineResult = await routineQuery.lean().exec();
-  addLastUpdatedToRoutine(routineResult);
-  groupByMuscleGroup(routineResult);
-  // sort exercises by muscleGroup
-  // routineResult.exercises.sort(this.sortByMuscleGroup);
+  await addExercisesToRoutine(routineResult);
   return routineResult;
 };
 

@@ -12,7 +12,7 @@ const mongoose = require("mongoose");
 const routineSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: "exercise" }]
+    // exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: "exercise" }]
   },
   { timestamps: true }
 );

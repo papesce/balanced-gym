@@ -7,7 +7,6 @@ class RoutineSelect extends Component<
   WrappedFieldProps & GenericFieldHTMLAttributes
 > {
   render() {
-    // debugger;
     return (
       <FormGroup>
         <Label>Routine:</Label>
@@ -16,6 +15,9 @@ class RoutineSelect extends Component<
           onChange={this.props.input.onChange}
           defaultValue={this.props.input.value}
         >
+         <option value="">
+            None
+          </option>
           <option value="59ee3ddc243a5977dab96c2b">
             Chest Triceps Forearms
           </option>

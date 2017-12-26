@@ -11,7 +11,8 @@ const exerciseSchema = new mongoose.Schema(
     series: [{ type: mongoose.Schema.Types.ObjectId, ref: "serie" }],
     gifURL: { type: String, required: true },
     multiplier: { type: Number, required: true },
-    equipment: { type: String, required: true }
+    equipment: { type: String, required: true },
+    routineId: {type: mongoose.Schema.Types.ObjectId, ref: "routine" }
     // lastUpdated: Date  //last date of creation of the series
   },
   { timestamps: true }
