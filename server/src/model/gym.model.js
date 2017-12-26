@@ -171,14 +171,15 @@ const groupByMuscleGroup = routineResult => {
 };
 
 const addExercisesToRoutine = async (routine) => {
+  const newRoutine = routine;
   const ExerciseModel = exerciseModel.getModel();
-  const exercisesQuery = ExerciseModel.find({routineId: routine._id}).populate({
+  const exercisesQuery = ExerciseModel.find({ routineId: routine._id }).populate({
     path: "series"
   });
   const exercisesResult = await exercisesQuery.lean().exec();
-  routine.exercises = exercisesResult;
-  addLastUpdatedToRoutine(routine);
-  groupByMuscleGroup(routine);
+  newRoutine.exercises = exercisesResult;
+  addLastUpdatedToRoutine(newRoutine);
+  groupByMuscleGroup(newRoutine);
 };
 
 const getRoutines = async () => {
@@ -216,7 +217,8 @@ const newSerie = async exerciseId => {
 const getExercises = async query => {
   const ExerciseModel = exerciseModel.getModel();
   const exQuery = ExerciseModel.find(query).populate({
-    path: "series" });
+    path: "series"
+  });
   exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();
   addLastUpdatedToExercises(exResult);
