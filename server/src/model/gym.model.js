@@ -21,7 +21,8 @@ const computeExtraWeight = equip => {
 const denormalizeWeight = (weight, exercise) => {
   const multiplier = exercise.multiplier ? exercise.multiplier : 1;
   const extraWeight = computeExtraWeight(exercise.equipment);
-  return (weight / multiplier) - extraWeight;
+  const value = (weight / multiplier) - extraWeight;
+  return (value > 0) ? value : 0;
 };
 
 const normalizeWeight = (weight, exercise) => {
