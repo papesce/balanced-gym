@@ -9,7 +9,8 @@ import {
   State,
   MuscleGroupsResult,
   TargetsResult,
-  Filter
+  Filter,
+  ExercisesReducer
 } from "./model";
 import { routerReducer } from "react-router-redux";
 
@@ -61,16 +62,24 @@ const getExerciseReducer = handleActions<GetExerciseStatus, Exercise>(
   { loading: true } // initial State
 );
 
-const exercisesReducer = handleActions(
+const exercisesReducer: Reducer<ExercisesReducer>  = handleActions(
   {
+    [T.GET_EXERCISES_STARTED]: (
+      state: ExercisesReducer,
+      action: Action<any>
+    ): ExercisesReducer => {
+      return { data: [], loading: true };
+    },
     [T.GET_EXERCISES_SUCCEEDED]: (
-      state: Array<Exercise>,
+      state: ExercisesReducer,
       action: Action<Array<Exercise>>
-    ): Array<Exercise> => {
-      return action.payload ? action.payload : [];
+    ): ExercisesReducer => {
+      const result: ExercisesReducer = {
+          data: (action.payload ? action.payload : [])};
+      return result;
     }
   },
-  []
+  {data: []}
 );
 
 const muscleGroupReducer = handleActions(

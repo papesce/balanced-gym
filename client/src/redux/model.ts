@@ -59,10 +59,15 @@ export const DEFAULT_STATE: State = {
   }
 };
 
+export type ExercisesReducer = {
+  data: Array<Exercise>;
+  loading?: boolean;
+};
+
 export type State = {
   newExerciseStatus?: NewExerciseStatus;
   getExerciseStatus?: GetExerciseStatus;
-  exercises?: [Exercise];
+  exercises?: ExercisesReducer;
   filter: Filter;
   form?: AppForms;
 };

@@ -12,10 +12,11 @@ interface ExerciseListProps {
 
 class ExerciseList extends React.Component<ExerciseListProps> {
   render() {
+    
     const { exercises, editExercise } = this.props;
-    return (
+    return ( 
       <div>
-        {/* <CardColumns> */}
+        {/* {(exercises.length === 0) && <div>loading */}
         <StackGrid
           className="app-stack-grid"
           monitorImagesLoaded={true}

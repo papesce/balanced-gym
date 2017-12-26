@@ -1,12 +1,12 @@
 import * as React from "react";
 import { ExerciseList } from "../component/ExerciseList";
 import { connect, Dispatch } from "react-redux";
-import { Exercise, State, ExerciseQuery } from "../redux/model";
+import { ExercisesReducer, State, ExerciseQuery } from "../redux/model";
 import { getExercisesStarted } from "../redux/actions";
 import { push } from "react-router-redux";
 
 interface ExerciseListRCProps {
-  exercises?: [Exercise];
+  exercises?: ExercisesReducer;
   exerciseQuery?: ExerciseQuery;
   getExercisesStarted?: (exerciseQuery: ExerciseQuery) => void;
   editExercise?: (exId: String) => void;
@@ -20,13 +20,13 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
     }
   }
   render() {
-    const { exercises = [], editExercise = x => x } = this.props;
-    return <ExerciseList exercises={exercises} editExercise={editExercise} />;
+    const { exercises = {data: [], loading: true}, editExercise = x => x } = this.props;
+    if (exercises.loading) { return (<div style={{paddingLeft: "40px"}}>loading...</div>); }
+    return <ExerciseList exercises={exercises.data} editExercise={editExercise} />;
   }
 }
 
 const mapStateToProps = (state: State): ExerciseListRCProps => {
-  // debugger;
   const exerciseQuery: ExerciseQuery = {};
   if (state.filter.selectedMuscleGroup !== "") {
     exerciseQuery.muscleGroup = state.filter.selectedMuscleGroup;
