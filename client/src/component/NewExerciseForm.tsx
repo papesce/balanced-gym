@@ -6,6 +6,7 @@ import { RoutineSelect } from "./formitems/RoutineSelect";
 import { TextField } from "./formitems/TextField";
 import { Exercise } from "../redux/model";
 import { EquipmentSelect } from "./formitems/EquipmentSelect";
+import "./NewExerciseForm.css";
 
 export interface NewExerciseProps {
   handleClick: () => void;
@@ -24,7 +25,7 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
     const { started, valid, buttonLabel, initialValues } = this.props;
     const { gifURL = "" } = initialValues; 
     return (
-      <Form>
+      <Form className="exercise-form">
          <Field name="routineId" component={RoutineSelect} /> 
         <Field
           name="name"
@@ -54,7 +55,7 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           label="Gif URL"
           placeholder="Enter Gif URL"
         /> 
-         <img style={{width:"200px", height:"200px"}} src={gifURL}/>
+         <img style={{ width: "200px" }} src={gifURL}/>
          <Field
           name="multiplier"
           validate={[required]}

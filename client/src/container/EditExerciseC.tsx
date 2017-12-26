@@ -54,17 +54,17 @@ export class NewExerciseRC extends React.Component<EditExerciseRCProps> {
     }
     if (getExerciseStatus.exercise) {
       const exercise: Exercise = getExerciseStatus.exercise;
-      return (<div>
-      <NewExerciseForm
-        handleClick={this.handleClick}
-        started={started}
-        buttonLabel="Save"
-        initialValues={exercise}
-      />
-      </div>);
-      
-    } 
-    return (<div>Error !</div>); 
+      return (
+        <NewExerciseForm
+          handleClick={this.handleClick}
+          started={started}
+          buttonLabel="Save"
+          initialValues={exercise}
+        />
+      );
+
+    }
+    return (<div>Error !</div>);
   }
 }
 
@@ -73,7 +73,7 @@ const mapStateToProps = (
   ownProps: EditExerciseRCProps
 ): StateToProps => {
   // debugger;
-  return {  
+  return {
     getExerciseStatus: state.getExerciseStatus,
     newExerciseForm: state.form ? state.form.newExerciseForm : state.form
   };
