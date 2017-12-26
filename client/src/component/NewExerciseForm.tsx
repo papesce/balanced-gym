@@ -57,13 +57,6 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
         /> 
          <img style={{ width: "200px" }} src={gifURL}/>
          <Field
-          name="multiplier"
-          validate={[required]}
-          component={TextField}
-          label="Multiplier"
-          placeholder="Enter the multiplier"
-         /> 
-         <Field
           name="equipment"
           component={EquipmentSelect}
          /> 

@@ -15,7 +15,6 @@ export interface Exercise {
   muscleGroup: string;
   target: string;
   gifURL: string;
-  multiplier?: number;
   equipment?: string;
   lastReps?: string;
   lastWeight?: string;
@@ -66,4 +65,9 @@ export type State = {
   exercises?: [Exercise];
   filter: Filter;
   form?: AppForms;
+};
+
+export type Routine = {
+  _id: string;
+  name: string;
 };

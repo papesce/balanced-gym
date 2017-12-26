@@ -16,17 +16,20 @@ class EquipmentSelect extends Component<
           onChange={this.props.input.onChange}
           defaultValue={this.props.input.value}
         >
+        <option value="">
+             None
+          </option>
+          <option value="Dumbbell">
+            1 Dumbbell
+          </option>
+          <option value="Dumbbells">
+            2 Dumbbells
+          </option>
           <option value="Barbell Long">
             Barbell Long
           </option>
-          <option value="Dumbbell">
-            Dumbbell
-          </option>
           <option value="Barbell Short">
             Barbell Short
-          </option>
-          <option value="">
-             None
           </option>
         </Input>
       </FormGroup>

@@ -3,32 +3,32 @@ const exerciseModel = require("./exercise.model");
 const serieModel = require("./serie.model");
 
 const computeExtraWeight = equip => {
-  if (equip === "Barbell Long") {
-    return 6;
-  }
+  // if (equip === "Barbell Long") {
+  //  return 6;
+  // }
   switch (equip) {
+    case "Dumbbells":
+      return { extraWeight: 4, multiplier: 2 };
     case "Dumbbell":
-      return 2;
+      return { extraWeight: 2, multiplier: 1 };
     case "Barbell Long":
-      return 6;
+      return { extraWeight: 6, multiplier: 1 };
     case "Barbell Short":
-      return 1;
+      return { extraWeight: 1, multiplier: 1 };
     default:
-      return 0;
+      return { extraWeight: 0, multiplier: 1 };
   }
 };
 
 const denormalizeWeight = (weight, exercise) => {
-  const multiplier = exercise.multiplier ? exercise.multiplier : 1;
-  const extraWeight = computeExtraWeight(exercise.equipment);
-  const value = (weight / multiplier) - extraWeight;
+  const { extraWeight, multiplier } = computeExtraWeight(exercise.equipment);
+  const value = (weight - extraWeight) / multiplier;
   return (value > 0) ? value : 0;
 };
 
 const normalizeWeight = (weight, exercise) => {
-  const multiplier = exercise.multiplier ? exercise.multiplier : 1;
-  const extraWeight = computeExtraWeight(exercise.equipment);
-  return (weight + extraWeight) * multiplier;
+  const { extraWeight, multiplier } = computeExtraWeight(exercise.equipment);
+  return (weight * multiplier) + extraWeight;
 };
 
 const addLastUpdatedToExercises = exercises => {
