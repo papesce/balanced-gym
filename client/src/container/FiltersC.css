@@ -1,7 +1,8 @@
 .row.app-row {
     margin-left: 0px;
+    padding-bottom: 20px;
 }
 
 .filter-button {
-    margin-top: 20px;
+    margin-top: 10px;
 }

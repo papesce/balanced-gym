@@ -140,12 +140,13 @@ const sortByTarget = exercises => {
     compareExercises(tg1.exercises[0], tg2.exercises[0])
   );
   // flatMap
-  let flatMap = [];
-  targets.forEach(tg => {
-    const exs = tg.exercises;
-    flatMap = flatMap.concat(exs);
-  });
-  return flatMap;
+  // let flatMap = [];
+  // targets.forEach(tg => {
+  //  const exs = tg.exercises;
+  //  flatMap = flatMap.concat(exs);
+  // });
+  // return flatMap;
+  return targets;
 };
 
 const groupByMuscleGroup = routineResult => {
@@ -164,7 +165,7 @@ const groupByMuscleGroup = routineResult => {
     if (key) {
       result.groupedExercises.push({
         muscleGroup: key,
-        exercises: sortByTarget(newExercises[key])
+        targets: sortByTarget(newExercises[key])
       });
     }
   }

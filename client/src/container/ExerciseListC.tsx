@@ -1,12 +1,12 @@
 import * as React from "react";
 import { ExerciseList } from "../component/ExerciseList";
 import { connect, Dispatch } from "react-redux";
-import { ExercisesReducer, State, ExerciseQuery } from "../redux/model";
+import { State, ExerciseQuery, GroupedExercises } from "../redux/model";
 import { getExercisesStarted } from "../redux/actions";
 import { push } from "react-router-redux";
 
 interface ExerciseListRCProps {
-  exercises?: ExercisesReducer;
+  groupedExercises?: GroupedExercises;
   exerciseQuery?: ExerciseQuery;
   getExercisesStarted?: (exerciseQuery: ExerciseQuery) => void;
   editExercise?: (exId: String) => void;
@@ -20,9 +20,15 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
     }
   }
   render() {
-    const { exercises = {data: [], loading: true}, editExercise = x => x } = this.props;
-    if (exercises.loading) { return (<div style={{paddingLeft: "40px"}}>loading...</div>); }
-    return <ExerciseList exercises={exercises.data} editExercise={editExercise} />;
+    // debugger;
+    const { groupedExercises = {}, editExercise = x => x } = this.props;
+    if (groupedExercises.loading) {
+      return (<div style={{ paddingLeft: "40px" }}>loading...</div>);
+    }
+    if (groupedExercises.targets) {
+      return <ExerciseList targets={groupedExercises.targets} editExercise={editExercise} />;
+    }
+    return <div />;
   }
 }
 
@@ -33,9 +39,10 @@ const mapStateToProps = (state: State): ExerciseListRCProps => {
   }
   if (state.filter.selectedTarget !== "") {
     exerciseQuery.target = state.filter.selectedTarget;
-  }  
+  }
+  // debugger;
   return {
-    exercises: state.exercises,
+    groupedExercises: state.groupedExercises,
     exerciseQuery: exerciseQuery
   };
 };

@@ -59,15 +59,20 @@ export const DEFAULT_STATE: State = {
   }
 };
 
-export type ExercisesReducer = {
-  data: Array<Exercise>;
+export type Targets = {
+  target: string;
+  exercises: Array<Exercise>;
+};
+
+export type GroupedExercises = {
+  targets?: Array<Targets>; 
   loading?: boolean;
 };
 
 export type State = {
   newExerciseStatus?: NewExerciseStatus;
   getExerciseStatus?: GetExerciseStatus;
-  exercises?: ExercisesReducer;
+  groupedExercises?: GroupedExercises;
   filter: Filter;
   form?: AppForms;
 };

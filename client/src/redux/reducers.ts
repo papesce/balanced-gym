@@ -10,7 +10,8 @@ import {
   MuscleGroupsResult,
   TargetsResult,
   Filter,
-  ExercisesReducer
+  GroupedExercises,
+  Targets
 } from "./model";
 import { routerReducer } from "react-router-redux";
 
@@ -62,24 +63,23 @@ const getExerciseReducer = handleActions<GetExerciseStatus, Exercise>(
   { loading: true } // initial State
 );
 
-const exercisesReducer: Reducer<ExercisesReducer>  = handleActions(
+const exercisesReducer: Reducer<GroupedExercises>  = handleActions(
   {
     [T.GET_EXERCISES_STARTED]: (
-      state: ExercisesReducer,
-      action: Action<any>
-    ): ExercisesReducer => {
-      return { data: [], loading: true };
+      state: GroupedExercises,
+      action: Action<Array<Targets>>
+    ): GroupedExercises => {
+      return { loading: true };
     },
     [T.GET_EXERCISES_SUCCEEDED]: (
-      state: ExercisesReducer,
-      action: Action<Array<Exercise>>
-    ): ExercisesReducer => {
-      const result: ExercisesReducer = {
-          data: (action.payload ? action.payload : [])};
-      return result;
+      state: GroupedExercises,
+      action: Action<Array<Targets>>
+    ): GroupedExercises => {
+      // debugger;
+      return {targets: action.payload}; 
     }
   },
-  {data: []}
+  {}
 );
 
 const muscleGroupReducer = handleActions(
@@ -134,7 +134,7 @@ const filterReducer: Reducer<Filter> = combineReducers({
 export const rootReducer: Reducer<State> = combineReducers({
   newExerciseStatus: newExerciseReducer,
   getExerciseStatus: getExerciseReducer,
-  exercises: exercisesReducer,
+  groupedExercises: exercisesReducer,
   form: formReducer,
   filter: filterReducer,
   router: routerReducer
