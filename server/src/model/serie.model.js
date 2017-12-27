@@ -8,7 +8,10 @@ const serieSchema = new mongoose.Schema(
     reps: Number,
     weight: Number
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    usePushEach: true
+  }
 );
 
 const serieModel = mongoose.model("serie", serieSchema);

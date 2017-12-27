@@ -20,7 +20,7 @@ const store: Store<State> = configureStore(persistedState);
 
 store.subscribe(() => {
   const state: State = store.getState();
-  const storedState: State = {filter: state.filter};
+  const storedState: State = { filter: state.filter };
   localStorage.setItem(PERSISTED_STATE_KEY, JSON.stringify(storedState));
 });
 

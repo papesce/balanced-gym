@@ -14,7 +14,10 @@ const routineSchema = new mongoose.Schema(
     name: { type: String, required: true },
     // exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: "exercise" }]
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    usePushEach: true
+  }
 );
 
 const routineModel = mongoose.model("routine", routineSchema);

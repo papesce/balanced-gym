@@ -49,6 +49,8 @@ npm install --save history
 
 npm install --save url-query-builder
 
+npm install --save react-router-scroll
+
 ## Examples 
 
 https://github.com/redux-observable/redux-observable/blob/master/examples/redux-observable-shopping-cart/js/main.js

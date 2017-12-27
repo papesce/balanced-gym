@@ -209,8 +209,8 @@ const newSerie = async exerciseId => {
   ex.series.push(nSerie);
   ex.lastUpdated = nSerie.createdAt;
   // temporary hack"
-  if (!ex.target) ex.target = "to complete";
-  if (!ex.gifURL) ex.gifURL = "http://www.exrx.net/";
+  // if (!ex.target) ex.target = "to complete";
+  // if (!ex.gifURL) ex.gifURL = "http://www.exrx.net/";
   await ex.save();
   return nSerie;
 };

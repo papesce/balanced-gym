@@ -14,7 +14,10 @@ const exerciseSchema = new mongoose.Schema(
     routineId: { type: mongoose.Schema.Types.ObjectId, ref: "routine" }
     // lastUpdated: Date  //last date of creation of the series
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    usePushEach: true
+  }
 );
 
 const exerciseModel = mongoose.model("exercise", exerciseSchema);

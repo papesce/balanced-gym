@@ -12,6 +12,11 @@ interface ExerciseListProps {
 }
 
 class ExerciseList extends React.Component<ExerciseListProps> {
+  componentDidMount() {
+    // setTimeout(() => {
+    //  window.scrollTo(100, 2100);
+    // },         5000);
+  }
   render() {
     // debugger;
     const { targets, editExercise } = this.props;
