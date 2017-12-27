@@ -12,6 +12,11 @@ const api = app => {
     res.send(routines);
   });
 
+  app.get("/muscleGroup", async (req, res) => {
+    const muscleGroup = await gym.getMuscleGroup(req.query);
+    res.send(muscleGroup);
+  });
+
   app.get("/exercise", async (req, res) => {
     const exercises = await gym.getExercises(req.query);
     res.send(exercises);

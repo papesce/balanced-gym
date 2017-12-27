@@ -131,7 +131,9 @@ const sortByTarget = exercises => {
       });
       targets.push({
         target: key,
-        exercises: sortExercises(groupedExercises)
+        exercises: sortExercises(groupedExercises),
+        // lastUpdated: addLastUpdatedToExercises(groupedExercises);
+        // routine.lastUpdated = maxLastUpdated;
       });
     }
   }
@@ -149,23 +151,48 @@ const sortByTarget = exercises => {
   return targets;
 };
 
-const groupByMuscleGroup = routineResult => {
+const getLasUpdatedFromExercises = exercises => {
+  let maxLastUpdated;
+  exercises.forEach(exerciseResult => {
+    if (!maxLastUpdated || exerciseResult.lastUpdated > maxLastUpdated) {
+      maxLastUpdated = exerciseResult.lastUpdated;
+    }
+  });
+  return maxLastUpdated;
+};
+
+const groupByMuscleGroupExercises = exercises => {
   const newExercises = {};
-  const result = routineResult;
-  routineResult.exercises.forEach(exercise => {
+  exercises.forEach(exercise => {
     const { muscleGroup } = exercise;
     if (!newExercises[muscleGroup]) {
       newExercises[muscleGroup] = [];
     }
     newExercises[muscleGroup].push(exercise);
   });
+  return newExercises;
+};
+
+const groupByMuscleGroup = routineResult => {
+//  const newExercises = {};
+  const result = routineResult;
+  const newExercises = groupByMuscleGroupExercises(routineResult.exercises);
+  // routineResult.exercises.forEach(exercise => {
+  //  const { muscleGroup } = exercise;
+  //  if (!newExercises[muscleGroup]) {
+  //    newExercises[muscleGroup] = [];
+  //  }
+  //  newExercises[muscleGroup].push(exercise);
+  // });
   result.exercises = [];
   result.groupedExercises = [];
   for (const key in newExercises) {
     if (key) {
+      const exercises = newExercises[key];
       result.groupedExercises.push({
         muscleGroup: key,
-        targets: sortByTarget(newExercises[key])
+        targets: sortByTarget(exercises),
+        lastUpdated: getLasUpdatedFromExercises(exercises)
       });
     }
   }
@@ -187,9 +214,11 @@ const getRoutines = async () => {
   const RoutineModel = routineModel.getModel();
   const routinesQuery = RoutineModel.find();
   const routines = await routinesQuery.lean().exec();
-  for (let routineResult of routines) {
-    await addExercisesToRoutine(routineResult);
-  };
+  const results = [];
+  for (const routineResult of routines) {
+    results.push(addExercisesToRoutine(routineResult));
+  }
+  await Promise.all(results);
   return routines;
 };
 
@@ -201,6 +230,21 @@ const getRoutine = async routineId => {
   return routineResult;
 };
 
+const getMuscleGroup = async query => {
+  const ExerciseModel = exerciseModel.getModel();
+  const exercisesQuery = ExerciseModel.find(query).populate({
+    path: "series"
+  });
+  const exercisesResult = await exercisesQuery.lean().exec();
+  addLastUpdatedToExercises(exercisesResult);
+  const muscleGroup = {
+    muscleGroup: query.muscleGroup,
+    targets: sortByTarget(exercisesResult),
+    lastUpdated: getLasUpdatedFromExercises(exercisesResult)
+  };
+  return muscleGroup;
+};
+
 const newSerie = async exerciseId => {
   const SerieModel = serieModel.getModel();
   const nSerie = await new SerieModel({ reps: 10, weight: 1 }).save();
@@ -209,8 +253,9 @@ const newSerie = async exerciseId => {
   ex.series.push(nSerie);
   ex.lastUpdated = nSerie.createdAt;
   // temporary hack"
-  // if (!ex.target) ex.target = "to complete";
-  // if (!ex.gifURL) ex.gifURL = "http://www.exrx.net/";
+  if (!ex.target) ex.target = "";
+  if (!ex.gifURL) ex.gifURL = "";
+  if (!ex.equipment) ex.equipment = "";
   await ex.save();
   return nSerie;
 };
@@ -330,5 +375,6 @@ module.exports = {
   newExercise,
   getMuscleGroups,
   getTargets,
-  getFilters
+  getFilters,
+  getMuscleGroup
 };
