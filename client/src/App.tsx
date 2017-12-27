@@ -12,9 +12,18 @@ import { Store } from "redux";
 
 const PERSISTED_STATE_KEY = "persistedState";
 const persistedStateSt = localStorage.getItem(PERSISTED_STATE_KEY);
-const persistedState: State = persistedStateSt
-  ? JSON.parse(persistedStateSt)
-  : DEFAULT_STATE;
+let persistedState: State;
+if (persistedStateSt) {
+  const storedState: State = JSON.parse(persistedStateSt);
+  persistedState = {
+    filter: {
+      selectedTarget: storedState.filter.selectedTarget,
+      selectedMuscleGroup: storedState.filter.selectedMuscleGroup,
+    }
+  };
+} else { 
+  persistedState = DEFAULT_STATE;
+}
 
 const store: Store<State> = configureStore(persistedState);
 

@@ -20,7 +20,6 @@ interface ExerciseItemProps {
 class ExerciseItem extends React.Component<ExerciseItemProps> {
   render() {
     const { exercise, editExercise } = this.props;
-    // debugger;
     return (
       <Card className="exercise-card" key={exercise._id}>
         <CardImg 

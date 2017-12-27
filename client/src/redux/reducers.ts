@@ -75,7 +75,6 @@ const exercisesReducer: Reducer<GroupedExercises>  = handleActions(
       state: GroupedExercises,
       action: Action<Array<Targets>>
     ): GroupedExercises => {
-      // debugger;
       return {targets: action.payload}; 
     }
   },

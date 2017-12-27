@@ -12,7 +12,6 @@ type FieldProps = CustomProps & WrappedFieldProps & GenericFieldHTMLAttributes;
 
 class TextField extends Component<FieldProps> {
   render() {
-    // debugger;
     const { label } = this.props;
     const { error } = this.props.meta;
     const showError = error;

@@ -18,7 +18,7 @@ import { Exercise } from "./model";
 const NEW_EXERCISE_URL: string = "/newExercise";
 const GET_EXERCISES_URL: string = "/exercise";
 const GET_EXERCISE_URL: string = "/exercise";
-const GET_MUSCLE_GROUPS_URL: string = "/muscleGroup";
+const GET_MUSCLE_GROUPS_URL: string = "/muscleGroups";
 const GET_TARGETS_URL: string = "/target";
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
@@ -30,7 +30,6 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
       });
     }),
     map(response => {
-      // debugger;
       const newExercise = {
         _id: "",
         routineId: "",
@@ -47,7 +46,6 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
 const getExercises = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
     mergeMap(action => {
-      // debugger;
       let QUERY_URL = GET_EXERCISES_URL;
       if (action.payload) {
         QUERY_URL = new URLQueryBuilder(
@@ -69,7 +67,6 @@ const getExercises = (action$: ActionsObservable<Action<any>>) => {
 const getExercise = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_EXERCISE_STARTED).pipe(
     mergeMap(action => {
-      // debugger;
       const exId = action.payload ? action.payload : "";
       return ajax.get(`${GET_EXERCISE_URL}/${exId}`, {
         "Content-Type": "application/json"
@@ -85,14 +82,12 @@ const getExercise = (action$: ActionsObservable<Action<any>>) => {
 const editExercise = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.EDIT_EXERCISE_STARTED).pipe(
     mergeMap(action => {
-      // debugger;
       const exId = action.payload ? action.payload._id : "";
       return ajax.patch(`${GET_EXERCISE_URL}/${exId}`, action.payload, {
         "Content-Type": "application/json"
       });
     }),
     map(resp => {
-      // debugger;
       const exercise = resp.response;
       return getExerciseSucceeded(exercise);
     })
@@ -102,14 +97,12 @@ const editExercise = (action$: ActionsObservable<Action<any>>) => {
 const getMuscleGroups = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_MUSCLE_GROUPS_STARTED).pipe(
     mergeMap(action => {
-      // debugger;
       let QUERY_URL = GET_MUSCLE_GROUPS_URL;
       return ajax.get(`${QUERY_URL}`, {
         "Content-Type": "application/json"
       });
     }),
     map(resp => {
-      // debugger;
       const muscleGroups = resp.response;
       return getMuscleGroupsSucceeded(muscleGroups);
    })
@@ -119,14 +112,12 @@ const getMuscleGroups = (action$: ActionsObservable<Action<any>>) => {
 const getTargets = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_TARGETS_STARTED).pipe(
     mergeMap(action => {
-      // debugger;
       let QUERY_URL = GET_TARGETS_URL;
       return ajax.get(`${QUERY_URL}`, {
         "Content-Type": "application/json"
       });
     }),
     map(resp => {
-      // debugger;
       const targets = resp.response;
       return getTargetsSucceeded(targets);
    })

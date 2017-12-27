@@ -36,7 +36,6 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
     }
   }
   render() {
-    debugger;
     const { newExerciseStatus } = this.props;
     const started: boolean = newExerciseStatus
       ? newExerciseStatus.started === true
@@ -53,7 +52,6 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
 }
 
 const mapStateToProps = (state: State): StateToProps => {
-  // debugger;
   return {
     newExerciseStatus: state.newExerciseStatus,
     newExerciseForm: state.form ? state.form.newExerciseForm : undefined

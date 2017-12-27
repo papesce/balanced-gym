@@ -1,10 +1,7 @@
 import * as React from "react";
-// import { CardColumns } from "reactstrap";
-import { ExerciseItem } from "./ExerciseItem";
 import { Targets } from "../redux/model";
-import StackGrid from "react-stack-grid";
 import "./ExerciseList.css";
-import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { ExerciseCollapse } from "./ExerciseCollapse";
 
 interface ExerciseListProps {
   targets: Array<Targets>;
@@ -18,30 +15,15 @@ class ExerciseList extends React.Component<ExerciseListProps> {
     // },         5000);
   }
   render() {
-    // debugger;
     const { targets, editExercise } = this.props;
     return (
       <div>
-        {targets.map(target => (
-          <div>
-            <Breadcrumb>
-              <BreadcrumbItem active={true}>{target.target}</BreadcrumbItem>
-            </Breadcrumb>
-            <StackGrid
-              className="app-stack-grid"
-              monitorImagesLoaded={true}
-              columnWidth={250}
-            >
-              {target && target.exercises && target.exercises.map(exercise => (
-                <ExerciseItem
-                  exercise={exercise}
-                  key={exercise._id}
-                  editExercise={editExercise}
-                />
-              ))}
-            </StackGrid>
-          </div>
-        )
+        {targets.map((target, index) =>
+          <ExerciseCollapse
+            key={index}
+            target={target}
+            editExercise={editExercise}
+          />
         )
         }
       </div>

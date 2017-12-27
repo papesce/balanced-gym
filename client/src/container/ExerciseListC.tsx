@@ -15,12 +15,10 @@ interface ExerciseListRCProps {
 class ExerciseListRC extends React.Component<ExerciseListRCProps> {
   componentDidMount() {
     if (this.props.getExercisesStarted && this.props.exerciseQuery) {
-      // debugger;
       this.props.getExercisesStarted(this.props.exerciseQuery);
     }
   }
   render() {
-    // debugger;
     const { groupedExercises = {}, editExercise = x => x } = this.props;
     if (groupedExercises.loading) {
       return (<div style={{ paddingLeft: "40px" }}>loading...</div>);
@@ -40,7 +38,6 @@ const mapStateToProps = (state: State): ExerciseListRCProps => {
   if (state.filter.selectedTarget !== "") {
     exerciseQuery.target = state.filter.selectedTarget;
   }
-  // debugger;
   return {
     groupedExercises: state.groupedExercises,
     exerciseQuery: exerciseQuery

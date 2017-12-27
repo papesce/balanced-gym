@@ -15,7 +15,6 @@ class TargetForm extends Component<TargetFormProps> {
     this.onChange = this.onChange.bind(this);
   }
   onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // debugger;
     this.props.handleChange(event.target.value);
   }
   render() {

@@ -7,7 +7,6 @@ class EquipmentSelect extends Component<
   WrappedFieldProps & GenericFieldHTMLAttributes
 > {
   render() {
-    // debugger;
     return (
       <FormGroup>
         <Label>Equipment:</Label>

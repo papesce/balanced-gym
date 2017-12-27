@@ -45,7 +45,6 @@ export class NewExerciseRC extends React.Component<EditExerciseRCProps> {
     }
   }
   render() {
-    // debugger;
     const { getExerciseStatus = {} } = this.props;
     const loading: boolean = getExerciseStatus.loading === true;
     const started: boolean = getExerciseStatus.started === true;
@@ -72,7 +71,6 @@ const mapStateToProps = (
   state: State,
   ownProps: EditExerciseRCProps
 ): StateToProps => {
-  // debugger;
   return {
     getExerciseStatus: state.getExerciseStatus,
     newExerciseForm: state.form ? state.form.newExerciseForm : state.form

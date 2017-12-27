@@ -52,7 +52,7 @@ const api = app => {
     res.send(serie);
   });
 
-  app.get("/muscleGroup", async (req, res) => {
+  app.get("/muscleGroups", async (req, res) => {
     const muscleGroups = await gym.getMuscleGroups();
     res.send(muscleGroups);
   });
