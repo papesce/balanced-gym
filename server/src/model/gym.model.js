@@ -49,7 +49,7 @@ const addLastUpdatedToExercises = exercises => {
         maxLastUpdated = exercise.lastUpdated;
       }
     } else {
-      exercise.lastUpdated = exerciseResult.createdAt;
+      // exercise.lastUpdated = exerciseResult.createdAt;
       exercise.lastReps = 0;
       exercise.lastWeight = 0;
       exercise.normalizedWeight = 0;
