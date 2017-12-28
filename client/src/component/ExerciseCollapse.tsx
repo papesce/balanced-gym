@@ -20,10 +20,17 @@ class ExerciseCollapse extends React.Component<ExerciseCollapseProps, ExerciseCo
         super(props);
         this.state = { open: false };
     }
+    componentWillMount() {
+        const openSt = localStorage.getItem(this.props.target.target);
+        this.setState({open: JSON.parse(openSt ? openSt : "false") });
+    }
     componentDidMount() {
         // setTimeout(() => {
         //  window.scrollTo(100, 2100);
         // },         5000);
+    }
+    componentWillUnmount() {
+        localStorage.setItem(this.props.target.target, JSON.stringify(this.state.open));
     }
     render() {
         const { target, editExercise } = this.props;

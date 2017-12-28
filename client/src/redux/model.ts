@@ -67,6 +67,7 @@ export type Targets = {
 export type GroupedExercises = {
   targets?: Array<Targets>; 
   loading?: boolean;
+  targetOpen?: Set<String>;
 };
 
 export type State = {
