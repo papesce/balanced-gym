@@ -30,6 +30,9 @@ class EquipmentSelect extends Component<
           <option value="Barbell Short">
             Barbell Short
           </option>
+          <option value="TRX">
+            TRX
+          </option>
         </Input>
       </FormGroup>
     );
