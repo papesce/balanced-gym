@@ -8,13 +8,13 @@ const computeExtraWeight = equip => {
   // }
   switch (equip) {
     case "Dumbbells":
-      return { extraWeight: 4, multiplier: 2 };
+      return { extraWeight: 3.6, multiplier: 2 };
     case "Dumbbell":
-      return { extraWeight: 2, multiplier: 1 };
+      return { extraWeight: 1.8, multiplier: 1 };
     case "Barbell Long":
-      return { extraWeight: 6, multiplier: 1 };
+      return { extraWeight: 7.8, multiplier: 1 };
     case "Barbell Short":
-      return { extraWeight: 1, multiplier: 1 };
+      return { extraWeight: 1.3, multiplier: 1 };
     default:
       return { extraWeight: 0, multiplier: 1 };
   }
