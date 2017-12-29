@@ -55,6 +55,12 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           label="Gif URL"
           placeholder="Enter Gif URL"
         /> 
+         <Field
+          name="muscleURL"
+          component={TextField}
+          label="Muscle URL"
+          placeholder="Enter Muscle URL"
+         /> 
          <img style={{ width: "200px" }} src={gifURL}/>
          <Field
           name="equipment"

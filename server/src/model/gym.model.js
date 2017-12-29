@@ -320,17 +320,20 @@ const getRoutineById = async routineId => {
 // };
 
 const newExercise = async (routineId, exercise) => {
-  const routine = await getRoutineById(routineId);
+  // const routine = await getRoutineById(routineId);
   const ExerciseModel = exerciseModel.getModel();
-  const exe = await new ExerciseModel({
+  await new ExerciseModel({
     name: exercise.name,
     series: [],
     muscleGroup: exercise.muscleGroup,
     target: exercise.target,
-    gifURL: exercise.gifURL
+    gifURL: exercise.gifURL,
+    equipment: exercise.equipment,
+    muscleURL: exercise.muscleURL,
+    routineId: exercise.routineId
   }).save();
-  routine.exercises.push(exe._id);
-  await routine.save();
+  // routine.exercises.push(exe._id);
+  // await routine.save();
 };
 
 const getMuscleGroups = async () => {
