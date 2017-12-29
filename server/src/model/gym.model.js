@@ -330,6 +330,7 @@ const newExercise = async (routineId, exercise) => {
     gifURL: exercise.gifURL,
     equipment: exercise.equipment,
     muscleURL: exercise.muscleURL,
+    synergists: exercise.synergists,
     routineId: exercise.routineId
   }).save();
   // routine.exercises.push(exe._id);
