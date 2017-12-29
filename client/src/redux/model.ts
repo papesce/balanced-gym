@@ -15,6 +15,7 @@ export interface Exercise {
   muscleGroup: string;
   target: string;
   gifURL: string;
+  muscleURL?: string;
   equipment?: string;
   lastReps?: string;
   lastWeight?: string;

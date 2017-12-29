@@ -23,7 +23,7 @@ const required = value => {
 class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
     const { started, valid, buttonLabel, initialValues } = this.props;
-    const { gifURL = "" } = initialValues; 
+    const { gifURL = "" , muscleURL = ""} = initialValues; 
     return (
       <Form className="exercise-form">
          <Field name="routineId" component={RoutineSelect} /> 
@@ -55,13 +55,15 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           label="Gif URL"
           placeholder="Enter Gif URL"
         /> 
+         
+         <img style={{ width: "200px" }} src={gifURL}/>
          <Field
           name="muscleURL"
           component={TextField}
           label="Muscle URL"
           placeholder="Enter Muscle URL"
          /> 
-         <img style={{ width: "200px" }} src={gifURL}/>
+          <img style={{ width: "200px" }} src={muscleURL}/>
          <Field
           name="equipment"
           component={EquipmentSelect}
