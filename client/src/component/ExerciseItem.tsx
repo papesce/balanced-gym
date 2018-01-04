@@ -17,7 +17,8 @@ interface ExerciseItemProps {
   editExercise: (exId: string) => void;
 }
 
-class ExerciseItem extends React.Component<ExerciseItemProps> {
+const formatWeight = (weight) => Math.round(weight * 100) / 100;
+class ExerciseItem extends React.Component<ExerciseItemProps> {  
   render() {
     const { exercise, editExercise } = this.props;
     return (
@@ -41,7 +42,7 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
             <b> Last Weight:</b> {exercise.lastWeight}<br/>
             {/* <b> Normalized Weight:</b> {exercise.normalizedWeight}<br/> */}
             <b> Suggested:</b> <b>Reps:</b> {exercise.suggestedSerie.reps} 
-            <b> Weight:</b> {exercise.suggestedSerie.weight}
+            <b> Weight:</b> {formatWeight(exercise.suggestedSerie.weight)}
             <b> Routine:</b> {getRoutine(exercise.routineId)}
           </CardText>
           <Button onClick={() => editExercise(exercise._id)}>Edit</Button>
