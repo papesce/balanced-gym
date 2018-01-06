@@ -26,7 +26,7 @@ const getLastUpdated = (exercise) => {
      const date1 = new Date();
      const date2 = new Date(exercise.lastUpdated);
      const diffDays = date2.getDate() - date1.getDate(); 
-     return `${diffDays} days` ;
+     return `${diffDays} days ` ;
    }
    return "";
 };
