@@ -1,3 +1,4 @@
+// @flow
 import { combineReducers, Reducer } from "redux";
 import * as T from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
@@ -15,7 +16,7 @@ import {
 } from "./model";
 import { routerReducer } from "react-router-redux";
 
-const newExerciseReducer = handleActions<NewExerciseStatus, Exercise>(
+const newExerciseReducer = handleActions(
   {
     [T.NEW_EXERCISE_STARTED]: (
       state: NewExerciseStatus,
@@ -33,7 +34,7 @@ const newExerciseReducer = handleActions<NewExerciseStatus, Exercise>(
   {} // initial State
 );
 
-const getExerciseReducer = handleActions<GetExerciseStatus, Exercise>(
+const getExerciseReducer = handleActions/*<GetExerciseStatus, Exercise>*/(
   {
     [T.GET_EXERCISE_STARTED]: (
       state: GetExerciseStatus,

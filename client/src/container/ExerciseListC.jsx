@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch: Dispatch<State>): ExerciseListRCProps => {
   };
 };
 
-const ExerciseListC = connect<ExerciseListRCProps>(
+const ExerciseListC = connect/*<ExerciseListRCProps>*/(
   mapStateToProps,
   mapDispatchToProps
 )(ExerciseListRC);

@@ -1,14 +1,8 @@
-export type NewExerciseStatus = {
+interface NewExerciseStatus {
   started?: boolean;
-};
+}
 
-export type GetExerciseStatus = {
-  loading?: boolean;
-  exercise?: Exercise;
-  started?: boolean;
-};
-
-export interface Exercise {
+interface Exercise {
   routineId: string;
   _id: string;
   name: string;
@@ -24,63 +18,73 @@ export interface Exercise {
   suggestedSerie?: any;
 }
 
-export interface ExerciseQuery {
+interface GetExerciseStatus {
+  loading?: boolean;
+  exercise?: Exercise;
+  started?: boolean;
+}
+
+interface ExerciseQuery {
   muscleGroup?: string;
   target?: string;
 }
 
-export type ExerciseForm = {
+export interface ExerciseForm {
   values: Exercise;
-};
+}
 
-type AppForms = {
+interface AppForms {
   newExerciseForm: ExerciseForm;
-};
+}
 
-export type MuscleGroupsResult = {
+export interface MuscleGroupsResult {
   muscleGroups?: Array<string>;
   loading?: boolean;
-};
+}
 
-export type TargetsResult = {
+export interface TargetsResult {
   targets?: Array<string>;
   loading?: boolean;
-};
+}
 
-export type Filter = {
+export interface Filter {
   selectedTarget: string;
   selectedMuscleGroup: string;
   targets?: TargetsResult;
   muscleGroups?: MuscleGroupsResult;
-};
+}
 
-export const DEFAULT_STATE: State = {
+
+
+export interface Targets {
+  target: string;
+  exercises: Array<Exercise>;
+}
+
+export interface GroupedExercises {
+  targets?: Array<Targets>;
+  loading?: boolean;
+  targetOpen?: Set<String>;
+}
+
+interface State {
+  newExerciseStatus?: NewExerciseStatus;
+  getExerciseStatus?: GetExerciseStatus;
+  groupedExercises?: GroupedExercises;
+  filter: Filter;
+  form?: AppForms;
+}
+
+const DEFAULT_STATE: State = {
   filter: {
     selectedMuscleGroup: "",
     selectedTarget: ""
   }
 };
 
-export type Targets = {
-  target: string;
-  exercises: Array<Exercise>;
-};
-
-export type GroupedExercises = {
-  targets?: Array<Targets>; 
-  loading?: boolean;
-  targetOpen?: Set<String>;
-};
-
-export type State = {
-  newExerciseStatus?: NewExerciseStatus;
-  getExerciseStatus?: GetExerciseStatus;
-  groupedExercises?: GroupedExercises;
-  filter: Filter;
-  form?: AppForms;
-};
-
-export type Routine = {
+export interface Routine {
   _id: string;
   name: string;
-};
+}
+
+export { NewExerciseStatus, Exercise, State, ExerciseQuery, DEFAULT_STATE, GetExerciseStatus };

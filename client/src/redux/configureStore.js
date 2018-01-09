@@ -1,3 +1,4 @@
+// @flow
 import { createStore, applyMiddleware, Store } from "redux";
 import { createEpicMiddleware } from "redux-observable";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -13,7 +14,7 @@ export const history = createHistory();
 const rMiddleware = routerMiddleware(history);
 
 export function configureStore(initialState: State) {
-  const store: Store<State> = createStore<State>(
+  const store: Store<State> = createStore/*<State>*/(
     rootReducer,
     initialState,
     composeWithDevTools(applyMiddleware(epicMiddleware, rMiddleware))

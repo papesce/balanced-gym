@@ -58,7 +58,7 @@ const mapDispatchToProps = (
   };
 };
 
-const TargetC = connect<TargetRCProps>(mapStateToProps, mapDispatchToProps)(
+const TargetC = connect/*<TargetRCProps>*/(mapStateToProps, mapDispatchToProps)(
   TargetRC
 );
 

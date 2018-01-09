@@ -20,9 +20,9 @@ interface StateToProps {
   newExerciseForm?: ExerciseForm;
 }
 
-interface DispatchToProps {
-  onClick: (ex: Exercise) => void;
-}
+// interface DispatchToProps {
+//  onClick: (ex: Exercise) => void;
+// }
 
 export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
   constructor(props: NewExerciseRCProps) {
@@ -69,7 +69,7 @@ const mapDispatchToProps = (
   };
 };
 
-const NewExerciseC = connect<StateToProps, DispatchToProps>(
+const NewExerciseC = connect/*<StateToProps, DispatchToProps>*/(
   mapStateToProps,
   mapDispatchToProps
 )(NewExerciseRC);

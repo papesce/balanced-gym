@@ -41,7 +41,7 @@ class ExerciseCollapse extends React.Component<ExerciseCollapseProps, ExerciseCo
                         active={true}
                         onClick={() => this.setState({ open: !this.state.open })}
                     >
-                        <a href="#">{target.target}</a>
+                        <a href={target.target}>{target.target}</a>
                     </BreadcrumbItem>
                 </Breadcrumb>
                 <Collapse isOpen={this.state.open}>

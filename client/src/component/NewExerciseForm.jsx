@@ -56,14 +56,14 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           placeholder="Enter Gif URL"
         /> 
          
-         <img style={{ width: "200px" }} src={gifURL}/>
+         <img alt="gif URL" style={{ width: "200px" }} src={gifURL}/>
          <Field
           name="muscleURL"
           component={TextField}
           label="Muscle URL"
           placeholder="Enter Muscle URL"
          /> 
-          <img style={{ width: "400px" }} src={muscleURL}/>
+          <img alt="muscleURL" style={{ width: "400px" }} src={muscleURL}/>
           <Field
            name="synergists"
            component={TextField}
@@ -85,7 +85,7 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
   }
 }
 
-const NewExerciseForm = reduxForm<Exercise, NewExerciseProps>({
+const NewExerciseForm = reduxForm/*<Exercise, NewExerciseProps>*/({
   form: "newExerciseForm",
 })(NewExerciseFormU);
 

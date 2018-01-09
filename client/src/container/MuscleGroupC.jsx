@@ -60,7 +60,7 @@ const mapDispatchToProps = (
   };
 };
 
-const MuscleGroupC = connect<MuscleGroupRCProps>(
+const MuscleGroupC = connect/*<MuscleGroupRCProps>*/(
   mapStateToProps,
   mapDispatchToProps
 )(MuscleGroupRC);
