@@ -70,7 +70,7 @@ const getExercises = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
     mergeMap(action => {
       let QUERY_URL = GET_EXERCISES_URL;
-      // debugger;
+      debugger;
       if (action.payload) {
         QUERY_URL = new URLQueryBuilder(
           GET_EXERCISES_URL,

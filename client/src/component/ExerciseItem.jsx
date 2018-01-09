@@ -50,7 +50,7 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
             <b>Group:</b> {exercise.muscleGroup}
           </CardSubtitle>
           <CardText>
-            <b>Target:</b> {exercise.target}<br/>
+            <b>Target:</b> {exercise.target.name}<br/>
             <b>Equipment:</b> {exercise.equipment}<br/>
             <b>Last Reps:</b> {exercise.lastReps} 
             <b> Last Weight:</b> {exercise.lastWeight}<br/>

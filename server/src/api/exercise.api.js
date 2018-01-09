@@ -67,16 +67,18 @@ const sortExercises = exercises => {
 const sortByTarget = exercises => {
   // group by target
   const targetGroups = {};
+  const targetObjs = {};
   const targets = [];
   // const result = routineResult;
   exercises.forEach(exercise => {
     const { target } = exercise;
-    if (typeof target === "string") {
-      if (!targetGroups[target]) {
-        targetGroups[target] = [];
-      }
-      targetGroups[target].push(exercise);
+    // if (typeof target === "string") {
+    if (!targetGroups[target._id]) {
+      targetGroups[target._id] = [];
+      targetObjs[target._id] = target;
     }
+    targetGroups[target._id].push(exercise);
+    // }
   });
 
   // add suggested serie to each exercise
@@ -95,7 +97,7 @@ const sortByTarget = exercises => {
         }
       });
       targets.push({
-        target: key,
+        target: targetObjs[key],
         exercises: sortExercises(groupedExercises)
         // lastUpdated: addLastUpdatedToExercises(groupedExercises);
         // routine.lastUpdated = maxLastUpdated;
@@ -149,9 +151,9 @@ const getExercises = async query => {
     .find(query)
     .populate({
       path: "series"
-    // })
-    // .populate({
-      // path: "target"
+    })
+    .populate({
+      path: "target"
     });
   exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();

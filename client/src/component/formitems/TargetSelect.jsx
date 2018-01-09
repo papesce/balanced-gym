@@ -17,13 +17,13 @@ class TargetSelect extends Component<
     if (muscles.muscles) {
       debugger;
       let val = this.props.input.value;
-      if (typeof val === 'string') {
-        const values = muscles.muscles.filter( muscle => 
-          muscle.name === val)
-        if (values.length > 0) { 
-          val = values[0]._id;
-        }
-      }
+      //if (typeof val === 'string') {
+      //  const values = muscles.muscles.filter( muscle => 
+      //    muscle.name === val)
+      //  if (values.length > 0) { 
+      //    val = values[0]._id;
+      //  }
+      //}
       return (
         <FormGroup>
           <Label>Target:</Label>
@@ -42,7 +42,7 @@ class TargetSelect extends Component<
         </FormGroup>
       );
     };
-    return <div> Error loading muscles </div>
+    return (<div> Error loading muscles </div>)
   }
 }
 
