@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State, TargetsResult } from "../redux/model";
-import { getTargetsStarted } from "../redux/actions";
+import { getMusclesStarted } from "../redux/actions";
 
 interface MuscleListRCProps {
   muscles?: TargetsResult;
@@ -20,11 +20,12 @@ class MuscleListRC extends Component<MuscleListRCProps> {
     if (muscles.loading) {
       return <div>loading... </div>;
     }
-    if (muscles.targets) {
+    if (muscles.muscles) {
+      // debugger;
       return (
          <ul>
-      {muscles.targets.map( (muscle, index) => {
-        return (<li key={index}> {muscle} </li>);
+      {muscles.muscles.map( (muscle, index) => {
+        return (<li key={index}> {muscle.name} </li>);
       })} 
         </ul> );
     }
@@ -37,13 +38,13 @@ class MuscleListRC extends Component<MuscleListRCProps> {
 }
 
 const mapStateToProps = (state: State): MuscleListRCProps => {
-  const muscles = state.filter ? state.filter.targets : {};
+  const muscles = state.filter ? state.filter.muscles : {};
   return { muscles: muscles };
 };
 
 const mapDispatchToProps = (dispatch): MuscleListRCProps => {
   return { 
-    getMuscleListStarted: () => dispatch(getTargetsStarted()) 
+    getMuscleListStarted: () => dispatch(getMusclesStarted()) 
   };
 };
 

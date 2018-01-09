@@ -8,20 +8,30 @@ const getTargets = async () => {
   const exResult = await exQuery.lean().exec();
   return exResult.sort();
 };
-const getTargets2 = async () => {
+const getMuscles = async () => {
   const exQuery = muscleModel.getModel().find();
   // exQuery.distinct("target"); // , { muscleGroup: "Chest" });
   const exResult = await exQuery.lean().exec();
   return exResult.sort();
 };
+
+const newMuscle = async (muscle) => {
+  const MuscleModel = muscleModel.getModel();
+  await new MuscleModel(muscle).save();
+};
+
 const api = app => {
   app.get("/target", async (req, res) => {
     const targets = await getTargets();
     res.send(targets);
   });
-  app.get("/target2", async (req, res) => {
-    const targets = await getTargets2();
+  app.get("/muscle", async (req, res) => {
+    const targets = await getMuscles();
     res.send(targets);
+  });
+  app.post("/newMuscle", async (req, res) => {
+    const muscle = await newMuscle(req.body);
+    res.send(muscle);
   });
 };
 

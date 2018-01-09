@@ -1,5 +1,4 @@
 // @flow
-// @ts-ignore
 import * as Types from "./actionTypes";
 import { createAction } from "redux-actions";
 
@@ -32,3 +31,9 @@ export const setTarget = createAction/*<String>*/(Types.SET_TARGET);
 
 export const getTargetsStarted = createAction(Types.GET_TARGETS_STARTED);
 export const getTargetsSucceeded = createAction/*<Array<String>>*/(Types.GET_TARGETS_SUCCEEDED);
+
+export const getMusclesStarted = createAction(Types.GET_MUSCLES_STARTED);
+export const getMusclesSucceeded = createAction/*<Array<String>>*/(Types.GET_MUSCLES_SUCCEEDED);
+
+export const newMuscleStarted = createAction(Types.NEW_MUSCLE_STARTED);
+export const newMuscleSucceeded = createAction(Types.NEW_MUSCLE_SUCCEEDED);

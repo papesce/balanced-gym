@@ -6,20 +6,24 @@ import URLQueryBuilder from "url-query-builder";
 
 import {
   newExerciseSucceeded,
+  newMuscleSucceeded,
   getExercisesSucceeded,
   getExerciseSucceeded,
   getMuscleGroupsSucceeded,
-  getTargetsSucceeded
+  getTargetsSucceeded,
+  getMusclesSucceeded
 } from "./actions";
 import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
 import { Exercise } from "./model";
 
 const NEW_EXERCISE_URL: string = "/newExercise";
+const NEW_MUSCLE_URL: string = "/newMuscle";
 const GET_EXERCISES_URL: string = "/exercise";
 const GET_EXERCISE_URL: string = "/exercise";
 const GET_MUSCLE_GROUPS_URL: string = "/muscleGroups";
-const GET_TARGETS_URL: string = "/target";
+const GET_MUSCLES_URL: string = "/muscle";
+const GET_TARGETS_URL: string = "/target"; //deprecated
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
   return action$.ofType(T.NEW_EXERCISE_STARTED).pipe(
@@ -42,6 +46,24 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
     })
   );
 };
+
+const addMuscle = (action$: ActionsObservable<Action<Muscle>>) => {
+  return action$.ofType(T.NEW_MUSCLE_STARTED).pipe(
+    mergeMap(action => {
+      debugger;
+     return ajax.post(`${NEW_MUSCLE_URL}`, action.payload, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(response => {
+      const newMuscle = {
+        _id: ""
+      };
+      return newMuscleSucceeded(newMuscle);
+    })
+  );
+};
+
 
 const getExercises = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
@@ -124,11 +146,28 @@ const getTargets = (action$: ActionsObservable<Action<any>>) => {
   );
 };
 
+const getMuscles = (action$: ActionsObservable<Action<any>>) => {
+  return action$.ofType(T.GET_MUSCLES_STARTED).pipe(
+    mergeMap(action => {
+      let QUERY_URL = GET_MUSCLES_URL;
+      return ajax.get(`${QUERY_URL}`, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      const muscles = resp.response;
+      return getMusclesSucceeded(muscles);
+   })
+  );
+};
+
 export const rootEpic = combineEpics(
   addExercise,
+  addMuscle,
   getExercises,
   getExercise,
   editExercise,
   getMuscleGroups,
-  getTargets
+  getTargets,
+  getMuscles
 );

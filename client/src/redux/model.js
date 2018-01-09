@@ -2,6 +2,10 @@ interface NewExerciseStatus {
   started?: boolean;
 }
 
+interface NewMuscleStatus {
+  started?: boolean;
+}
+
 interface Exercise {
   routineId: string;
   _id: string;
@@ -42,10 +46,16 @@ export interface MuscleGroupsResult {
   loading?: boolean;
 }
 
-export interface TargetsResult {
+interface TargetsResult {
   targets?: Array<string>;
   loading?: boolean;
 }
+
+interface MusclesResult {
+  targets?: Array<string>;
+  loading?: boolean;
+}
+
 
 export interface Filter {
   selectedTarget: string;
@@ -53,8 +63,6 @@ export interface Filter {
   targets?: TargetsResult;
   muscleGroups?: MuscleGroupsResult;
 }
-
-
 
 export interface Targets {
   target: string;
@@ -69,6 +77,7 @@ export interface GroupedExercises {
 
 interface State {
   newExerciseStatus?: NewExerciseStatus;
+  newMuscleStatus?: NewMuscleStatus;
   getExerciseStatus?: GetExerciseStatus;
   groupedExercises?: GroupedExercises;
   filter: Filter;
@@ -82,9 +91,27 @@ const DEFAULT_STATE: State = {
   }
 };
 
-export interface Routine {
+interface Routine {
   _id: string;
   name: string;
 }
 
-export { NewExerciseStatus, Exercise, State, ExerciseQuery, DEFAULT_STATE, GetExerciseStatus };
+interface Muscle {
+  _id: string;
+  name: string;
+  muscleGif: string;
+}
+
+export {
+  NewExerciseStatus,
+  NewMuscleStatus,
+  Routine,
+  Muscle,
+  Exercise,
+  TargetsResult,
+  MusclesResult,
+  State,
+  ExerciseQuery,
+  DEFAULT_STATE,
+  GetExerciseStatus
+};
