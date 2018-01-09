@@ -50,7 +50,7 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           placeholder="Enter target muscle"
         />
         <Field
-          name="target"
+          name="muscle"
           validate={[required]}
           component={TargetSelect}
         />
