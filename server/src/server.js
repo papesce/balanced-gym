@@ -1,7 +1,12 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const api = require("./api");
+
+const routineApi = require("./api/routine.api");
+const exerciseApi = require("./api/exercise.api");
+const muscleApi = require('./api/muscle.api');
+const muscleGroupApi = require('./api/muscleGroup.api');
+const serieApi = require('./api/serie.api');
 const mongoose = require("mongoose");
 require("dotenv").config();
 const bodyParser = require("body-parser");
@@ -21,7 +26,12 @@ mongoose.Promise = Promise;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-api(app);
+routineApi.api(app);
+exerciseApi.api(app);
+muscleApi.api(app);
+muscleGroupApi.api(app);
+serieApi.api(app);
+
 
 /**
  * Express configuration.

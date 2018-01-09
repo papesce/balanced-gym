@@ -34,10 +34,10 @@ npm install --save-dev redux-devtools-extension
 npm install --save redux-form
 npm install @types/redux-form
 
-npm install --save reactrap
-npm install --save @types/reactstrap
+// npm install --save reactrap
+// npm install --save @types/reactstrap
 
-bootstrap@4.0.0-beta.2
+// bootstrap@4.0.0-beta.2
 npm install --save jquery@1.9.1
 
 npm install react-stack-grid
@@ -50,6 +50,8 @@ npm install --save history
 npm install --save url-query-builder
 
 npm install --save react-router-scroll
+
+npm install --save material-ui
 
 ## Examples 
 

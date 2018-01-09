@@ -5,7 +5,7 @@
     "target": "es5",
     "lib": ["es6", "dom"],
     "sourceMap": true,
-    "allowJs": true,
+    "allowJs": false,
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
@@ -14,10 +14,12 @@
     "noImplicitThis": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
+    "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "noEmitOnError": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noStrictGenericChecks": true
   },
   "exclude": [
     "node_modules",

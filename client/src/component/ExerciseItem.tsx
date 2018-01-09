@@ -17,9 +17,9 @@ interface ExerciseItemProps {
   editExercise: (exId: string) => void;
 }
 
-const getLastSerie = (exercise) => {
-  return `r:${exercise.lastReps} w:${exercise.lastWeight}`;
-};
+// const getLastSerie = (exercise) => {
+//   return `r:${exercise.lastReps} w:${exercise.lastWeight}`;
+// };
 
 const getLastUpdated = (exercise) => {
    if (exercise.lastUpdated) {
@@ -58,7 +58,6 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
             <b> Suggested:</b> <b>Reps:</b> {exercise.suggestedSerie.reps}
             <b> Weight:</b> {formatWeight(exercise.suggestedSerie.weight)}<br/>
             <b> Routine:</b> {getRoutine(exercise.routineId)}<br/>
-            <b> Last Serie</b> {getLastSerie(exercise)}<br/>
             <b> Last Updated</b> {getLastUpdated(exercise)}<br/>
           </CardText>
           <Button onClick={() => editExercise(exercise._id)}>Edit</Button>

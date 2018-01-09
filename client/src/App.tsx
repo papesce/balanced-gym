@@ -6,9 +6,12 @@ import { Home } from "./routes/Home";
 import { ConnectedRouter } from "react-router-redux";
 import { Route } from "react-router";
 import { AddExercise } from "./routes/AddExercise";
+import { AddMuscle } from "./routes/AddMuscle";
 import { EditExercise } from "./routes/EditExercise";
+import { Muscle } from "./routes/Muscle";
 import { State, DEFAULT_STATE } from "./redux/model";
 import { Store } from "redux";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 const PERSISTED_STATE_KEY = "persistedState";
 const persistedStateSt = localStorage.getItem(PERSISTED_STATE_KEY);
@@ -37,13 +40,17 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
+      <MuiThemeProvider>
         <ConnectedRouter history={history}>
           <div>
             <Route exact={true} path="/" component={Home} />
             <Route path="/addExercise" component={AddExercise} />
             <Route path="/editExercise/:exId" component={EditExercise} />
+            <Route path="/muscle" component={Muscle} />
+            <Route path="/addMuscle" component={AddMuscle} />
           </div>
         </ConnectedRouter>
+        </MuiThemeProvider>
       </Provider>
     );
   }

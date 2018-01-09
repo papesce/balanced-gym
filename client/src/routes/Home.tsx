@@ -1,14 +1,10 @@
 import * as React from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  Container,
-  NavLink
-} from "reactstrap";
+import { Container  } from "reactstrap";
 import { ExerciseListC } from "../container/ExerciseListC";
 import "./Home.css";
 import sizeMe from "react-sizeme";
 import { FiltersC } from "../container/FiltersC";
+import AppBar from "material-ui/AppBar";
 
 interface HomeCProps {}
 
@@ -28,16 +24,18 @@ class HomeC extends React.Component<HomeCProps, HomeCState> {
   render() {
     return (
       <div>
-        <Navbar dark={true} color="dark">
+        <AppBar
+          title="Balanced Gym"
+          // iconClassNameRight="muidocs-icon-navigation-expand-more"
+        />
+        {/* <Navbar dark={true} color="dark">
           <NavbarBrand href="/">Balanced Gym</NavbarBrand>
           <NavLink className="navbar-toggler" href="/addExercise">
-            <span
-              className={"navbar-toggler-plus fa fa-plus"}
-            />
+            <span className={"navbar-toggler-plus fa fa-plus"} />
           </NavLink>
-        </Navbar>
+        </Navbar> */}
         <Container className="app-container">
-          <FiltersC /> 
+          <FiltersC />
         </Container>
         <ExerciseListC />
       </div>

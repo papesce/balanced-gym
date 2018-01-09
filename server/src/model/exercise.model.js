@@ -7,11 +7,13 @@ const exerciseSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     muscleGroup: { type: String, required: true },
-    target: { type: String, required: true },
+    // target: { type: String },
+    target: { type: mongoose.Schema.Types.ObjectId, ref: "muscle" },
     series: [{ type: mongoose.Schema.Types.ObjectId, ref: "serie" }],
     gifURL: { type: String, required: true },
     muscleURL: { type: String },
-    synergists: { type: String },
+    // synergists: { type: String },
+    synergist: [{ type: mongoose.Schema.Types.ObjectId, ref: "muscle" }],
     equipment: { type: String },
     routineId: { type: mongoose.Schema.Types.ObjectId, ref: "routine" }
     // lastUpdated: Date  //last date of creation of the series
@@ -32,6 +34,16 @@ class Exercise {
 
   static getSchema() {
     return exerciseSchema;
+  }
+  static async addExercisesToRoutine(routine) {
+    const newRoutine = routine;
+    const exercisesQuery = this.getModel().find({ routineId: routine._id }).populate({
+      path: "series"
+    });
+    const exercisesResult = await exercisesQuery.lean().exec();
+    newRoutine.exercises = exercisesResult;
+    // addLastUpdatedToRoutine(newRoutine);
+    // groupByMuscleGroup(newRoutine);
   }
 }
 
