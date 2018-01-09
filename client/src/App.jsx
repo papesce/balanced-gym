@@ -46,7 +46,7 @@ class App extends React.Component {
             <Route exact={true} path="/" component={Home} />
             <Route path="/addExercise" component={AddExercise} />
             <Route path="/editExercise/:exId" component={EditExercise} />
-            <Route path="/muscle" component={Muscle} />
+            <Route path="/muscles" component={Muscle} />
             <Route path="/addMuscle" component={AddMuscle} />
           </div>
         </ConnectedRouter>
