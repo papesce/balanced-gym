@@ -18,12 +18,12 @@ const computeExtraWeight = equip => {
 const denormalizeWeight = (weight, exercise) => {
   const { extraWeight, multiplier } = computeExtraWeight(exercise.equipment);
   const value = (weight - extraWeight) / multiplier;
-  return (value > 0) ? value : 0;
+  return value > 0 ? value : 0;
 };
 
 const normalizeWeight = (weight, exercise) => {
   const { extraWeight, multiplier } = computeExtraWeight(exercise.equipment);
-  return (weight * multiplier) + extraWeight;
+  return weight * multiplier + extraWeight;
 };
 
 const computeSuggestedSerie = targetGroup => {
@@ -52,7 +52,7 @@ const compareExercises = (ex1, ex2) => {
   }
   if (
     ex1.lastUpdated.toString().substring(0, 9) ===
-      ex2.lastUpdated.toString().substring(0, 9)
+    ex2.lastUpdated.toString().substring(0, 9)
   ) {
     return ex1.series.length > ex2.series.length;
   }
@@ -71,11 +71,14 @@ const sortByTarget = exercises => {
   // const result = routineResult;
   exercises.forEach(exercise => {
     const { target } = exercise;
-    if (!targetGroups[target]) {
-      targetGroups[target] = [];
+    if (typeof target === "string") {
+      if (!targetGroups[target]) {
+        targetGroups[target] = [];
+      }
+      targetGroups[target].push(exercise);
     }
-    targetGroups[target].push(exercise);
   });
+
   // add suggested serie to each exercise
   for (const key in targetGroups) {
     if (key) {
@@ -93,7 +96,7 @@ const sortByTarget = exercises => {
       });
       targets.push({
         target: key,
-        exercises: sortExercises(groupedExercises),
+        exercises: sortExercises(groupedExercises)
         // lastUpdated: addLastUpdatedToExercises(groupedExercises);
         // routine.lastUpdated = maxLastUpdated;
       });
@@ -141,9 +144,15 @@ const addLastUpdatedToExercises = exercises => {
 };
 
 const getExercises = async query => {
-  const exQuery = exerciseModel.getModel().find(query).populate({
-    path: "series"
-  });
+  const exQuery = exerciseModel
+    .getModel()
+    .find(query)
+    .populate({
+      path: "series"
+    // })
+    // .populate({
+      // path: "target"
+    });
   exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();
   addLastUpdatedToExercises(exResult);
@@ -151,9 +160,11 @@ const getExercises = async query => {
 };
 
 const updateExercise = async (exId, exUpdate) => {
-  const exQuery = exerciseModel.getModel().findOneAndUpdate({ _id: exId }, exUpdate, {
-    new: true
-  });
+  const exQuery = exerciseModel
+    .getModel()
+    .findOneAndUpdate({ _id: exId }, exUpdate, {
+      new: true
+    });
   const exResult = await exQuery.lean().exec();
   return exResult;
 };
@@ -201,7 +212,6 @@ const api = app => {
     res.send(exercise);
   });
 };
-
 
 module.exports = {
   api,
