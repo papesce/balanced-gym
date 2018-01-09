@@ -15,13 +15,22 @@ class TargetSelect extends Component<
       return <div> loading... </div>;
     }
     if (muscles.muscles) {
+      debugger;
+      let val = this.props.input.value;
+      if (typeof val === 'string') {
+        const values = muscles.muscles.filter( muscle => 
+          muscle.name === val)
+        if (values.length > 0) { 
+          val = values[0]._id;
+        }
+      }
       return (
         <FormGroup>
           <Label>Target:</Label>
           <Input
             type="select"
             onChange={this.props.input.onChange}
-            defaultValue={this.props.input.value}
+            defaultValue={val}
           >
             <option value="">None</option>
             {muscles.muscles.map((muscle, index) => (
