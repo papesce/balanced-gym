@@ -5,6 +5,7 @@ import { Targets } from "../redux/model";
 import StackGrid from "react-stack-grid";
 import "./ExerciseList.css";
 import { Breadcrumb, BreadcrumbItem, Collapse } from "reactstrap";
+import Button from "reactstrap/lib/Button";
 
 interface ExerciseCollapseProps {
     target: Targets;
@@ -37,11 +38,8 @@ class ExerciseCollapse extends React.Component<ExerciseCollapseProps, ExerciseCo
         return (
             <div>
                 <Breadcrumb>
-                    <BreadcrumbItem
-                        active={true}
-                        onClick={() => this.setState({ open: !this.state.open })}
-                    >
-                        <a href={target.target}>{target.target}</a>
+                    <BreadcrumbItem active={true}>
+                        <Button color="link" onClick={() => this.setState({ open: !this.state.open })}>{target.target}</Button>
                     </BreadcrumbItem>
                 </Breadcrumb>
                 <Collapse isOpen={this.state.open}>

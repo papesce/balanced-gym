@@ -35,7 +35,9 @@ export class NewExerciseRC extends React.Component<EditExerciseRCProps> {
   }
   handleClick() {
     if (this.props.newExerciseForm) {
+      // debugger;
       const ex: ExerciseForm = this.props.newExerciseForm;
+      ex.values.target = ex.values.muscle;
       this.props.onClick(ex.values);
     }
   }

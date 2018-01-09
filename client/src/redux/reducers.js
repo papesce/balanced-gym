@@ -7,6 +7,7 @@ import {
   NewExerciseStatus,
   NewMuscleStatus,
   Muscle,
+  MusclesResult,
   GetExerciseStatus,
   Exercise,
   State,

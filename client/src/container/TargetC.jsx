@@ -2,7 +2,7 @@ import * as React from "react";
 import { TargetForm } from "../component/TargetForm";
 import { connect, Dispatch } from "react-redux";
 import { State } from "../redux/model";
-import { getTargetsStarted, setTarget } from "../redux/actions";
+import { getMusclesStarted, setTarget } from "../redux/actions";
 
 interface TargetRCProps {
   setTarget?: (value: string) => void;
@@ -43,8 +43,8 @@ export class TargetRC extends React.Component<TargetRCProps> {
 const mapStateToProps = (state: State): TargetRCProps => {
   return {
     selectedTarget: state.filter.selectedTarget,
-    loading: state.filter.targets ? state.filter.targets.loading : false,
-    targets: state.filter.targets ? state.filter.targets.targets : []
+    loading: state.filter.muscles ? state.filter.muscles.loading : false,
+    targets: state.filter.muscles ? state.filter.muscles.muscles : []
   };
 };
 
@@ -54,7 +54,7 @@ const mapDispatchToProps = (
 ) => {
   return {
     setTarget: (value: string) => dispatch(setTarget(value)),
-    getTargetsStarted: () => dispatch(getTargetsStarted())
+    getTargetsStarted: () => dispatch(getMusclesStarted())
   };
 };
 

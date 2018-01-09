@@ -1,11 +1,13 @@
+// @flow
 import * as React from "react";
 import { Component } from "react";
 import { Label, FormGroup, Input, Form } from "reactstrap";
+import { Muscle } from "../routes/Muscle";
 
 export interface TargetFormProps {
   handleChange: (value: string) => void;
   defaultValue: string;
-  targets: Array<string>;
+  targets: Array<Muscle>;
   loading: boolean;
 }
 
@@ -36,9 +38,9 @@ class TargetForm extends Component<TargetFormProps> {
             {targets.map((muscleGroup, index) => (
               <option
                 key={index}
-                value={muscleGroup}
+                value={muscleGroup._id}
               >
-                {muscleGroup}
+                {muscleGroup.name}
               </option>
             ))}
           </Input>}

@@ -17,6 +17,7 @@ import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
 import { Exercise } from "./model";
 
+
 const NEW_EXERCISE_URL: string = "/newExercise";
 const NEW_MUSCLE_URL: string = "/newMuscle";
 const GET_EXERCISES_URL: string = "/exercise";
@@ -50,7 +51,7 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
 const addMuscle = (action$: ActionsObservable<Action<Muscle>>) => {
   return action$.ofType(T.NEW_MUSCLE_STARTED).pipe(
     mergeMap(action => {
-      debugger;
+      // debugger;
      return ajax.post(`${NEW_MUSCLE_URL}`, action.payload, {
         "Content-Type": "application/json"
       });
@@ -69,6 +70,7 @@ const getExercises = (action$: ActionsObservable<Action<any>>) => {
   return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
     mergeMap(action => {
       let QUERY_URL = GET_EXERCISES_URL;
+      // debugger;
       if (action.payload) {
         QUERY_URL = new URLQueryBuilder(
           GET_EXERCISES_URL,

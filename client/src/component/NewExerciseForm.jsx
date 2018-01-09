@@ -7,6 +7,7 @@ import { TextField } from "./formitems/TextField";
 import { Exercise } from "../redux/model";
 import { EquipmentSelect } from "./formitems/EquipmentSelect";
 import "./NewExerciseForm.css";
+import TargetSelect from "./formitems/TargetSelect";
 
 export interface NewExerciseProps {
   handleClick: () => void;
@@ -45,8 +46,13 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
           name="target"
           validate={[required]}
           component={TextField}
-          label="Target"
+          label="Target (deprecated)"
           placeholder="Enter target muscle"
+        />
+        <Field
+          name="muscle"
+          validate={[required]}
+          component={TargetSelect}
         />
         <Field
           name="gifURL"
