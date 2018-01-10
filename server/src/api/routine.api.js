@@ -44,15 +44,22 @@ const groupByMuscleGroup = routineResult => {
 
 const addLastUpdatedToRoutine = routineResult => {
   const routine = routineResult;
-  const maxLastUpdated = exerciseApi.addLastUpdatedToExercises(routineResult.exercises);
+  const maxLastUpdated = exerciseApi.addLastUpdatedToExercises(
+    routineResult.exercises
+  );
   routine.lastUpdated = maxLastUpdated;
 };
 
-const addExercisesToRoutine = async (routine) => {
+const addExercisesToRoutine = async routine => {
   const newRoutine = routine;
-  const exercisesQuery = exerciseModel.getModel().find({ routineId: routine._id }).populate({
-    path: "series"
-  });
+  const exercisesQuery = exerciseModel
+    .getModel()
+    .find({ routineId: routine._id })
+    .populate({
+      path: "series"
+    }).populate({
+      path: "target"
+    });
   const exercisesResult = await exercisesQuery.lean().exec();
   newRoutine.exercises = exercisesResult;
   addLastUpdatedToRoutine(newRoutine);
