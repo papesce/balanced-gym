@@ -2,7 +2,6 @@
 import { combineReducers, Reducer } from "redux";
 import * as T from "./actionTypes";
 import { handleActions, Action } from "redux-actions";
-import { reducer as formReducer } from "redux-form";
 import {
   NewExerciseStatus,
   NewMuscleStatus,
@@ -170,7 +169,6 @@ export const rootReducer: Reducer<State> = combineReducers({
   newMuscleStatus: newMuscleReducer,
   getExerciseStatus: getExerciseReducer,
   groupedExercises: exercisesReducer,
-  form: formReducer,
   filter: filterReducer,
   router: routerReducer
 });

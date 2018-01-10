@@ -1,31 +1,24 @@
 import * as React from "react";
-import { NewExerciseForm } from "../component/NewExerciseForm";
+import { ExerciseForm } from "../component/ExerciseForm";
 import { connect, Dispatch } from "react-redux";
 import {
   State,
   Exercise,
-  ExerciseForm,
   NewExerciseStatus
 } from "../redux/model";
 import { newExerciseStarted } from "../redux/actions";
 
-interface NewExerciseRCProps {
+interface NewExerciseCProps {
   onClick: (ex: Exercise) => void;
-  newExerciseForm?: ExerciseForm;
   newExerciseStatus?: NewExerciseStatus;
 }
 
 interface StateToProps {
   newExerciseStatus?: NewExerciseStatus;
-  newExerciseForm?: ExerciseForm;
 }
 
-// interface DispatchToProps {
-//  onClick: (ex: Exercise) => void;
-// }
-
-export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
-  constructor(props: NewExerciseRCProps) {
+export class NewExerciseC extends React.Component<NewExerciseCProps> {
+  constructor(props: NewExerciseCProps) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -41,10 +34,10 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
       ? newExerciseStatus.started === true
       : false;
     return (
-      <NewExerciseForm
+      <ExerciseForm
         handleClick={this.handleClick}
         started={started}
-        buttonLabel="Add new Exercise"
+        buttonLabel="Add New Exercise"
         initialValues={{routineId: "59f0c59d4e55c40d38868034"}}
       />
     );
@@ -54,7 +47,6 @@ export class NewExerciseRC extends React.Component<NewExerciseRCProps> {
 const mapStateToProps = (state: State): StateToProps => {
   return {
     newExerciseStatus: state.newExerciseStatus,
-    newExerciseForm: state.form ? state.form.newExerciseForm : undefined
   };
 };
 
@@ -69,9 +61,8 @@ const mapDispatchToProps = (
   };
 };
 
-const NewExerciseC = connect/*<StateToProps, DispatchToProps>*/(
+export default connect/*<StateToProps, DispatchToProps>*/(
   mapStateToProps,
   mapDispatchToProps
-)(NewExerciseRC);
+)(NewExerciseC);
 
-export { NewExerciseC };

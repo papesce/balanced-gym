@@ -1,15 +1,14 @@
 import * as React from "react";
-import { Navbar, NavbarBrand, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import { NewExerciseC } from "../container/NewExerciseC";
 import "./Home.css";
+import TopBar from "./TopBar";
 
 class AddExercise extends React.Component {
   render() {
     return (
       <div>
-         <Navbar dark={true} color="dark" >
-          <NavbarBrand href="/">Balanced Gym</NavbarBrand>
-        </Navbar>
+         <TopBar/>
           <Container>
             <Row>
               <Col md={12}>

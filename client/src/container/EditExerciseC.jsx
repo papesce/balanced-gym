@@ -1,99 +1,76 @@
 import * as React from "react";
-import { NewExerciseForm } from "../component/NewExerciseForm";
+import { ExerciseForm } from "../component/ExerciseForm";
 import { connect, Dispatch } from "react-redux";
-import {
-  State,
-  Exercise,
-  ExerciseForm,
-  GetExerciseStatus
-} from "../redux/model";
-import { getExerciseStarted, editExerciseStarted } from "../redux/actions";
+import { State, Exercise, GetExerciseStatus } from "../redux/model";
+import { getExerciseStarted, editExerciseStarted, getMusclesStarted } from "../redux/actions";
 
-interface EditExerciseRCProps {
+interface EditExerciseCProps {
   exerciseId: string;
   onClick: (ex: Exercise) => void;
-  // exercise?: Exercise;
-  newExerciseForm?: ExerciseForm;
   getExerciseStatus?: GetExerciseStatus;
   getExerciseStarted?: (exId: string) => void;
+  muscles?: MuscleResult;
 }
 
-interface StateToProps {
-  // exercise?: Exercise;
-  getExerciseStatus?: GetExerciseStatus;
-  newExerciseForm?: ExerciseForm;
-}
-
-// interface DispatchToProps {
-//  onClick: (ex: Exercise) => void;
-// }
-
-export class NewExerciseRC extends React.Component<EditExerciseRCProps> {
-  constructor(props: EditExerciseRCProps) {
+export class EditExerciseC extends React.Component<EditExerciseCProps> {
+  constructor(props: EditExerciseCProps) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
-  handleClick() {
-    if (this.props.newExerciseForm) {
-      // debugger;
-      const ex: ExerciseForm = this.props.newExerciseForm;
-      ex.values.target = ex.values.muscle;
-      this.props.onClick(ex.values);
-    }
+  handleClick(exercise) {
+      this.props.onClick(exercise);
   }
   componentDidMount() {
     if (this.props.getExerciseStarted) {
       this.props.getExerciseStarted(this.props.exerciseId);
     }
+    // debugger
+    if (this.props.muscles.loading) {
+      this.props.getMuscleListStarted();
+    }
   }
   render() {
+    // debugger;
     const { getExerciseStatus = {} } = this.props;
     const loading: boolean = getExerciseStatus.loading === true;
     const started: boolean = getExerciseStatus.started === true;
     if (loading) {
-      return (<div>loading...</div>);
+      return <div>loading...</div>;
     }
     if (getExerciseStatus.exercise) {
       const exercise: Exercise = getExerciseStatus.exercise;
+      // debugger;
       return (
-        <NewExerciseForm
+        <ExerciseForm
           handleClick={this.handleClick}
           started={started}
           buttonLabel="Save"
           initialValues={exercise}
+          muscles={this.props.muscles}
         />
       );
-
     }
-    return (<div>Error !</div>);
+    return <div>Error !</div>;
   }
 }
 
-const mapStateToProps = (
-  state: State,
-  ownProps: EditExerciseRCProps
-): StateToProps => {
+const mapStateToProps = (state: State) => {
+  // debugger;
   return {
     getExerciseStatus: state.getExerciseStatus,
-    newExerciseForm: state.form ? state.form.newExerciseForm : state.form
+    muscles : state.filter.muscles
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<State>,
-  ownProps: EditExerciseRCProps
-) => {
+const mapDispatchToProps = (dispatch: Dispatch<State>) => {
+
   return {
-    onClick: (editExerciseForm: Exercise) => {
-      dispatch(editExerciseStarted(editExerciseForm));
+    onClick: (exercise: Exercise) => {
+      dispatch(editExerciseStarted(exercise));
     },
-    getExerciseStarted: (exId: string) => dispatch(getExerciseStarted(exId))
+    getExerciseStarted: (exId: string) => dispatch(getExerciseStarted(exId)),
+    getMuscleListStarted: () => dispatch(getMusclesStarted()) 
   };
 };
 
-const EditExerciseC = connect/*<StateToProps, DispatchToProps>*/(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewExerciseRC);
-
-export { EditExerciseC };
+export default connect(mapStateToProps,mapDispatchToProps)(EditExerciseC);

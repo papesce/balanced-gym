@@ -1,6 +1,6 @@
 //
 import React, { Component } from "react";
-import TextField from 'material-ui/TextField';
+import TextEntryField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import "./AddMuscleForm.css";
 import { Muscle } from "../redux/model";
@@ -47,8 +47,8 @@ class AddMuscleForm extends Component<AddMuscleFormProps, AddMuscleFormState> {
   render() {
     return (
       <div className="add-muscle-form">
-        <TextField  onChange={this.handleChangeName} hintText="Muscle Name" /><br/>
-        <TextField  onChange={this.handleChangeGif} hintText="Muscle Image Url" /><br/>
+        <TextEntryField  onChange={this.handleChangeName} hintText="Muscle Name" /><br/>
+        <TextEntryField  onChange={this.handleChangeGif} hintText="Muscle Image Url" /><br/>
         <RaisedButton onClick={this.handleClick} disabled={this.state.buttonDisabled} label="Add Muscle" primary={true} style={style} />
       </div>
     );

@@ -1,11 +1,8 @@
 import * as React from "react";
 import { Component } from "react";
-import { WrappedFieldProps, GenericFieldHTMLAttributes } from "redux-form";
 import { Label, FormGroup, Input } from "reactstrap";
 
-class EquipmentSelect extends Component<
-  WrappedFieldProps & GenericFieldHTMLAttributes
-> {
+class EquipmentSelect extends Component {
   render() {
     return (
       <FormGroup>

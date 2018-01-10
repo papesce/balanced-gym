@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Navbar, NavbarBrand, Container, Row, Col } from "reactstrap";
-import { EditExerciseC } from "../container/EditExerciseC";
+import { Container, Row, Col } from "reactstrap";
+import EditExerciseC from "../container/EditExerciseC";
 import "./Home.css";
+import TopBar from "./TopBar";
 
 interface EditExerciseProps {
         match: {
@@ -19,9 +20,7 @@ render() {
     const exId: string = this.props.match.params.exId;
     return (
       <div>
-         <Navbar dark={true} color="dark" >
-          <NavbarBrand href="/">Balanced Gym</NavbarBrand>
-        </Navbar>
+        <TopBar/>
           <Container>
             <Row>
               <Col md={12}>

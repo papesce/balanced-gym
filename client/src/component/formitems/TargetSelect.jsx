@@ -1,49 +1,58 @@
 import * as React from "react";
 import { Component } from "react";
-import { WrappedFieldProps, GenericFieldHTMLAttributes } from "redux-form";
-import { Label, FormGroup, Input } from "reactstrap";
-import { connect } from "react-redux";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem/MenuItem";
+import { MusclesResult } from "../../redux/model";
 
-class TargetSelect extends Component<
-  WrappedFieldProps & GenericFieldHTMLAttributes
-> {
+interface TargetSelectProps {
+  initialValue: Muscle;
+  onChange: string => void;
+  muscles: MusclesResult;
+}
+
+class TargetSelect extends Component<TargetSelectProps> {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event, index, value) {
+    // debugger
+    let val = "";
+    if (index > 0) {
+      val = this.props.muscles.muscles[index - 1];
+    }
+    this.props.onChange(val);
+  }
   render() {
-    // debugger;
-    // getRoutines();
-    const { muscles } = this.props;
+    const { muscles, initialValue = "None" } = this.props;
     if (muscles.loading) {
-      return <div> loading... </div>;
+      return <div> loading muscles... </div>;
     }
     if (muscles.muscles) {
-      // debugger;
-      let val = this.props.input.value;
+      const musclesList = muscles.muscles;
       return (
-        <FormGroup>
-          <Label>Target:</Label>
-          <Input
-            type="select"
-            onChange={this.props.input.onChange}
-            defaultValue={val._id}
+        
+        <div>
+          <SelectField
+            floatingLabelText="Target"
+            value={initialValue}
+            onChange={this.handleChange}
           >
-            <option value="">None</option>
-            {muscles.muscles.map((muscle, index) => (
-              <option key={index} value={muscle._id}>
-                {muscle.name}
-              </option>
+            <MenuItem value={"None"} primaryText="None" />
+            {musclesList.map(muscle => (
+              <MenuItem
+                key={muscle._id}
+                value={muscle._id}
+                primaryText={muscle.name}
+              />
             ))}
-          </Input>
-        </FormGroup>
+          </SelectField>
+         
+        </div>
       );
-    };
-    return (<div> Error loading muscles </div>)
+    }
+    return <div> Error loading muscles </div>;
   }
 }
 
-const mapStateToProps = state => {
-  // debugger;
-  return {
-    muscles: state.filter.muscles
-  };
-};
-
-export default connect(mapStateToProps)(TargetSelect);
+export default TargetSelect;

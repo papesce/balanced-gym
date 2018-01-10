@@ -4,7 +4,7 @@ import { ExerciseListC } from "../container/ExerciseListC";
 import "./Home.css";
 import sizeMe from "react-sizeme";
 import { FiltersC } from "../container/FiltersC";
-import AppBar from "material-ui/AppBar";
+import TopBar from "./TopBar";
 
 interface HomeCProps {}
 
@@ -24,10 +24,7 @@ class HomeC extends React.Component<HomeCProps, HomeCState> {
   render() {
     return (
       <div>
-        <AppBar
-          title="Balanced Gym"
-          // iconClassNameRight="muidocs-icon-navigation-expand-more"
-        />
+        <TopBar/>
         {/* <Navbar dark={true} color="dark">
           <NavbarBrand href="/">Balanced Gym</NavbarBrand>
           <NavLink className="navbar-toggler" href="/addExercise">

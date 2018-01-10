@@ -55,11 +55,9 @@ const addExercisesToRoutine = async routine => {
   const exercisesQuery = exerciseModel
     .getModel()
     .find({ routineId: routine._id })
-    .populate({
-      path: "series"
-    }).populate({
-      path: "target"
-    });
+    .populate("series")
+    .populate("target")
+    .populate("synergists");
   const exercisesResult = await exercisesQuery.lean().exec();
   newRoutine.exercises = exercisesResult;
   addLastUpdatedToRoutine(newRoutine);

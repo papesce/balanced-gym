@@ -13,7 +13,7 @@ const exerciseSchema = new mongoose.Schema(
     gifURL: { type: String, required: true },
     exerciseURL: { type: String },
     // synergists: { type: String },
-    synergist: [{ type: mongoose.Schema.Types.ObjectId, ref: "muscle" }],
+    synergists: [{ type: mongoose.Schema.Types.ObjectId, ref: "muscle" }],
     equipment: { type: String },
     routineId: { type: mongoose.Schema.Types.ObjectId, ref: "routine" }
     // lastUpdated: Date  //last date of creation of the series
