@@ -6,14 +6,20 @@ interface NewMuscleStatus {
   started?: boolean;
 }
 
+interface Muscle {
+  _id: string;
+  name: string;
+  muscleURL: string;
+}
+
 interface Exercise {
   routineId: string;
   _id: string;
   name: string;
   muscleGroup: string;
-  target: string;
+  target: Muscle;
   gifURL: string;
-  muscleURL?: string;
+  exerciseURL?: string;
   synergists?: string;
   equipment?: string;
   lastReps?: string;
@@ -96,11 +102,7 @@ interface Routine {
   name: string;
 }
 
-interface Muscle {
-  _id: string;
-  name: string;
-  muscleGif: string;
-}
+
 
 export {
   NewExerciseStatus,

@@ -11,7 +11,7 @@ const exerciseSchema = new mongoose.Schema(
     target: { type: mongoose.Schema.Types.ObjectId, ref: "muscle" },
     series: [{ type: mongoose.Schema.Types.ObjectId, ref: "serie" }],
     gifURL: { type: String, required: true },
-    muscleURL: { type: String },
+    exerciseURL: { type: String },
     // synergists: { type: String },
     synergist: [{ type: mongoose.Schema.Types.ObjectId, ref: "muscle" }],
     equipment: { type: String },

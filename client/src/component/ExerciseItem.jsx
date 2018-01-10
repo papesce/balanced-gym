@@ -59,6 +59,7 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
             <b> Weight:</b> {formatWeight(exercise.suggestedSerie.weight)}<br/>
             <b> Routine:</b> {getRoutine(exercise.routineId)}<br/>
             <b> Last Updated</b> {getLastUpdated(exercise)}<br/>
+            <b> murl </b> {exercise.exerciseURL? 'yes' : 'no'}
           </CardText>
           <Button onClick={() => editExercise(exercise._id)}>Edit</Button>
         </CardBody>

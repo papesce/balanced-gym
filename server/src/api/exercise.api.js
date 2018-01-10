@@ -181,14 +181,17 @@ const newExercise = async (routineId, exercise) => {
     target: exercise.target,
     gifURL: exercise.gifURL,
     equipment: exercise.equipment,
-    muscleURL: exercise.muscleURL,
+    exerciseURL: exercise.exerciseURL,
     synergists: exercise.synergists,
     routineId: exercise.routineId
   }).save();
 };
 
 const getExercise = async exId => {
-  const exQuery = exerciseModel.getModel().findOne({ _id: exId });
+  const exQuery = exerciseModel
+    .getModel()
+    .findOne({ _id: exId })
+    .populate({ path: "target" });
   const exResult = await exQuery.lean().exec();
   return exResult;
 };

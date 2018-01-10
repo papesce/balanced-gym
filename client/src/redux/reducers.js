@@ -133,17 +133,17 @@ const targetReducer = handleActions(
   ""
 );
 
-const targetsReducer = handleActions(
-  {
-    [T.GET_TARGETS_SUCCEEDED]: (
-      state: TargetsResult,
-      action: Action<TargetsResult>
-    ): TargetsResult => {
-      return action.payload ? { targets: action.payload } : {};
-    }
-  },
-  { loading: true }
-);
+// const targetsReducer = handleActions(
+//  {
+//    [T.GET_TARGETS_SUCCEEDED]: (
+//      state: TargetsResult,
+//      action: Action<TargetsResult>
+//    ): TargetsResult => {
+//      return action.payload ? { targets: action.payload } : {};
+//    }
+//  },
+//  { loading: true }
+// );
 
 const musclesReducer = handleActions(
   {
@@ -158,7 +158,7 @@ const musclesReducer = handleActions(
 );
 
 const filterReducer: Reducer<Filter> = combineReducers({
-  targets: targetsReducer, //deprecated
+  // targets: targetsReducer, //deprecated
   muscles: musclesReducer,
   muscleGroups: muscleGroupsReducer,
   selectedMuscleGroup: muscleGroupReducer,

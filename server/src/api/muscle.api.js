@@ -33,6 +33,28 @@ const api = app => {
     const muscle = await newMuscle(req.body);
     res.send(muscle);
   });
+  app.get("/convert", async (req, res) => {
+    const exQuery = exerciseModel.getModel().find();
+    const exResult = await exQuery.lean().exec();
+    const proms = exResult.map(ex => {
+      const { muscleURL } = ex;
+      if (muscleURL) {
+        const exQuery2 = exerciseModel.getModel().findOneAndUpdate(
+          { _id: ex._id },
+          {
+            muscleURL: "",
+            exerciseURL: muscleURL
+          },
+          { new: true }
+        );
+        return exQuery2.lean().exec();
+      }
+      return Promise.resolve();
+    });
+    Promise.all(proms);
+
+    res.send("done");
+  });
   // app.get("/convert", async (req, res) => {
   //   let exQuery = muscleModel.getModel().find();
   //   // exQuery.distinct("target"); // , { muscleGroup: "Chest" });

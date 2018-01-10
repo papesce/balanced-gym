@@ -23,8 +23,11 @@ const required = value => {
 
 class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
   render() {
+    // debugger
     const { started, valid, buttonLabel, initialValues } = this.props;
-    const { gifURL = "" , muscleURL = ""} = initialValues; 
+    const { gifURL = "" , exerciseURL = "", target = {}} = initialValues; 
+    const { muscleURL = "" } = target;
+    debugger;
     return (
       <Form className="exercise-form">
          <Field name="routineId" component={RoutineSelect} /> 
@@ -45,15 +48,9 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
         <Field
           name="target"
           validate={[required]}
-          component={TextField}
-          label="Target (deprecated)"
-          placeholder="Enter target muscle"
-        />
-        <Field
-          name="muscle"
-          validate={[required]}
           component={TargetSelect}
         />
+        <img alt="muscleURL" style={{ width: "200px" }} src={muscleURL}/>
         <Field
           name="gifURL"
           validate={[required]}
@@ -64,12 +61,12 @@ class NewExerciseFormU extends Component<NewExerciseProps & InjectedProps, {}> {
          
          <img alt="gif URL" style={{ width: "200px" }} src={gifURL}/>
          <Field
-          name="muscleURL"
+          name="exerciseURL"
           component={TextField}
-          label="Muscle URL"
-          placeholder="Enter Muscle URL"
+          label="Exercise URL"
+          placeholder="Enter Exercise URL"
          /> 
-          <img alt="muscleURL" style={{ width: "400px" }} src={muscleURL}/>
+          <img alt="exerciseURL" style={{ width: "400px" }} src={exerciseURL}/>
           <Field
            name="synergists"
            component={TextField}
