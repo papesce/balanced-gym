@@ -50,8 +50,11 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
     this.props.handleClick(exercise);
   };
   render() {
+
     const { buttonLabel } = this.props;
     const muscleURL = this.state.target ? this.state.target.muscleURL : "";
+    
+    debugger
     return (
       <div className="exercise-form">
         <RoutineSelect

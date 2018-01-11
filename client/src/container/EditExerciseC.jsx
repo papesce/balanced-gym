@@ -1,36 +1,47 @@
+// @flow
 import * as React from "react";
 import { ExerciseForm } from "../component/ExerciseForm";
 import { connect, Dispatch } from "react-redux";
-import { State, Exercise, GetExerciseStatus } from "../redux/model";
-import { getExerciseStarted, editExerciseStarted, getMusclesStarted } from "../redux/actions";
+import {
+  State,
+  Exercise,
+  GetExerciseStatus,
+  MusclesResult
+} from "../redux/model";
+import {
+  getExerciseStarted,
+  editExerciseStarted,
+  getMusclesStarted
+} from "../redux/actions";
 
 interface EditExerciseCProps {
   exerciseId: string;
   onClick: (ex: Exercise) => void;
   getExerciseStatus?: GetExerciseStatus;
   getExerciseStarted?: (exId: string) => void;
-  muscles?: MuscleResult;
+  getMuscleListStarted?: () => void;
+  muscles?: MusclesResult;
 }
 
 export class EditExerciseC extends React.Component<EditExerciseCProps> {
-  constructor(props: EditExerciseCProps) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick(exercise) {
-      this.props.onClick(exercise);
-  }
+  handleClick = (exercise: Exercise) => {
+    this.props.onClick(exercise);
+  };
   componentDidMount() {
     if (this.props.getExerciseStarted) {
       this.props.getExerciseStarted(this.props.exerciseId);
     }
     // debugger
-    if (this.props.muscles.loading) {
+    if (
+      this.props.muscles &&
+      this.props.muscles.loading &&
+      this.props.getMuscleListStarted
+    ) {
       this.props.getMuscleListStarted();
     }
   }
   render() {
-    // debugger;
+    debugger;
     const { getExerciseStatus = {} } = this.props;
     const loading: boolean = getExerciseStatus.loading === true;
     const started: boolean = getExerciseStatus.started === true;
@@ -45,7 +56,7 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
           handleClick={this.handleClick}
           started={started}
           buttonLabel="Save"
-          initialValues={exercise}
+          initialValue={exercise}
           muscles={this.props.muscles}
         />
       );
@@ -58,19 +69,18 @@ const mapStateToProps = (state: State) => {
   // debugger;
   return {
     getExerciseStatus: state.getExerciseStatus,
-    muscles : state.filter.muscles
+    muscles: state.filter.muscles
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<State>) => {
-
   return {
     onClick: (exercise: Exercise) => {
       dispatch(editExerciseStarted(exercise));
     },
     getExerciseStarted: (exId: string) => dispatch(getExerciseStarted(exId)),
-    getMuscleListStarted: () => dispatch(getMusclesStarted()) 
+    getMuscleListStarted: () => dispatch(getMusclesStarted())
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(EditExerciseC);
+export default connect(mapStateToProps, mapDispatchToProps)(EditExerciseC);
