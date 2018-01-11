@@ -5,13 +5,14 @@ import IconButton from "material-ui/IconButton";
 import Subheader from "material-ui/Subheader";
 import StarBorder from "material-ui/svg-icons/toggle/star-border";
 import { Muscle } from "../redux/model";
+import "./MuscleList.css";
 
 const styles = {
-  // root: {
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  //   justifyContent: 'space-around',
-  // },
+   root: {
+     display: 'flex',
+     flexWrap: 'wrap',
+     justifyContent: 'space-around',
+   },
   gridList: {
     width: "80%",
     height: "80%",
@@ -30,7 +31,7 @@ class MuscleList extends React.Component<MuscleListProps> {
   };
   render() {
     return (
-      <div>
+      <div style={styles.root}>
         <GridList cellHeight={250} cols={4} style={styles.gridList}>
           <Subheader>Muscles</Subheader>
           {this.props.muscles.map(muscle => (
@@ -43,7 +44,7 @@ class MuscleList extends React.Component<MuscleListProps> {
                 </IconButton>
               }
             >
-              <img alt="no set" src={muscle.muscleURL} />
+              <img className="muscle-img" alt="no set" src={muscle.muscleURL} />
             </GridTile>
           ))}
         </GridList>
