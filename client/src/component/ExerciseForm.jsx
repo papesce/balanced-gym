@@ -1,54 +1,47 @@
+// @flow
 import * as React from "react";
 import { Component } from "react";
 import { RoutineSelect } from "./formitems/RoutineSelect";
 import { TextEntryField } from "./formitems/TextEntryField";
-// import { Exercise } from "../redux/model";
-// import { EquipmentSelect } from "./formitems/EquipmentSelect";
 import "./ExerciseForm.css";
 import TargetSelect from "./formitems/TargetSelect";
-import { MusclesResult } from "../redux/model";
+import { MusclesResult, Exercise, Muscle } from "../redux/model";
 import MuscleSelect from "./formitems/MuscleSelect";
 import RaisedButton from "material-ui/RaisedButton";
-// import TargetSelect from "./formitems/TargetSelect";
-// import MuscleSelect from "./formitems/MuscleSelect";
 
 interface ExerciseFormProps {
-  handleClick: () => void;
+  handleClick: (exercise: Exercise) => void;
   started: boolean;
   buttonLabel: string;
-  initialValues: Exercise;
+  initialValue: Exercise;
   muscles: MusclesResult;
 }
 
-interface ExerciseFormState {
-  routineId: string;
-}
-
-class ExerciseForm extends Component<ExerciseFormProps, ExerciseFormState> {
-  constructor(props) {
+class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
+  constructor(props: ExerciseFormProps) {
     super(props);
     // debugger;
-    this.state = { ...this.props.initialValues };
+    this.state = { ...this.props.initialValue };
   }
-  onRoutineIdChange = value => {
+  onRoutineIdChange = (value: string) => {
     this.setState({ routineId: value });
   };
-  onNameChange = value => {
+  onNameChange = (value: string) => {
     this.setState({ name: value });
   };
-  onMuscleGroupChange = value => {
+  onMuscleGroupChange = (value: string) => {
     this.setState({ muscleGroup: value });
   };
-  onTargetChange = value => {
+  onTargetChange = (value: Muscle) => {
     this.setState({ target: value });
   };
-  onGifURLChange = value => {
+  onGifURLChange = (value: string) => {
     this.setState({ gifURL: value });
   };
-  onExerciseURLChange = value => {
+  onExerciseURLChange = (value: string) => {
     this.setState({ exerciseURL: value });
   };
-  onSynergistsChange = value => {
+  onSynergistsChange = (value: Array<Muscle>) => {
     this.setState({ synergists: value });
   };
   handleClick = () => {

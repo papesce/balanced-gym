@@ -10,7 +10,8 @@ import {
   getExercisesSucceeded,
   getExerciseSucceeded,
   getMuscleGroupsSucceeded,
-  // getTargetsSucceeded,
+  getMuscleSucceeded,
+  editMuscleSucceeded,
   getMusclesSucceeded
 } from "./actions";
 import { ajax } from "rxjs/observable/dom/ajax";
@@ -19,10 +20,11 @@ import { Exercise } from "./model";
 
 const NEW_EXERCISE_URL: string = "/newExercise";
 const NEW_MUSCLE_URL: string = "/newMuscle";
+const GET_MUSCLE_URL: string = "/muscle";
+const GET_MUSCLES_URL: string = "/muscle";
 const GET_EXERCISES_URL: string = "/exercise";
 const GET_EXERCISE_URL: string = "/exercise";
 const GET_MUSCLE_GROUPS_URL: string = "/muscleGroups";
-const GET_MUSCLES_URL: string = "/muscle";
 // const GET_TARGETS_URL: string = "/target"; //deprecated
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
@@ -161,13 +163,44 @@ const getMuscles = (action$: ActionsObservable<Action<any>>) => {
   );
 };
 
+const getMuscle = (action$: ActionsObservable<Action<any>>) => {
+  return action$.ofType(T.GET_MUSCLE_STARTED).pipe(
+    mergeMap(action => {
+      const muscleId = action.payload ? action.payload : "";
+      return ajax.get(`${GET_MUSCLE_URL}/${muscleId}`, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      const muscle = resp.response;
+      return getMuscleSucceeded(muscle);
+    })
+  );
+};
+
+const editMuscle = (action$: ActionsObservable<Action<any>>) => {
+  return action$.ofType(T.EDIT_MUSCLE_STARTED).pipe(
+    mergeMap(action => {
+      const exId = action.payload ? action.payload._id : "";
+      return ajax.patch(`${GET_MUSCLE_URL}/${exId}`, action.payload, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      const muscle = resp.response;
+      return editMuscleSucceeded(muscle);
+    })
+  );
+};
+
 export const rootEpic = combineEpics(
   addExercise,
   addMuscle,
   getExercises,
   getExercise,
   editExercise,
+  editMuscle,
   getMuscleGroups,
-  // getTargets,
+  getMuscle,
   getMuscles
 );

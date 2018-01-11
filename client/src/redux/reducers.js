@@ -5,31 +5,22 @@ import { handleActions, Action } from "redux-actions";
 import {
   NewExerciseStatus,
   NewMuscleStatus,
-  Muscle,
-  MusclesResult,
+  GetMuscleStatus,
   GetExerciseStatus,
-  Exercise,
   State,
   MuscleGroupsResult,
   TargetsResult,
   Filter,
-  GroupedExercises,
-  Targets
+  GroupedExercises
 } from "./model";
 import { routerReducer } from "react-router-redux";
 
 const newExerciseReducer = handleActions(
   {
-    [T.NEW_EXERCISE_STARTED]: (
-      state: NewExerciseStatus,
-      action: Action<Exercise>
-    ): NewExerciseStatus => {
+    [T.NEW_EXERCISE_STARTED]: (state, action): NewExerciseStatus => {
       return { started: true };
     },
-    [T.NEW_EXERCISE_SUCCEEDED]: (
-      state: NewExerciseStatus,
-      action: Action<Exercise>
-    ): NewExerciseStatus => {
+    [T.NEW_EXERCISE_SUCCEEDED]: (state, action): NewExerciseStatus => {
       return {};
     }
   },
@@ -38,65 +29,59 @@ const newExerciseReducer = handleActions(
 
 const newMuscleReducer = handleActions(
   {
-    [T.NEW_MUSCLE_STARTED]: (
-      state: NewMuscleStatus,
-      action: Action<Muscle>
-    ): NewMuscleStatus => {
+    [T.NEW_MUSCLE_STARTED]: (state, action): NewMuscleStatus => {
       return { started: true };
     },
-    [T.NEW_MUSCLE_SUCCEEDED]: (
-      state: NewMuscleStatus,
-      action: Action<Muscle>
-    ): NewMuscleStatus => {
+    [T.NEW_MUSCLE_SUCCEEDED]: (state, action): NewMuscleStatus => {
       return {};
     }
   },
   {} // initial State
 );
 
-const getExerciseReducer = handleActions/*<GetExerciseStatus, Exercise>*/(
+const getMuscleReducer = handleActions(
   {
-    [T.GET_EXERCISE_STARTED]: (
-      state: GetExerciseStatus,
-      action: Action<any>
-    ): GetExerciseStatus => {
+    [T.GET_MUSCLE_STARTED]: (state, action): GetMuscleStatus => {
       return { loading: true };
     },
-    [T.GET_EXERCISE_SUCCEEDED]: (
-      state: GetExerciseStatus,
-      action: Action<Exercise>
-    ): GetExerciseStatus => {
+    [T.GET_MUSCLE_SUCCEEDED]: (state, action): GetMuscleStatus => {
+      return { muscle: action.payload };
+    },
+    [T.EDIT_MUSCLE_STARTED]: (state, action): GetMuscleStatus => {
+      return { muscle: state.muscle, started: true };
+    },
+    [T.EDIT_MUSCLE_SUCCEEDED]: (state, action): GetMuscleStatus => {
+      return { muscle: action.payload };
+    }
+  },
+  { loading: true } // initial State
+);
+
+const getExerciseReducer = handleActions(
+  {
+    [T.GET_EXERCISE_STARTED]: (state, action): GetExerciseStatus => {
+      return { loading: true };
+    },
+    [T.GET_EXERCISE_SUCCEEDED]: (state, action): GetExerciseStatus => {
       return { exercise: action.payload };
     },
-    [T.EDIT_EXERCISE_STARTED]: (
-      state: GetExerciseStatus,
-      action: Action<Exercise>
-    ): GetExerciseStatus => {
+    [T.EDIT_EXERCISE_STARTED]: (state, action): GetExerciseStatus => {
       return { exercise: state.exercise, started: true };
     },
-    [T.EDIT_EXERCISE_SUCCEEDED]: (
-      state: GetExerciseStatus,
-      action: Action<Exercise>
-    ): GetExerciseStatus => {
+    [T.EDIT_EXERCISE_SUCCEEDED]: (state, action): GetExerciseStatus => {
       return { exercise: action.payload };
     }
   },
   { loading: true } // initial State
 );
 
-const exercisesReducer: Reducer<GroupedExercises>  = handleActions(
+const exercisesReducer: Reducer<GroupedExercises> = handleActions(
   {
-    [T.GET_EXERCISES_STARTED]: (
-      state: GroupedExercises,
-      action: Action<Array<Targets>>
-    ): GroupedExercises => {
+    [T.GET_EXERCISES_STARTED]: (state, action): GroupedExercises => {
       return { loading: true };
     },
-    [T.GET_EXERCISES_SUCCEEDED]: (
-      state: GroupedExercises,
-      action: Action<Array<Targets>>
-    ): GroupedExercises => {
-      return {targets: action.payload}; 
+    [T.GET_EXERCISES_SUCCEEDED]: (state, action): GroupedExercises => {
+      return { targets: action.payload };
     }
   },
   {}
@@ -104,7 +89,7 @@ const exercisesReducer: Reducer<GroupedExercises>  = handleActions(
 
 const muscleGroupReducer = handleActions(
   {
-    [T.SET_MUSCLE_GROUP]: (state: string, action: Action<string>): string => {
+    [T.SET_MUSCLE_GROUP]: (state, action): string => {
       return action.payload ? action.payload : "";
     }
   },
@@ -113,10 +98,7 @@ const muscleGroupReducer = handleActions(
 
 const muscleGroupsReducer = handleActions(
   {
-    [T.GET_MUSCLE_GROUPS_SUCCEEDED]: (
-      state: MuscleGroupsResult,
-      action: Action<MuscleGroupsResult>
-    ): MuscleGroupsResult => {
+    [T.GET_MUSCLE_GROUPS_SUCCEEDED]: (state, action): MuscleGroupsResult => {
       return action.payload ? { muscleGroups: action.payload } : {};
     }
   },
@@ -146,10 +128,7 @@ const targetReducer = handleActions(
 
 const musclesReducer = handleActions(
   {
-    [T.GET_MUSCLES_SUCCEEDED]: (
-      state: MusclesResult,
-      action: Action<MusclesResult>
-    ): TargetsResult => {
+    [T.GET_MUSCLES_SUCCEEDED]: (state, action): TargetsResult => {
       return action.payload ? { muscles: action.payload } : {};
     }
   },
@@ -161,12 +140,13 @@ const filterReducer: Reducer<Filter> = combineReducers({
   muscles: musclesReducer,
   muscleGroups: muscleGroupsReducer,
   selectedMuscleGroup: muscleGroupReducer,
-  selectedTarget: targetReducer,
+  selectedTarget: targetReducer
 });
 
 export const rootReducer: Reducer<State> = combineReducers({
   newExerciseStatus: newExerciseReducer,
   newMuscleStatus: newMuscleReducer,
+  getMuscleStatus: getMuscleReducer,
   getExerciseStatus: getExerciseReducer,
   groupedExercises: exercisesReducer,
   filter: filterReducer,

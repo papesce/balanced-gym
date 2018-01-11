@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Component } from "react";
 import { Label, FormGroup, Input, Form } from "reactstrap";
-import { Muscle } from "../routes/Muscle";
+import { Muscle } from "../redux/model";
 
 export interface TargetFormProps {
   handleChange: (value: string) => void;
@@ -16,7 +16,7 @@ class TargetForm extends Component<TargetFormProps> {
     super(props);
     this.onChange = this.onChange.bind(this);
   }
-  onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  onChange = (event: any) => {
     this.props.handleChange(event.target.value);
   }
   render() {

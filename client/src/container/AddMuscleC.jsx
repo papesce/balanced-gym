@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { newMuscleStarted } from '../redux/actions';
-import { AddMuscleForm } from '../component/AddMuscleForm'
+import { MuscleForm } from '../component/MuscleForm'
 function mapStateToProps(state) {
   return {
 
@@ -18,7 +18,7 @@ class AddMuscleC extends Component {
   render() {
     return (
       <div>
-         <AddMuscleForm handleClick={this.props.addMuscle}/>
+         <MuscleForm handleClick={this.props.addMuscle}/>
       </div>
     );
   }

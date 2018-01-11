@@ -8,6 +8,15 @@ const getTargets = async () => {
   const exResult = await exQuery.lean().exec();
   return exResult.sort();
 };
+
+const getMuscle = async muscleId => {
+  const exQuery = muscleModel
+    .getModel()
+    .findOne({ _id: muscleId });
+  const exResult = await exQuery.lean().exec();
+  return exResult;
+};
+
 const getMuscles = async () => {
   const exQuery = muscleModel.getModel().find();
   // exQuery.distinct("target"); // , { muscleGroup: "Chest" });
@@ -21,15 +30,38 @@ const newMuscle = async muscle => {
   await new MuscleModel(muscle).save();
 };
 
+const updateMuscle = async (exId, exUpdate) => {
+  const exQuery = muscleModel
+    .getModel()
+    .findOneAndUpdate({ _id: exId }, exUpdate, {
+      new: true
+    });
+  const exResult = await exQuery.lean().exec();
+  return exResult;
+};
+
 const api = app => {
-  app.get("/target", async (req, res) => {
-    const targets = await getTargets();
-    res.send(targets);
-  });
+  // app.get("/target", async (req, res) => {
+  //   const targets = await getTargets();
+  //   res.send(targets);
+  // });
+
   app.get("/muscle", async (req, res) => {
     const targets = await getMuscles();
     res.send(targets);
   });
+
+  app.get("/muscle/:id", async (req, res) => {
+    const muscle = await getMuscle(req.params.id);
+    res.send(muscle);
+  });
+
+  app.patch("/muscle/:id", async (req, res) => {
+    const updatedMuscle = await updateMuscle(req.params.id, req.body);
+    res.send(updatedMuscle);
+  });
+
+
   app.post("/newMuscle", async (req, res) => {
     const muscle = await newMuscle(req.body);
     res.send(muscle);

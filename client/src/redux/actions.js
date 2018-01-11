@@ -53,3 +53,10 @@ export const getMusclesSucceeded = createAction(
 
 export const newMuscleStarted = createAction(Types.NEW_MUSCLE_STARTED);
 export const newMuscleSucceeded = createAction(Types.NEW_MUSCLE_SUCCEEDED);
+
+export const getMuscleStarted = createAction(Types.GET_MUSCLE_STARTED);
+export const getMuscleSucceeded = createAction(Types.GET_MUSCLE_SUCCEEDED);
+
+
+export const editMuscleStarted = createAction(Types.EDIT_MUSCLE_STARTED);
+export const editMuscleSucceeded = createAction(Types.EDIT_MUSCLE_SUCCEEDED);

@@ -38,18 +38,17 @@ interface GetExerciseStatus {
   started?: boolean;
 }
 
+interface GetMuscleStatus {
+  loading?: boolean;
+  muscle?: Muscle;
+  started?: boolean;
+}
+
+
 interface ExerciseQuery {
   muscleGroup?: string;
   target?: string;
 }
-
-// export interface ExerciseForm {
-//   values: Exercise;
-// }
-
-// interface AppForms {
-//   newExerciseForm: ExerciseForm;
-// }
 
 export interface MuscleGroupsResult {
   muscleGroups?: Array<string>;
@@ -84,6 +83,7 @@ interface State {
   newExerciseStatus?: NewExerciseStatus;
   editExerciseSatus?: EditExerciseStatus;
   setMuscleStatus?: SetMuscleStatus;
+  getMuscleStatus?: GetMuscleStatus;
   getExerciseStatus?: GetExerciseStatus;
   groupedExercises?: GroupedExercises;
   filter: Filter;

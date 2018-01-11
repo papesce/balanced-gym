@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State, TargetsResult } from "../redux/model";
 import { getMusclesStarted } from "../redux/actions";
+import { MuscleList } from "../component/MuscleList";
+import { push } from "react-router-redux";
 
 interface MuscleListRCProps {
   muscles?: TargetsResult;
@@ -23,17 +25,10 @@ class MuscleListRC extends Component<MuscleListRCProps> {
     if (muscles.muscles) {
       // debugger;
       return (
-         <ul>
-      {muscles.muscles.map( (muscle, index) => {
-        return (<li key={index}> {muscle.name} </li>);
-      })} 
-        </ul> );
+        <MuscleList muscles={muscles.muscles} onClick={this.props.editMuscle} />
+      );
     }
-    return (
-      <div>
-        error loading muscle list  
-      </div>
-    );
+    return <div>error loading muscle list</div>;
   }
 }
 
@@ -43,8 +38,9 @@ const mapStateToProps = (state: State): MuscleListRCProps => {
 };
 
 const mapDispatchToProps = (dispatch): MuscleListRCProps => {
-  return { 
-    getMuscleListStarted: () => dispatch(getMusclesStarted()) 
+  return {
+    getMuscleListStarted: () => dispatch(getMusclesStarted()),
+    editMuscle: (muscleId: string) => dispatch(push(`/editMuscle/${muscleId}`))
   };
 };
 
