@@ -1,3 +1,4 @@
+// @flow
 import * as React from "react";
 import { Exercise } from "../redux/model";
 import {
@@ -30,6 +31,13 @@ const getLastUpdated = (exercise) => {
    }
    return "";
 };
+ 
+const getSyn = (col) => {
+  if (col) {
+  return col.reduce( (accum, musc, index) => accum + ((index > 0) ? ", " : "") + musc.name, "");
+  } 
+  return "[]"
+}
 
 const formatWeight = (weight) => Math.round(weight * 100) / 100;
 class ExerciseItem extends React.Component<ExerciseItemProps> {  
@@ -58,8 +66,8 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
             <b> Suggested:</b> <b>Reps:</b> {exercise.suggestedSerie.reps}
             <b> Weight:</b> {formatWeight(exercise.suggestedSerie.weight)}<br/>
             <b> Routine:</b> {getRoutine(exercise.routineId)}<br/>
-            <b> Last Updated</b> {getLastUpdated(exercise)}<br/>
-            <b> murl </b> {exercise.exerciseURL? 'yes' : 'no'}
+            <b> Last Updated:</b> {getLastUpdated(exercise)}<br/>
+            <b> Syn: </b> {getSyn(exercise.synergists)}
           </CardText>
           <Button onClick={() => editExercise(exercise._id)}>Edit</Button>
         </CardBody>
