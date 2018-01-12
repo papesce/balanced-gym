@@ -26,11 +26,25 @@ const normalizeWeight = (weight, exercise) => {
   return weight * multiplier + extraWeight;
 };
 
-const computeSuggestedSerie = targetGroup => {
+const areSimilar = (musc1s, musc2s) => {
+  const s1 = new Set(musc1s.map(m => m.name));
+  const s2 = new Set(musc2s.map(m => m.name));
+  const difference = new Set([...s1].filter(x => !s2.has(x)));
+  return difference.size === 0;
+};
+
+const isSimilar = (ex1, ex2) => {
+  if ((ex1.synergists === undefined) && ex2.synergists) return false;
+  if ((ex2.synergists === undefined) && ex1.synergists) return false;
+  if ((ex2.synergists === undefined) && (ex2.synergists === undefined)) return true;
+  return areSimilar(ex1.synergists, ex2.synergists);
+};
+
+const computeSuggestedSerie = (exercise, targetGroup) => {
   let serie = {};
   const maxserie = { reps: 0, weight: 0 };
   targetGroup.forEach(ex => {
-    if (ex.series.length > 0) {
+    if (isSimilar(exercise, ex) && ex.series.length > 0) {
       [serie] = ex.series;
       const nweight = normalizeWeight(serie.weight, ex);
       if (nweight > maxserie.weight) {
@@ -85,8 +99,8 @@ const sortByTarget = exercises => {
   for (const key in targetGroups) {
     if (key) {
       const groupedExercises = targetGroups[key];
-      const suggestedSerie = computeSuggestedSerie(groupedExercises);
       groupedExercises.forEach(ex => {
+        const suggestedSerie = computeSuggestedSerie(ex, groupedExercises);
         const exerc = ex;
         if (suggestedSerie) {
           const denormalizedSerie = {
