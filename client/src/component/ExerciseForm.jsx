@@ -82,7 +82,7 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
           onChange={this.onTargetChange}
         />
         <br />
-        <img alt="muscleURL" style={{ width: "200px" }} src={muscleURL} />
+        <img alt="muscleURL" style={{ width: "auto", maxHeight: "250px" }} src={muscleURL} />
         <br />
         <TextEntryField
           label="Gif URL"

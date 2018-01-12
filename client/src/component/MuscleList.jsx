@@ -9,7 +9,7 @@ import "./MuscleList.css";
 
 const styles = {
    root: {
-     display: 'flex',
+     // display: 'flex',
      flexWrap: 'wrap',
      justifyContent: 'space-around',
    },

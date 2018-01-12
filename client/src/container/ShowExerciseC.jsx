@@ -31,7 +31,9 @@ export class ShowExerciseC extends React.Component<ShowExerciseCProps> {
     }
     if (getExerciseStatus.exercise) {
       const exercise: Exercise = getExerciseStatus.exercise;
-      const muscles: Array<Muscle> = [exercise.target, ...exercise.synergists];
+      // debugger;
+      const { target = {}, synergists = [] } = exercise; 
+      const muscles: Array<Muscle> = [target, ...synergists];
       // debugger;
       return (
           <MuscleList
