@@ -34,9 +34,9 @@ const areSimilar = (musc1s, musc2s) => {
 };
 
 const isSimilar = (ex1, ex2) => {
-  if ((ex1.synergists === undefined) && ex2.synergists) return false;
-  if ((ex2.synergists === undefined) && ex1.synergists) return false;
-  if ((ex1.synergists === undefined) && (ex2.synergists === undefined)) return true;
+  if ((!ex1.synergists) && ex2.synergists) return false;
+  if ((!ex2.synergists) && ex1.synergists) return false;
+  if ((!ex1.synergists) && (!ex2.synergists)) return true;
   return areSimilar(ex1.synergists, ex2.synergists);
 };
 
