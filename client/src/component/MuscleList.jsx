@@ -44,7 +44,7 @@ class MuscleList extends React.Component<MuscleListProps> {
                 </IconButton>
               }
             >
-              <img className="muscle-img" alt="no set" src={muscle.muscleURL} />
+              <img style={styles.gridList} alt="no set" src={muscle.muscleURL} />
             </GridTile>
           ))}
         </GridList>
