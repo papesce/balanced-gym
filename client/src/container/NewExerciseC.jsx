@@ -1,68 +1,71 @@
+// @flow
 import * as React from "react";
 import { ExerciseForm } from "../component/ExerciseForm";
-import { connect, Dispatch } from "react-redux";
+import { connect } from "react-redux";
 import {
   State,
   Exercise,
-  NewExerciseStatus
+  NewExerciseStatus,
+  MusclesResult
 } from "../redux/model";
-import { newExerciseStarted } from "../redux/actions";
+import { newExerciseStarted, getMusclesStarted } from "../redux/actions";
 
 interface NewExerciseCProps {
   onClick: (ex: Exercise) => void;
   newExerciseStatus?: NewExerciseStatus;
-}
-
-interface StateToProps {
-  newExerciseStatus?: NewExerciseStatus;
+  getMuscleListStarted?: () => void;
+  muscles?: MusclesResult;
 }
 
 export class NewExerciseC extends React.Component<NewExerciseCProps> {
-  constructor(props: NewExerciseCProps) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick() {
-    if (this.props.newExerciseForm) {
-      const ex: ExerciseForm = this.props.newExerciseForm;
-      this.props.onClick(ex.values);
+  handleClick = (exercise: Exercise) => {
+    this.props.onClick(exercise);
+  };
+  componentDidMount() {
+    if (
+      this.props.muscles &&
+      this.props.muscles.loading &&
+      this.props.getMuscleListStarted
+    ) {
+      this.props.getMuscleListStarted();
     }
   }
   render() {
-    const { newExerciseStatus } = this.props;
+    debugger;
+    const { newExerciseStatus, muscles } = this.props;
     const started: boolean = newExerciseStatus
       ? newExerciseStatus.started === true
       : false;
+    const loading: boolean = muscles ? muscles.loading : true;
+    if (loading) {
+      return <div>loading...</div>;
+    }
     return (
       <ExerciseForm
         handleClick={this.handleClick}
         started={started}
         buttonLabel="Add New Exercise"
-        initialValues={{routineId: "59f0c59d4e55c40d38868034"}}
+        initialValue={{ routineId: "59f0c59d4e55c40d38868034" }}
+        muscles={muscles}
       />
     );
   }
 }
 
-const mapStateToProps = (state: State): StateToProps => {
+const mapStateToProps = (state: State) => {
   return {
     newExerciseStatus: state.newExerciseStatus,
+    muscles: state.filter.muscles
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<State>,
-  ownProps: NewExerciseRCProps
-) => {
+const mapDispatchToProps = dispatch => {
   return {
     onClick: (newExerciseForm: Exercise) => {
       dispatch(newExerciseStarted(newExerciseForm));
-    }
+    },
+    getMuscleListStarted: () => dispatch(getMusclesStarted())
   };
 };
 
-export default connect/*<StateToProps, DispatchToProps>*/(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewExerciseC);
-
+export default connect(mapStateToProps, mapDispatchToProps)(NewExerciseC);

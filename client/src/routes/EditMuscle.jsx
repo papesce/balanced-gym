@@ -25,7 +25,7 @@ render() {
           <Container>
             <Row>
               <Col md={12}>
-                <h4 className={"newMuscle"}>Edit muscle:</h4>
+                <h4 className={"App-subtitle"}>Edit muscle:</h4>
               </Col>
             </Row>
             <Row>

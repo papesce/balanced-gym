@@ -25,18 +25,21 @@ class ExerciseCollapse extends React.Component<
     this.state = { open: false };
   }
   componentWillMount() {
-    const openSt = localStorage.getItem(this.props.target.target);
-    this.setState({ open: JSON.parse(openSt ? openSt : "false") });
+    const openSt = localStorage.getItem(this.props.target.target._id);
+    const open = JSON.parse(openSt ? openSt : "false");
+    //debugger
+    this.setState({ open });
   }
   componentDidMount() {
     // setTimeout(() => {
     //  window.scrollTo(100, 2100);
     // },         5000);
   }
-  componentWillUnmount() {
+  toggleState = () => {
+    this.setState({ open: !this.state.open });
     localStorage.setItem(
-      this.props.target.target,
-      JSON.stringify(this.state.open)
+      this.props.target.target._id,
+      JSON.stringify(!this.state.open)
     );
   }
   render() {
@@ -47,7 +50,7 @@ class ExerciseCollapse extends React.Component<
           <BreadcrumbItem active={true}>
             <Button
               color="link"
-              onClick={() => this.setState({ open: !this.state.open })}
+              onClick={this.toggleState}
             >
               {target.target.name}
             </Button>

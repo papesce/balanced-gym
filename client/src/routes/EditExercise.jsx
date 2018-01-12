@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Container, Row, Col } from "reactstrap";
 import EditExerciseC from "../container/EditExerciseC";
-import "./Home.css";
 import TopBar from "./TopBar";
 
 interface EditExerciseProps {
@@ -24,7 +23,7 @@ render() {
           <Container>
             <Row>
               <Col md={12}>
-                <h4 className={"newExercise"}>Edit exercise:</h4>
+                <h4 className={"App-subtitle"}>Edit exercise:</h4>
               </Col>
             </Row>
             <Row>

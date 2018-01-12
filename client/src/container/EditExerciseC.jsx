@@ -26,7 +26,7 @@ interface EditExerciseCProps {
 export class EditExerciseC extends React.Component<EditExerciseCProps> {
   handleClick = (exercise: Exercise) => {
     this.props.onClick(exercise);
-  };
+  }
   componentDidMount() {
     if (this.props.getExerciseStarted) {
       this.props.getExerciseStarted(this.props.exerciseId);
@@ -41,7 +41,7 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
     }
   }
   render() {
-    debugger;
+    // debugger;
     const { getExerciseStatus = {} } = this.props;
     const loading: boolean = getExerciseStatus.loading === true;
     const started: boolean = getExerciseStatus.started === true;

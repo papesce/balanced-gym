@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Container, Row, Col } from "reactstrap";
-import { NewExerciseC } from "../container/NewExerciseC";
+import NewExerciseC from "../container/NewExerciseC";
 import "./Home.css";
 import TopBar from "./TopBar";
 
@@ -12,7 +12,7 @@ class AddExercise extends React.Component {
           <Container>
             <Row>
               <Col md={12}>
-                <h4 className={"newExercise"}>Add a new exercise:</h4>
+                <h4 className={"App-subtitle"}>Add a new exercise:</h4>
               </Col>
             </Row>
             <Row>

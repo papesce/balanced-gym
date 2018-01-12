@@ -22,3 +22,8 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.App-subtitle {
+  margin-top: 20px;
+  font-size: 1.5em;
+}

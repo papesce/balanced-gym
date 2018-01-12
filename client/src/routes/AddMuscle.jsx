@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import AddMuscleC from "../container/AddMuscleC"
+import { Container, Row, Col } from "reactstrap";
+import NewMuscleC from "../container/NewMuscleC"
 import TopBar from "./TopBar";
 
 class AddMuscle extends Component {
@@ -7,7 +8,19 @@ class AddMuscle extends Component {
     return (
       <div>
         <TopBar/>
-        <AddMuscleC/>
+        <Container>
+            <Row>
+              <Col md={12}>
+                <h4 className="App-subtitle">Add muscle:</h4>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={12}>
+                <NewMuscleC/>
+              </Col>
+            </Row> 
+          </Container>
+       
       </div>
     );
   }

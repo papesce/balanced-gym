@@ -45,7 +45,7 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
     this.setState({ synergists: value });
   };
   handleClick = () => {
-    debugger;
+    // debugger;
     const exercise = this.state;
     this.props.handleClick(exercise);
   };
@@ -53,8 +53,8 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
 
     const { buttonLabel } = this.props;
     const muscleURL = this.state.target ? this.state.target.muscleURL : "";
-    
-    debugger
+    const targetId = this.state.target ? this.state.target._id : "";
+    // debugger
     return (
       <div className="exercise-form">
         <RoutineSelect
@@ -78,7 +78,7 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
         <br />
         <TargetSelect
           muscles={this.props.muscles}
-          initialValue={this.state.target._id}
+          initialValue={targetId}
           onChange={this.onTargetChange}
         />
         <br />

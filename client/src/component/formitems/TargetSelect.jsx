@@ -24,6 +24,7 @@ class TargetSelect extends Component<TargetSelectProps> {
     this.props.onChange(val);
   }
   render() {
+    // debugger
     const { muscles, initialValue = "None" } = this.props;
     if (muscles.loading) {
       return <div> loading muscles... </div>;

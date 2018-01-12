@@ -14,6 +14,7 @@ import { Store } from "redux";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { EditMuscle } from "./routes/EditMuscle";
 
+
 const PERSISTED_STATE_KEY = "persistedState";
 const persistedStateSt = localStorage.getItem(PERSISTED_STATE_KEY);
 let persistedState: State;
