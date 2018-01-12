@@ -1,3 +1,4 @@
+// @flow
 import * as React from "react";
 // import { CardColumns } from "reactstrap";
 import { ExerciseItem } from "./ExerciseItem";
@@ -10,6 +11,7 @@ import Button from "reactstrap/lib/Button";
 interface ExerciseCollapseProps {
   target: Targets;
   editExercise: (exId: string) => void;
+  showMuscles: (exId: string) => void;
 }
 
 interface ExerciseCollapseState {
@@ -43,7 +45,7 @@ class ExerciseCollapse extends React.Component<
     );
   }
   render() {
-    const { target, editExercise } = this.props;
+    const { target, editExercise, showMuscles } = this.props;
     return (
       <div>
         <Breadcrumb>
@@ -69,6 +71,7 @@ class ExerciseCollapse extends React.Component<
                   exercise={exercise}
                   key={exercise._id}
                   editExercise={editExercise}
+                  showMuscles={showMuscles}
                 />
               ))}
           </StackGrid>

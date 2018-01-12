@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ExerciseList } from "../component/ExerciseList";
-import { connect, Dispatch } from "react-redux";
+import { connect } from "react-redux";
 import { State, ExerciseQuery, GroupedExercises } from "../redux/model";
 import { getExercisesStarted } from "../redux/actions";
 import { push } from "react-router-redux";
@@ -10,6 +10,7 @@ interface ExerciseListRCProps {
   exerciseQuery?: ExerciseQuery;
   getExercisesStarted?: (exerciseQuery: ExerciseQuery) => void;
   editExercise?: (exId: String) => void;
+  showMuscles?: (exId: String) => void;
 }
 
 class ExerciseListRC extends React.Component<ExerciseListRCProps> {
@@ -19,12 +20,22 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
     }
   }
   render() {
-    const { groupedExercises = {}, editExercise = x => x } = this.props;
+    const {
+      groupedExercises = {},
+      editExercise = x => x,
+      showMuscles = x => x
+    } = this.props;
     if (groupedExercises.loading) {
-      return (<div style={{ paddingLeft: "40px" }}>loading...</div>);
+      return <div style={{ paddingLeft: "40px" }}>loading...</div>;
     }
     if (groupedExercises.targets) {
-      return <ExerciseList targets={groupedExercises.targets} editExercise={editExercise} />;
+      return (
+        <ExerciseList
+          targets={groupedExercises.targets}
+          editExercise={editExercise}
+          showMuscles={showMuscles}
+        />
+      );
     }
     return <div />;
   }
@@ -44,17 +55,17 @@ const mapStateToProps = (state: State): ExerciseListRCProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<State>): ExerciseListRCProps => {
+const mapDispatchToProps = (dispatch): ExerciseListRCProps => {
   return {
     getExercisesStarted: (exerciseQuery: ExerciseQuery) =>
       dispatch(getExercisesStarted(exerciseQuery)),
-    editExercise: (exId: string) => dispatch(push(`/editExercise/${exId}`))
+    editExercise: (exId: string) => dispatch(push(`/editExercise/${exId}`)),
+    showMuscles: (exId: string) => dispatch(push(`/showExercise/${exId}`))
   };
 };
 
-const ExerciseListC = connect/*<ExerciseListRCProps>*/(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExerciseListRC);
+const ExerciseListC = connect(mapStateToProps, mapDispatchToProps)(
+  ExerciseListRC
+);
 
 export { ExerciseListC };

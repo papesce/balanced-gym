@@ -6,6 +6,7 @@ import { ExerciseCollapse } from "./ExerciseCollapse";
 interface ExerciseListProps {
   targets: Array<Targets>;
   editExercise: (exId: string) => void;
+  showMuscles: (exId: string) => void;
 }
 
 class ExerciseList extends React.Component<ExerciseListProps> {
@@ -15,7 +16,8 @@ class ExerciseList extends React.Component<ExerciseListProps> {
     // },         5000);
   }
   render() {
-    const { targets, editExercise } = this.props;
+    const { targets, editExercise, showMuscles } = this.props;
+    // debugger
     return (
       <div>
         {targets.map((target, index) =>
@@ -23,6 +25,7 @@ class ExerciseList extends React.Component<ExerciseListProps> {
             key={index}
             target={target}
             editExercise={editExercise}
+            showMuscles={showMuscles}
           />
         )
         }

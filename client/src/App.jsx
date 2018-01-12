@@ -8,6 +8,7 @@ import { Route } from "react-router";
 import { AddExercise } from "./routes/AddExercise";
 import { AddMuscle } from "./routes/AddMuscle";
 import { EditExercise } from "./routes/EditExercise";
+import { ShowExercise } from "./routes/ShowExercise";
 import { Muscles } from "./routes/Muscles";
 import { State, DEFAULT_STATE } from "./redux/model";
 import { Store } from "redux";
@@ -48,6 +49,7 @@ class App extends React.Component {
             <Route exact={true} path="/" component={Home} />
             <Route path="/addExercise" component={AddExercise} />
             <Route path="/editExercise/:exId" component={EditExercise} />
+            <Route path="/showExercise/:exId" component={ShowExercise} />
             <Route path="/muscles" component={Muscles} />
             <Route path="/addMuscle" component={AddMuscle} />
             <Route path="/editMuscle/:muscleId" component={EditMuscle} />

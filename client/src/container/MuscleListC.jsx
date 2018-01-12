@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State, TargetsResult } from "../redux/model";
@@ -5,12 +6,13 @@ import { getMusclesStarted } from "../redux/actions";
 import { MuscleList } from "../component/MuscleList";
 import { push } from "react-router-redux";
 
-interface MuscleListRCProps {
+interface MuscleListCProps {
   muscles?: TargetsResult;
   getMuscleListStarted?: () => void;
+  editMuscle?: (muscleId: string) => void; 
 }
 
-class MuscleListRC extends Component<MuscleListRCProps> {
+class MuscleListC extends Component<MuscleListCProps> {
   componentDidMount() {
     if (this.props.getMuscleListStarted) {
       this.props.getMuscleListStarted();
@@ -18,32 +20,32 @@ class MuscleListRC extends Component<MuscleListRCProps> {
   }
   render() {
     // debugger;
-    const { muscles = {} } = this.props;
+    const { muscles = {}, editMuscle } = this.props;
     if (muscles.loading) {
       return <div>loading... </div>;
     }
     if (muscles.muscles) {
       // debugger;
       return (
-        <MuscleList muscles={muscles.muscles} onClick={this.props.editMuscle} />
+        <MuscleList muscles={muscles.muscles} onClick={editMuscle} />
       );
     }
     return <div>error loading muscle list</div>;
   }
 }
 
-const mapStateToProps = (state: State): MuscleListRCProps => {
+const mapStateToProps = (state: State): MuscleListCProps => {
   const muscles = state.filter ? state.filter.muscles : {};
   return { muscles: muscles };
 };
 
-const mapDispatchToProps = (dispatch): MuscleListRCProps => {
+const mapDispatchToProps = (dispatch): MuscleListCProps => {
   return {
     getMuscleListStarted: () => dispatch(getMusclesStarted()),
     editMuscle: (muscleId: string) => dispatch(push(`/editMuscle/${muscleId}`))
   };
 };
 
-const MuscleListC = connect(mapStateToProps, mapDispatchToProps)(MuscleListRC);
+export default connect(mapStateToProps, mapDispatchToProps)(MuscleListC);
 
-export { MuscleListC };
+

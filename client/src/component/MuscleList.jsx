@@ -33,12 +33,12 @@ const styles = {
 
 interface MuscleListProps {
   muscles: Array<Muscle>;
-  onClick: (muscleID: String) => void;
+  onClick: (muscleId: string) => void;
 }
 
 class MuscleList extends React.Component<MuscleListProps> {
-  handleClick = (muscleID: String) => {
-    this.props.onClick(muscleID);
+  handleClick = (muscleId: string) => {
+    this.props.onClick(muscleId);
   };
   render() {
     return (

@@ -16,6 +16,7 @@ import { getRoutine } from "./Routines";
 interface ExerciseItemProps {
   exercise: Exercise;
   editExercise: (exId: string) => void;
+  showMuscles: (exId: string) => void;
 }
 
 // const getLastSerie = (exercise) => {
@@ -42,7 +43,8 @@ const getSyn = (col) => {
 const formatWeight = (weight) => Math.round(weight * 100) / 100;
 class ExerciseItem extends React.Component<ExerciseItemProps> {  
   render() {
-    const { exercise, editExercise } = this.props;
+    const { exercise, editExercise, showMuscles } = this.props;
+    // debugger
     return (
       <Card className="exercise-card" key={exercise._id}>
         <CardImg 
@@ -69,7 +71,8 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
             <b> Last Updated:</b> {getLastUpdated(exercise)}<br/>
             <b> Syn: </b> {getSyn(exercise.synergists)}
           </CardText>
-          <Button onClick={() => editExercise(exercise._id)}>Edit</Button>
+          <Button className="exercise-button" onClick={() => editExercise(exercise._id)}>Edit</Button>
+          <Button onClick={() => showMuscles(exercise._id)}>Muscles</Button>
         </CardBody>
       </Card>
     );
