@@ -3,7 +3,7 @@ import * as React from "react";
 import { GridList, GridTile } from "material-ui/GridList";
 import IconButton from "material-ui/IconButton";
 import Subheader from "material-ui/Subheader";
-import StarBorder from "material-ui/svg-icons/toggle/star-border";
+import StarBorder from "material-ui/svg-icons/navigation/more-horiz";
 import { Muscle } from "../redux/model";
 import "./MuscleList.css";
 
@@ -14,9 +14,20 @@ const styles = {
      justifyContent: 'space-around',
    },
   gridList: {
-    width: "80%",
+    width: "auto",
     height: "80%",
     overflowY: "auto"
+  },
+  divImg: {
+    width: "100%",
+    height: "100%",
+    textAlign: "center"
+  },
+  img:{
+    maxWidth: "100%",
+    maxHeight: "100%",
+    width:"auto",
+    height:"auto"
   }
 };
 
@@ -44,7 +55,9 @@ class MuscleList extends React.Component<MuscleListProps> {
                 </IconButton>
               }
             >
-              <img style={styles.gridList} alt="no set" src={muscle.muscleURL} />
+              <div style={styles.divImg}>
+                <img style={styles.img} alt="no set" src={muscle.muscleURL} />
+               </div>
             </GridTile>
           ))}
         </GridList>
