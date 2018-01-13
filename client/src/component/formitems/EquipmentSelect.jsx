@@ -1,37 +1,44 @@
+// @flow
 import * as React from "react";
 import { Component } from "react";
-import { Label, FormGroup, Input } from "reactstrap";
+import { getEquipments } from "../Equipments";
+import { SelectField } from "material-ui";
+import MenuItem from "material-ui/MenuItem/MenuItem";
 
-class EquipmentSelect extends Component {
+const styles = {
+  customWidth: {
+    width: 300
+  }
+};
+
+interface EquipmentSelectProps {
+  initialValue: string;
+  onChange: string => void;
+}
+
+class EquipmentSelect extends Component<EquipmentSelectProps> {
+  handleChange = (event: any, index: any, value: string) => {
+    this.props.onChange(value);
+  }
   render() {
+    const equipments = getEquipments();
+    const { initialValue = "None" } = this.props;
     return (
-      <FormGroup>
-        <Label>Equipment:</Label>
-        <Input
-          type="select"
-          onChange={this.props.input.onChange}
-          defaultValue={this.props.input.value}
-        >
-        <option value="">
-             None
-          </option>
-          <option value="Dumbbell">
-            1 Dumbbell
-          </option>
-          <option value="Dumbbells">
-            2 Dumbbells
-          </option>
-          <option value="Barbell Long">
-            Barbell Long
-          </option>
-          <option value="Barbell Short">
-            Barbell Short
-          </option>
-          <option value="TRX">
-            TRX
-          </option>
-        </Input>
-      </FormGroup>
+      <SelectField
+      floatingLabelText="Equipment"
+      value={initialValue}
+      onChange={this.handleChange}
+      style={styles.customWidth}
+    >
+      <MenuItem value={"None"} primaryText="None" />
+      {equipments.map((eq, index) => (
+        <MenuItem
+          key={index}
+          value={eq.value}
+          primaryText={eq.name}
+        />
+      ))}
+    </SelectField>
     );
   }
 }

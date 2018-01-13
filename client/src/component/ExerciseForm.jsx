@@ -2,6 +2,7 @@
 import * as React from "react";
 import { Component } from "react";
 import { RoutineSelect } from "./formitems/RoutineSelect";
+import { EquipmentSelect } from "./formitems/EquipmentSelect";
 import { TextEntryField } from "./formitems/TextEntryField";
 import "./ExerciseForm.css";
 import TargetSelect from "./formitems/TargetSelect";
@@ -25,6 +26,9 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
   }
   onRoutineIdChange = (value: string) => {
     this.setState({ routineId: value });
+  };
+  onEquipmentChange = (value: string) => {
+    this.setState({ equipment: value });
   };
   onNameChange = (value: string) => {
     this.setState({ name: value });
@@ -112,12 +116,14 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
           onChange={this.onSynergistsChange}
         />
         <br />
-        {/*<EquipmentSelect/>*/}
+        <EquipmentSelect 
+         onChange={this.onEquipmentChange}
+         initialValue={this.state.equipment}
+        />
+        <br/>
         <RaisedButton
           label={buttonLabel}
           primary={true}
-          // style={style}
-          //  disabled={started || !valid}
           onClick={this.handleClick}
         />
       </div>

@@ -1,3 +1,4 @@
+// @flow
 import * as React from "react";
 import { Component } from "react";
 import { getRoutines } from "../Routines";
@@ -16,11 +17,7 @@ interface RoutineSelectProps {
 }
 
 class RoutineSelect extends Component<RoutineSelectProps> {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
-  handleChange(event, index, value) {
+  handleChange = (event: any, index: any, value: string) => {
     this.props.onChange(value);
   }
   render() {
