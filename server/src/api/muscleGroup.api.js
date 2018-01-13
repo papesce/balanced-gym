@@ -4,9 +4,10 @@ const routineApi = require("./routine.api");
 
 const getMuscleGroup = async query => {
   const ExerciseModel = exerciseModel.getModel();
-  const exercisesQuery = ExerciseModel.find(query).populate({
-    path: "series"
-  });
+  const exercisesQuery = ExerciseModel.find(query)
+    .populate("series")
+    .populate("target")
+    .populate("synergists");
   const exercisesResult = await exercisesQuery.lean().exec();
   exerciseApi.addLastUpdatedToExercises(exercisesResult);
   const muscleGroup = {
