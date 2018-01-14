@@ -4,12 +4,20 @@ const exerciseApi = require("./exercise.api");
 
 const getLasUpdatedFromExercises = exercises => {
   let maxLastUpdated;
+  const today = new Date();
+  let updatedToday = 0;
   exercises.forEach(exerciseResult => {
-    if (!maxLastUpdated || exerciseResult.lastUpdated > maxLastUpdated) {
-      maxLastUpdated = exerciseResult.lastUpdated;
+    if (exerciseResult.lastUpdated) {
+      if (!maxLastUpdated || exerciseResult.lastUpdated > maxLastUpdated) {
+        maxLastUpdated = exerciseResult.lastUpdated;
+      }
+      const hours = (today.getTime() - exerciseResult.lastUpdated.getTime()) / 3600000
+      if (hours < 24) {
+        updatedToday += 1;
+      }
     }
   });
-  return maxLastUpdated;
+  return { maxLastUpdated, updatedToday };
 };
 
 const groupByMuscleGroupExercises = exercises => {
@@ -33,10 +41,12 @@ const groupByMuscleGroup = routineResult => {
   for (const key in newExercises) {
     if (key) {
       const exercises = newExercises[key];
+      const res = getLasUpdatedFromExercises(exercises);
       result.groupedExercises.push({
         muscleGroup: key,
         targets: exerciseApi.sortByTarget(exercises),
-        lastUpdated: getLasUpdatedFromExercises(exercises)
+        lastUpdated: res.maxLastUpdated,
+        doneToday: res.updatedToday
       });
     }
   }
@@ -44,10 +54,11 @@ const groupByMuscleGroup = routineResult => {
 
 const addLastUpdatedToRoutine = routineResult => {
   const routine = routineResult;
-  const maxLastUpdated = exerciseApi.addLastUpdatedToExercises(
+  const res = exerciseApi.addLastUpdatedToExercises(
     routineResult.exercises
   );
-  routine.lastUpdated = maxLastUpdated;
+  routine.lastUpdated = res.maxLastUpdated;
+  routine.doneToday = res.updatedToday;
 };
 
 const addExercisesToRoutine = async routine => {

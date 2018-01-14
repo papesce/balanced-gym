@@ -9,11 +9,12 @@ const getMuscleGroup = async query => {
     .populate("target")
     .populate("synergists");
   const exercisesResult = await exercisesQuery.lean().exec();
-  exerciseApi.addLastUpdatedToExercises(exercisesResult);
+  const res = exerciseApi.addLastUpdatedToExercises(exercisesResult);
   const muscleGroup = {
     muscleGroup: query.muscleGroup,
     targets: exerciseApi.sortByTarget(exercisesResult),
-    lastUpdated: routineApi.getLasUpdatedFromExercises(exercisesResult)
+    lastUpdated: routineApi.getLasUpdatedFromExercises(exercisesResult),
+    doneToday: res.updatedToday
   };
   return muscleGroup;
 };

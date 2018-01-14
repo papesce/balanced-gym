@@ -29,14 +29,16 @@ const normalizeWeight = (weight, exercise) => {
 const areSimilar = (musc1s, musc2s) => {
   const s1 = new Set(musc1s.map(m => m.name));
   const s2 = new Set(musc2s.map(m => m.name));
-  const difference = new Set([...s1].filter(x => !s2.has(x)));
-  return difference.size === 0;
+  const difference1 = new Set([...s1].filter(x => !s2.has(x)));
+  const difference2 = new Set([...s2].filter(x => !s1.has(x)));
+
+  return difference1.size === 0 && difference2.size === 0;
 };
 
 const isSimilar = (ex1, ex2) => {
-  if ((!ex1.synergists) && ex2.synergists) return false;
-  if ((!ex2.synergists) && ex1.synergists) return false;
-  if ((!ex1.synergists) && (!ex2.synergists)) return true;
+  if (!ex1.synergists && ex2.synergists) return false;
+  if (!ex2.synergists && ex1.synergists) return false;
+  if (!ex1.synergists && !ex2.synergists) return true;
   return areSimilar(ex1.synergists, ex2.synergists);
 };
 
@@ -100,6 +102,9 @@ const sortByTarget = exercises => {
     if (key) {
       const groupedExercises = targetGroups[key];
       groupedExercises.forEach(ex => {
+        // if (ex.name.startsWith("Lever Leg")) {
+        //  debugger
+        // }
         const suggestedSerie = computeSuggestedSerie(ex, groupedExercises);
         const exerc = ex;
         if (suggestedSerie) {
@@ -134,6 +139,8 @@ const sortByTarget = exercises => {
 
 const addLastUpdatedToExercises = exercises => {
   let maxLastUpdated;
+  const today = new Date();
+  let updatedToday = 0;
   exercises.forEach(exerciseResult => {
     const exercise = exerciseResult;
     if (exerciseResult.series.length > 0) {
@@ -149,6 +156,10 @@ const addLastUpdatedToExercises = exercises => {
       if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
         maxLastUpdated = exercise.lastUpdated;
       }
+      const hours = (today.getTime() - exercise.lastUpdated.getTime()) / 3600000
+      if (hours < 24) {
+        updatedToday += 1;
+      }
     } else {
       // exercise.lastUpdated = exerciseResult.createdAt;
       exercise.lastReps = 0;
@@ -156,7 +167,7 @@ const addLastUpdatedToExercises = exercises => {
       exercise.normalizedWeight = 0;
     }
   });
-  return maxLastUpdated;
+  return { maxLastUpdated, updatedToday };
 };
 
 const getExercises = async query => {
