@@ -7,12 +7,12 @@ const routine1: Routine = {
 
 const routine2: Routine = {
     _id: "59f0c59d4e55c40d38868034",
-    name: "Thighs Shoulders Calves Hips"
+    name: "Thighs Shoulders Calves"
 };
 
 const routine3: Routine = {
     _id: "59f3a4fb73da258989f47cf0",
-    name: " Back Biceps Waist Neck"
+    name: " Back Biceps Waist Hips"
 };
 
 const routines = [routine1, routine2, routine3];
