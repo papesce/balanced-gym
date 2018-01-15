@@ -48,10 +48,12 @@ const computeSuggestedSerie = (exercise, targetGroup) => {
   targetGroup.forEach(ex => {
     if (isSimilar(exercise, ex) && ex.series.length > 0) {
       [serie] = ex.series;
-      const nweight = normalizeWeight(serie.weight, ex);
-      if (nweight > maxserie.weight) {
-        maxserie.weight = nweight;
-        maxserie.reps = serie.reps;
+      if (exercise.equipment !== "TRX" || ex.equipment === "TRX") {
+        const nweight = normalizeWeight(serie.weight, ex);
+        if (nweight > maxserie.weight) {
+          maxserie.weight = nweight;
+          maxserie.reps = serie.reps;
+        }
       }
     }
   });
