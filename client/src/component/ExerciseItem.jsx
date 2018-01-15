@@ -12,6 +12,9 @@ import {
 } from "reactstrap";
 import "./ExerciseItem.css";
 import { getRoutine } from "./Routines";
+import IconButton from "material-ui/IconButton";
+import StarBorder from "material-ui/svg-icons/navigation/more-horiz";
+
 
 interface ExerciseItemProps {
   exercise: Exercise;
@@ -19,6 +22,9 @@ interface ExerciseItemProps {
   showMuscles: (exId: string) => void;
 }
 
+interface ExerciseItemState {
+  showImage: boolean
+}
 // const getLastSerie = (exercise) => {
 //   return `r:${exercise.lastReps} w:${exercise.lastWeight}`;
 // };
@@ -41,17 +47,24 @@ const getSyn = (col) => {
 }
 
 const formatWeight = (weight) => Math.round(weight * 100) / 100;
-class ExerciseItem extends React.Component<ExerciseItemProps> {  
+class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState> {  
+  constructor(props: ExerciseItemProps){
+    super(props)
+    this.state = { showImage : false};
+  }
+  showImage = () => {
+    this.setState((prevState) => ({showImage: !prevState.showImage}))
+  }
   render() {
-    const { exercise, editExercise, showMuscles } = this.props;
+    const { exercise, editExercise, showMuscles} = this.props;
     // debugger
     return (
       <Card className="exercise-card" key={exercise._id}>
         <CardImg 
           top={true}
           width="250px"
-          height="100%"
-          src={exercise.gifURL}
+          height="180px"
+          src={this.state.showImage ? exercise.gifURL : ""}
           alt="No Image"
         />
         <CardBody>
@@ -73,6 +86,9 @@ class ExerciseItem extends React.Component<ExerciseItemProps> {
           </CardText>
           <Button className="exercise-button" onClick={() => editExercise(exercise._id)}>Edit</Button>
           <Button onClick={() => showMuscles(exercise._id)}>Muscles</Button>
+          <IconButton onClick={() => this.showImage()}>
+                  <StarBorder color="black" />
+          </IconButton>
         </CardBody>
       </Card>
     );

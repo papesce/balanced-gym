@@ -53,6 +53,8 @@ npm install --save react-router-scroll
 
 npm install --save material-ui
 
+npm install --save react-gif-player
+
 ## Examples 
 
 https://github.com/redux-observable/redux-observable/blob/master/examples/redux-observable-shopping-cart/js/main.js
