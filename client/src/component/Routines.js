@@ -2,7 +2,7 @@ import { Routine } from "../redux/model";
 
 const routine1: Routine = {
     _id: "59ee3ddc243a5977dab96c2b",
-    name: "Chest Triceps Forearms"
+    name: "Chest Triceps Forearms Neck"
 };
 
 const routine2: Routine = {
