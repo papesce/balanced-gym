@@ -50,7 +50,7 @@ const formatWeight = (weight) => Math.round(weight * 100) / 100;
 class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState> {  
   constructor(props: ExerciseItemProps){
     super(props)
-    this.state = { showImage : false};
+    this.state = { showImage : true };
   }
   showImage = () => {
     this.setState((prevState) => ({showImage: !prevState.showImage}))
