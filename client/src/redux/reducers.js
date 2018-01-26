@@ -82,6 +82,9 @@ const exercisesReducer: Reducer<GroupedExercises> = handleActions(
     },
     [T.GET_EXERCISES_SUCCEEDED]: (state, action): GroupedExercises => {
       return { targets: action.payload };
+    },
+    [T.GET_EXERCISES_FAILED]: (state, action): GroupedExercises => {
+      return { error: action.payload };
     }
   },
   {}

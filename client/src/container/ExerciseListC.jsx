@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { State, ExerciseQuery, GroupedExercises } from "../redux/model";
 import { getExercisesStarted } from "../redux/actions";
 import { push } from "react-router-redux";
+import MDSpinner from "react-md-spinner";
 
 interface ExerciseListRCProps {
   groupedExercises?: GroupedExercises;
@@ -26,7 +27,11 @@ class ExerciseListRC extends React.Component<ExerciseListRCProps> {
       showMuscles = x => x
     } = this.props;
     if (groupedExercises.loading) {
-      return <div style={{ paddingLeft: "40px" }}>loading...</div>;
+      return <MDSpinner />
+      // return <div style={{ paddingLeft: "40px" }}>lading...</div>;
+    }
+    if (groupedExercises.error) {
+      return <p style={{marginLeft:"20px"}}>Error: {groupedExercises.error}</p>
     }
     if (groupedExercises.targets) {
       return (

@@ -23,12 +23,11 @@ export const editExerciseSucceeded = createAction(
   /*<Exercise>*/ Types.EDIT_EXERCISE_SUCCEEDED
 );
 
-export const getExercisesStarted = createAction(
-  /*<ExerciseQuery>*/ Types.GET_EXERCISES_STARTED
-);
+export const getExercisesStarted = createAction(Types.GET_EXERCISES_STARTED);
 export const getExercisesSucceeded = createAction(
-  /*<Array<Exercise>>*/ Types.GET_EXERCISES_SUCCEEDED
+  Types.GET_EXERCISES_SUCCEEDED
 );
+export const getExercisesFailed = createAction(Types.GET_EXERCISES_FAILED);
 
 export const setMuscleGroup = createAction(/*<String>*/ Types.SET_MUSCLE_GROUP);
 
@@ -56,7 +55,6 @@ export const newMuscleSucceeded = createAction(Types.NEW_MUSCLE_SUCCEEDED);
 
 export const getMuscleStarted = createAction(Types.GET_MUSCLE_STARTED);
 export const getMuscleSucceeded = createAction(Types.GET_MUSCLE_SUCCEEDED);
-
 
 export const editMuscleStarted = createAction(Types.EDIT_MUSCLE_STARTED);
 export const editMuscleSucceeded = createAction(Types.EDIT_MUSCLE_SUCCEEDED);

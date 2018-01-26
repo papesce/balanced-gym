@@ -77,6 +77,7 @@ export interface GroupedExercises {
   targets?: Array<Targets>;
   loading?: boolean;
   targetOpen?: Set<String>;
+  error?: String;
 }
 
 interface State {

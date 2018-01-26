@@ -1,6 +1,6 @@
-import { combineEpics, ActionsObservable } from "redux-observable";
-import { map } from "rxjs/operators/map";
-import { mergeMap } from "rxjs/operators/mergeMap";
+import { combineEpics, ActionsObservable, ofType } from "redux-observable";
+import { map, mergeMap, catchError } from "rxjs/operators";
+import { of }  from "rxjs/observable/of"
 import * as T from "./actionTypes";
 import URLQueryBuilder from "url-query-builder";
 
@@ -8,6 +8,7 @@ import {
   newExerciseSucceeded,
   newMuscleSucceeded,
   getExercisesSucceeded,
+  getExercisesFailed,
   getExerciseSucceeded,
   getMuscleGroupsSucceeded,
   getMuscleSucceeded,
@@ -17,6 +18,7 @@ import {
 import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
 import { Exercise } from "./model";
+import { Observable } from "rxjs/Observable";
 
 const NEW_EXERCISE_URL: string = "/newExercise";
 const NEW_MUSCLE_URL: string = "/newMuscle";
@@ -66,26 +68,32 @@ const addMuscle = (action$: ActionsObservable<Action<Muscle>>) => {
   );
 };
 
-const getExercises = (action$: ActionsObservable<Action<any>>) => {
-  return action$.ofType(T.GET_EXERCISES_STARTED).pipe(
+const getExercises = (action$) => {
+  return action$.pipe(
+    ofType(T.GET_EXERCISES_STARTED),
     mergeMap(action => {
-      let QUERY_URL = GET_EXERCISES_URL;
-     // debugger;
-      if (action.payload) {
-        QUERY_URL = new URLQueryBuilder(
-          GET_EXERCISES_URL,
-          action.payload
-        ).getUrl();
-      }
-      return ajax.get(`${QUERY_URL}`, {
-        "Content-Type": "application/json"
-      });
-    }),
-    map(resp => {
-      const exercises = resp.response;
-      return getExercisesSucceeded(exercises);
-    })
-  );
+          let QUERY_URL = GET_EXERCISES_URL+"1";
+          if (action.payload) {
+            QUERY_URL = new URLQueryBuilder(
+              GET_EXERCISES_URL+"1",
+              action.payload
+            ).getUrl();
+          } 
+          return ajax.get(`${QUERY_URL}`, {
+            "Content-Type": "application/json"
+          }).pipe(
+              map(resp => {
+                  // debugger;
+                  const exercises = resp.response;
+                  return getExercisesSucceeded(exercises);
+              }),
+              catchError(error => {
+                  // debugger;
+                  return of(getExercisesFailed(error.message));
+              })
+            );
+        })
+    );
 };
 
 const getExercise = (action$: ActionsObservable<Action<any>>) => {

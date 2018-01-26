@@ -5,6 +5,7 @@ import { State, TargetsResult } from "../redux/model";
 import { getMusclesStarted } from "../redux/actions";
 import { MuscleList } from "../component/MuscleList";
 import { push } from "react-router-redux";
+import MDSpinner from "react-md-spinner";
 
 interface MuscleListCProps {
   muscles?: TargetsResult;
@@ -19,11 +20,12 @@ class MuscleListC extends Component<MuscleListCProps> {
     }
   }
   render() {
-    // debugger;
+    debugger;
     const { muscles = {}, editMuscle } = this.props;
     if (muscles.loading) {
-      return <div>loading... </div>;
-    }
+      // return <div>loading... </div>;
+      return <MDSpinner />
+    } 
     if (muscles.muscles) {
       // debugger;
       return (
