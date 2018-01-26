@@ -4,13 +4,12 @@ const app = express();
 
 const routineApi = require("./api/routine.api");
 const exerciseApi = require("./api/exercise.api");
-const muscleApi = require('./api/muscle.api');
-const muscleGroupApi = require('./api/muscleGroup.api');
-const serieApi = require('./api/serie.api');
+const muscleApi = require("./api/muscle.api");
+const muscleGroupApi = require("./api/muscleGroup.api");
+const serieApi = require("./api/serie.api");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const bodyParser = require("body-parser");
-
 
 let MONGODB_API;
 if (process.env.NODE_ENV === "production") {
@@ -32,7 +31,6 @@ muscleApi.api(app);
 muscleGroupApi.api(app);
 serieApi.api(app);
 
-
 /**
  * Express configuration.
  */
@@ -45,7 +43,7 @@ app.use(
   })
 );
 
-app.get("/*", function(req, res) {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 

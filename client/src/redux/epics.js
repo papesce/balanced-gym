@@ -72,10 +72,10 @@ const getExercises = (action$) => {
   return action$.pipe(
     ofType(T.GET_EXERCISES_STARTED),
     mergeMap(action => {
-          let QUERY_URL = GET_EXERCISES_URL+"1";
+          let QUERY_URL = GET_EXERCISES_URL;
           if (action.payload) {
             QUERY_URL = new URLQueryBuilder(
-              GET_EXERCISES_URL+"1",
+              GET_EXERCISES_URL,
               action.payload
             ).getUrl();
           } 

@@ -100,8 +100,12 @@ const api = app => {
   });
 
   app.get("/routine/:id", async (req, res) => {
-    const routines = await getRoutine(req.params.id);
-    res.send(routines);
+    try {
+      const routines = await getRoutine(req.params.id);
+      res.send(routines);
+    } catch (error) {
+      res.status(500).json(error);
+    }
   });
 };
 
