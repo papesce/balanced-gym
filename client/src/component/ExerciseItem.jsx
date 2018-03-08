@@ -64,7 +64,7 @@ class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState>
           top={true}
           width="250px"
           height="180px"
-          src={this.state.showImage ? exercise.gifURL : ""}
+          src={`./${this.state.showImage ? exercise.gifURL : ""}`}
           alt="No Image"
         />
         <CardBody>

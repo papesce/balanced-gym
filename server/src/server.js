@@ -36,12 +36,15 @@ serieApi.api(app);
  */
 app.set("port", process.env.PORT || 5000);
 
-console.log(__dirname);
+// console.log(__dirname);
 app.use(
   express.static(path.join(__dirname, "../build"), {
     maxAge: 31557600000
   })
 );
+
+console.log(path.join(__dirname, "./assets"));
+app.use(express.static(path.join(__dirname, "./assets")));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
