@@ -53,6 +53,8 @@ class MuscleForm extends Component<MuscleFormProps, Muscle> {
           initialValue={this.state.muscleURL}
         />
         <br />
+        <img alt="muscleURL" style={{ width: "auto", maxHeight: "250px" }} src={this.state.muscleURL} />
+        <br />
         <RaisedButton
           onClick={this.handleClick}
           // disabled={this.state.buttonDisabled}
