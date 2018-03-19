@@ -28,7 +28,6 @@ export class MuscleGroupRC extends React.Component<MuscleGroupRCProps> {
       }
   }
   render() {
-    // debugger;
     const {muscleGroups = []} = this.props;
     return (
       <MuscleGroupForm

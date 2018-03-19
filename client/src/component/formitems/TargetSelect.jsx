@@ -16,7 +16,6 @@ class TargetSelect extends Component<TargetSelectProps> {
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event, index, value) {
-    // debugger
     let val = "";
     if (index > 0) {
       val = this.props.muscles.muscles[index - 1];
@@ -24,7 +23,6 @@ class TargetSelect extends Component<TargetSelectProps> {
     this.props.onChange(val);
   }
   render() {
-    // debugger
     const { muscles, initialValue = "None" } = this.props;
     if (muscles.loading) {
       return <div> loading muscles... </div>;

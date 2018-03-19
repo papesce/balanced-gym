@@ -20,14 +20,12 @@ class MuscleListC extends Component<MuscleListCProps> {
     }
   }
   render() {
-    debugger;
     const { muscles = {}, editMuscle } = this.props;
     if (muscles.loading) {
       // return <div>loading... </div>;
       return <MDSpinner />
     } 
     if (muscles.muscles) {
-      // debugger;
       return (
         <MuscleList muscles={muscles.muscles} onClick={editMuscle} />
       );

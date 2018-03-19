@@ -31,7 +31,6 @@ export class NewExerciseC extends React.Component<NewExerciseCProps> {
     }
   }
   render() {
-    debugger;
     const { newExerciseStatus, muscles } = this.props;
     const started: boolean = newExerciseStatus
       ? newExerciseStatus.started === true
@@ -45,7 +44,7 @@ export class NewExerciseC extends React.Component<NewExerciseCProps> {
         handleClick={this.handleClick}
         started={started}
         buttonLabel="Add New Exercise"
-        initialValue={{ routineId: "59f0c59d4e55c40d38868034" }}
+        initialValue={null}
         muscles={muscles}
       />
     );

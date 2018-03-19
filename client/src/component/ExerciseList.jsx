@@ -17,7 +17,9 @@ class ExerciseList extends React.Component<ExerciseListProps> {
   }
   render() {
     const { targets, editExercise, showMuscles } = this.props;
-    // debugger
+    if (targets.length === 0) {
+      return (<div style={{marginLeft: "20px"}}>No results</div>) 
+    } 
     return (
       <div>
         {targets.map((target, index) =>

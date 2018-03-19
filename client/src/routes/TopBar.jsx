@@ -32,7 +32,6 @@ class TopBar extends Component<TopBarProps,TopBarState> {
     dispatch(push(url));
   }
   render() {
-    // debugger;
     
     return (
       <div>

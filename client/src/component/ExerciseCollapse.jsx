@@ -29,7 +29,6 @@ class ExerciseCollapse extends React.Component<
   componentWillMount() {
     const openSt = localStorage.getItem(this.props.target.target._id);
     const open = JSON.parse(openSt ? openSt : "false");
-    //debugger
     this.setState({ open });
   }
   componentDidMount() {

@@ -138,6 +138,21 @@ const musclesReducer = handleActions(
   { loading: true }
 );
 
+const getRoutinesReducer = handleActions(
+  {
+    [T.GET_ROUTINES_STARTED]: (state, action) => {
+      return { loading: true, error: false };
+    },
+    [T.GET_ROUTINES_SUCCEEDED]: (state, action) => {
+      return { payload: action.payload };
+    },
+    [T.GET_ROUTINES_FAILED]: (state, action) => {
+      return { error: action.payload, loading: false };
+    },
+  },
+  { loading: true, error: false, payload: [] } // initial State
+);
+
 const filterReducer: Reducer<Filter> = combineReducers({
   // targets: targetsReducer, //deprecated
   muscles: musclesReducer,
@@ -152,6 +167,7 @@ export const rootReducer: Reducer<State> = combineReducers({
   getMuscleStatus: getMuscleReducer,
   getExerciseStatus: getExerciseReducer,
   groupedExercises: exercisesReducer,
+  routineStatus: getRoutinesReducer,
   filter: filterReducer,
   router: routerReducer
 });

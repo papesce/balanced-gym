@@ -17,7 +17,7 @@ export class EditMuscleC extends React.Component<EditMuscleCProps> {
        this.props.onClick(muscle);
   }
   componentDidMount() {
-    // debugger
+
     if (this.props.getMuscleStarted) {
       this.props.getMuscleStarted(this.props.muscleId);
     }
@@ -31,7 +31,6 @@ export class EditMuscleC extends React.Component<EditMuscleCProps> {
      }
      if (getMuscleStatus.muscle) {
        const muscle: Muscle = getMuscleStatus.muscle;
-      // debugger;
        return (
           <MuscleForm
               handleClick={this.handleClick}
@@ -46,7 +45,6 @@ export class EditMuscleC extends React.Component<EditMuscleCProps> {
 }
 
 const mapStateToProps = (state: State) => {
-  // debugger
   return {
      getMuscleStatus: state.getMuscleStatus
   };
@@ -56,7 +54,6 @@ const mapDispatchToProps = (dispatch: Dispatch<State>) => {
   
   return {
      onClick: (muscle: Muscle) => {
-       debugger
        dispatch(editMuscleStarted(muscle));
      },
     getMuscleStarted: (muscleId: string) => dispatch(getMuscleStarted(muscleId)),

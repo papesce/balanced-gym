@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 import { Component } from "react";
-import { RoutineSelect } from "./formitems/RoutineSelect";
+import RoutineSelect from "./formitems/RoutineSelect";
 import { EquipmentSelect } from "./formitems/EquipmentSelect";
 import { TextEntryField } from "./formitems/TextEntryField";
 import "./ExerciseForm.css";
@@ -21,7 +21,6 @@ interface ExerciseFormProps {
 class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
   constructor(props: ExerciseFormProps) {
     super(props);
-    // debugger;
     this.state = { ...this.props.initialValue };
   }
   onRoutineIdChange = (value: string) => {
@@ -49,7 +48,6 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
     this.setState({ synergists: value });
   };
   handleClick = () => {
-    // debugger;
     const exercise = this.state;
     this.props.handleClick(exercise);
   };
@@ -58,7 +56,6 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
     const { buttonLabel } = this.props;
     const muscleURL = this.state.target ? this.state.target.muscleURL : "";
     const targetId = this.state.target ? this.state.target._id : "";
-    // debugger
     return (
       <div className="exercise-form">
         <RoutineSelect

@@ -14,7 +14,6 @@ class MuscleSelect extends Component<MuscleSelectProps> {
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event, index, values) {
-    debugger;
     const value = this.props.muscles.muscles.filter(
       muscle => values.indexOf(muscle._id) >= 0
     );

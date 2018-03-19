@@ -13,12 +13,13 @@ import {
   getMuscleGroupsSucceeded,
   getMuscleSucceeded,
   editMuscleSucceeded,
-  getMusclesSucceeded
+  getMusclesSucceeded,
+  getRoutinesSucceeded,
+  getRoutinesFailed
 } from "./actions";
 import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
 import { Exercise } from "./model";
-import { Observable } from "rxjs/Observable";
 
 const NEW_EXERCISE_URL: string = "/newExercise";
 const NEW_MUSCLE_URL: string = "/newMuscle";
@@ -27,6 +28,7 @@ const GET_MUSCLES_URL: string = "/muscle";
 const GET_EXERCISES_URL: string = "/exercise";
 const GET_EXERCISE_URL: string = "/exercise";
 const GET_MUSCLE_GROUPS_URL: string = "/muscleGroups";
+const GET_ROUTINES_URL: string = "/routines";
 // const GET_TARGETS_URL: string = "/target"; //deprecated
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
@@ -54,7 +56,6 @@ const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {
 const addMuscle = (action$: ActionsObservable<Action<Muscle>>) => {
   return action$.ofType(T.NEW_MUSCLE_STARTED).pipe(
     mergeMap(action => {
-      // debugger;
       return ajax.post(`${NEW_MUSCLE_URL}`, action.payload, {
         "Content-Type": "application/json"
       });
@@ -83,12 +84,12 @@ const getExercises = (action$) => {
             "Content-Type": "application/json"
           }).pipe(
               map(resp => {
-                  // debugger;
+                 
                   const exercises = resp.response;
                   return getExercisesSucceeded(exercises);
               }),
               catchError(error => {
-                  // debugger;
+              
                   return of(getExercisesFailed(error.message));
               })
             );
@@ -137,6 +138,24 @@ const getMuscleGroups = (action$: ActionsObservable<Action<any>>) => {
     map(resp => {
       const muscleGroups = resp.response;
       return getMuscleGroupsSucceeded(muscleGroups);
+    })
+  );
+};
+
+const getRoutines = (action$) => {
+  return action$.ofType(T.GET_ROUTINES_STARTED).pipe(
+    mergeMap(action => {
+      let QUERY_URL = GET_ROUTINES_URL;
+      return ajax.get(`${QUERY_URL}`, {
+        "Content-Type": "application/json"
+      });
+    }),
+    map(resp => {
+      const routines = resp.response;
+      return getRoutinesSucceeded(routines);
+    }),
+    catchError(error => {
+      return of(getRoutinesFailed(error.message))
     })
   );
 };
@@ -210,5 +229,6 @@ export const rootEpic = combineEpics(
   editMuscle,
   getMuscleGroups,
   getMuscle,
-  getMuscles
+  getMuscles,
+  getRoutines
 );

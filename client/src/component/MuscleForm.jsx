@@ -19,7 +19,6 @@ interface MuscleFormProps {
 class MuscleForm extends Component<MuscleFormProps, Muscle> {
   constructor(props: MuscleFormProps) {
     super(props);
-   // debugger
     this.state = {...this.props.initialValue, buttonDisabled: true };
   }
   handleClick = () => {

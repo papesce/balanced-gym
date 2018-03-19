@@ -176,9 +176,10 @@ const getExercises = async query => {
   const exQuery = exerciseModel
     .getModel()
     .find(query)
+    .populate("routineId", "name")
     .populate("series")
-    .populate("target")
-    .populate("synergists");
+    .populate("target", "name")
+    .populate("synergists", "name");
   exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();
   addLastUpdatedToExercises(exResult);
@@ -215,6 +216,7 @@ const getExercise = async exId => {
   const exQuery = exerciseModel
     .getModel()
     .findOne({ _id: exId })
+    .populate("routineId", "name")
     .populate("target")
     .populate("synergists");
 

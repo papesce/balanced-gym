@@ -11,7 +11,6 @@ import {
   CardText
 } from "reactstrap";
 import "./ExerciseItem.css";
-import { getRoutine } from "./Routines";
 import IconButton from "material-ui/IconButton";
 import StarBorder from "material-ui/svg-icons/navigation/more-horiz";
 
@@ -57,7 +56,6 @@ class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState>
   }
   render() {
     const { exercise, editExercise, showMuscles} = this.props;
-    // debugger
     return (
       <Card className="exercise-card" key={exercise._id}>
         <CardImg 
@@ -80,7 +78,7 @@ class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState>
             {/* <b> Normalized Weight:</b> {exercise.normalizedWeight}<br/> */}
             <b> Suggested:</b> <b>Reps:</b> {exercise.suggestedSerie.reps}
             <b> Weight:</b> {formatWeight(exercise.suggestedSerie.weight)}<br/>
-            <b> Routine:</b> {getRoutine(exercise.routineId)}<br/>
+            <b> Routine:</b> {(exercise.routineId) ? exercise.routineId.name : "No Routine"}<br/>
             <b> Last Updated:</b> {getLastUpdated(exercise)}<br/>
             <b> Syn: </b> {getSyn(exercise.synergists)}
           </CardText>

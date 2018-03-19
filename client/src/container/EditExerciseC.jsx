@@ -31,7 +31,7 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
     if (this.props.getExerciseStarted) {
       this.props.getExerciseStarted(this.props.exerciseId);
     }
-    // debugger
+
     if (
       this.props.muscles &&
       this.props.muscles.loading &&
@@ -41,7 +41,6 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
     }
   }
   render() {
-    // debugger;
     const { getExerciseStatus = {} } = this.props;
     const loading: boolean = getExerciseStatus.loading === true;
     const started: boolean = getExerciseStatus.started === true;
@@ -50,7 +49,6 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
     }
     if (getExerciseStatus.exercise) {
       const exercise: Exercise = getExerciseStatus.exercise;
-      // debugger;
       return (
         <ExerciseForm
           handleClick={this.handleClick}
@@ -66,7 +64,7 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
 }
 
 const mapStateToProps = (state: State) => {
-  // debugger;
+
   return {
     getExerciseStatus: state.getExerciseStatus,
     muscles: state.filter.muscles

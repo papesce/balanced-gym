@@ -23,7 +23,6 @@ export class ShowExerciseC extends React.Component<ShowExerciseCProps> {
     }
   }
   render() {
-    // debugger;
     const { getExerciseStatus = {} } = this.props;
     const loading: boolean = getExerciseStatus.loading === true;
     if (loading) {
@@ -31,10 +30,8 @@ export class ShowExerciseC extends React.Component<ShowExerciseCProps> {
     }
     if (getExerciseStatus.exercise) {
       const exercise: Exercise = getExerciseStatus.exercise;
-      // debugger;
       const { target = {}, synergists = [] } = exercise; 
       const muscles: Array<Muscle> = [target, ...synergists];
-      // debugger;
       return (
           <MuscleList
             muscles={muscles}
@@ -47,7 +44,6 @@ export class ShowExerciseC extends React.Component<ShowExerciseCProps> {
 }
 
 const mapStateToProps = (state: State) => {
-  // debugger;
   return {
     getExerciseStatus: state.getExerciseStatus
   };

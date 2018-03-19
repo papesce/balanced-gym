@@ -75,14 +75,16 @@ const addExercisesToRoutine = async routine => {
   groupByMuscleGroup(newRoutine);
 };
 
-const getRoutines = async () => {
+const getRoutines = async (withExercises) => {
   const routinesQuery = routineModel.getModel().find();
   const routines = await routinesQuery.lean().exec();
   const results = [];
-  for (const routineResult of routines) {
-    results.push(addExercisesToRoutine(routineResult));
+  if (withExercises) {
+    for (const routineResult of routines) {
+      results.push(addExercisesToRoutine(routineResult));
+    }
+    await Promise.all(results);
   }
-  await Promise.all(results);
   return routines;
 };
 
@@ -95,9 +97,15 @@ const getRoutine = async routineId => {
 
 const api = app => {
   app.get("/routine", async (req, res) => {
-    const routines = await getRoutines();
+    const routines = await getRoutines(true);
     res.send(routines);
   });
+
+  app.get("/routines", async (req, res) => {
+    const routines = await getRoutines(false);
+    res.send(routines);
+  });
+
 
   app.get("/routine/:id", async (req, res) => {
     try {
