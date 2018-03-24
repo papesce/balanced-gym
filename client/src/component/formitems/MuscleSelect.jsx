@@ -33,7 +33,7 @@ class MuscleSelect extends Component<MuscleSelectProps> {
     });
   }
   render() {
-    const { muscles, initialValues = [] } = this.props;
+    const { muscles, initialValues = [], placeholder, label } = this.props;
     if (muscles.loading) {
       return <div> loading... </div>;
     }
@@ -41,9 +41,9 @@ class MuscleSelect extends Component<MuscleSelectProps> {
       const muscleList = muscles.muscles;
       return (
         <SelectField
-          floatingLabelText="Synergists"
+          floatingLabelText={label}
           multiple={true}
-          hintText="Select the Synergists"
+          hintText={placeholder}
           value={initialValues.map(v => v._id)}
           onChange={this.handleChange}
           fullWidth={true}

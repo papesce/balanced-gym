@@ -9,6 +9,7 @@ import TargetSelect from "./formitems/TargetSelect";
 import { MusclesResult, Exercise, Muscle } from "../redux/model";
 import MuscleSelect from "./formitems/MuscleSelect";
 import RaisedButton from "material-ui/RaisedButton";
+import MuscleGroupSelect from './formitems/MuscleGroupSelect';
 
 interface ExerciseFormProps {
   handleClick: (exercise: Exercise) => void;
@@ -56,6 +57,7 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
     const { buttonLabel } = this.props;
     const muscleURL = this.state.target ? this.state.target.muscleURL : "";
     const targetId = this.state.target ? this.state.target._id : "";
+    const muscleGroups = ["Back","Biceps","Calves","Chest","Forearms","Hips","Lats-Neck-Traps","Shoulders","Thighs","Triceps","Waist"]
     return (
       <div className="exercise-form">
         <RoutineSelect
@@ -70,12 +72,19 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
           onChange={this.onNameChange}
         />
         <br />
-        <TextEntryField
+        <MuscleGroupSelect 
+          label="Muscle Group (required)"
+          placeholder="Enter the muscle group (reuqired)"
+          muscleGroups={muscleGroups}
+          initialValue={this.state.muscleGroup}
+          onChange={this.onMuscleGroupChange}
+        />
+        {/* <TextEntryField
           label="Muscle Group"
           placeholder="Enter muscle group"
           initialValue={this.state.muscleGroup}
           onChange={this.onMuscleGroupChange}
-        />
+        /> */}
         <br />
         <TargetSelect
           muscles={this.props.muscles}
@@ -108,6 +117,8 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
         />
         <br />
         <MuscleSelect
+          label="Synergists"
+          placeholder="Select the Synergists"
           muscles={this.props.muscles}
           initialValues={this.state.synergists}
           onChange={this.onSynergistsChange}

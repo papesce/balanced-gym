@@ -49,7 +49,7 @@ const mapStateToProps = (state: State) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<State>) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     editMuscle: (muscleId: string) => dispatch(push(`/editMuscle/${muscleId}`)),
     getExerciseStarted: (exId: string) => dispatch(getExerciseStarted(exId))

@@ -183,6 +183,8 @@ const getExercises = async query => {
   exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();
   addLastUpdatedToExercises(exResult);
+  // const exr2 = exResult.filter(e => e.gifURL && !e.gifURL.startsWith("/"));
+  // return sortByTarget(exr2);
   return sortByTarget(exResult);
 };
 
