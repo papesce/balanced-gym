@@ -9,6 +9,7 @@ import {
   MusclesResult
 } from "../redux/model";
 import { newExerciseStarted, getMusclesStarted } from "../redux/actions";
+import { goBack } from "react-router-redux";
 
 interface NewExerciseCProps {
   onClick: (ex: Exercise) => void;
@@ -20,6 +21,7 @@ interface NewExerciseCProps {
 export class NewExerciseC extends React.Component<NewExerciseCProps> {
   handleClick = (exercise: Exercise) => {
     this.props.onClick(exercise);
+    this.props.finish()
   };
   componentDidMount() {
     if (
@@ -63,7 +65,8 @@ const mapDispatchToProps = dispatch => {
     onClick: (newExerciseForm: Exercise) => {
       dispatch(newExerciseStarted(newExerciseForm));
     },
-    getMuscleListStarted: () => dispatch(getMusclesStarted())
+    getMuscleListStarted: () => dispatch(getMusclesStarted()),
+    finish: () => dispatch(goBack())
   };
 };
 

@@ -18,7 +18,12 @@ if (process.env.NODE_ENV === "production") {
   MONGODB_API = process.env.MONGODB_LOCAL_API;
 }
 console.log("connecting to db:", MONGODB_API);
-mongoose.connect(MONGODB_API, { useMongoClient: true });
+mongoose.connect(MONGODB_API, { useMongoClient: true }, (error) => {
+  if (error) {
+    console.log("Error: cannot connect to mongo db. Exiting...", error);
+    process.exit(0);
+  }
+});
 mongoose.Promise = Promise;
 
 // parse body params and attache them to req.body

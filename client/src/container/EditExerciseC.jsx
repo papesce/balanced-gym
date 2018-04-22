@@ -13,10 +13,12 @@ import {
   editExerciseStarted,
   getMusclesStarted
 } from "../redux/actions";
+import { goBack } from "react-router-redux";
 
 interface EditExerciseCProps {
   exerciseId: string;
   onClick: (ex: Exercise) => void;
+  finish: () => void;
   getExerciseStatus?: GetExerciseStatus;
   getExerciseStarted?: (exId: string) => void;
   getMuscleListStarted?: () => void;
@@ -26,6 +28,7 @@ interface EditExerciseCProps {
 export class EditExerciseC extends React.Component<EditExerciseCProps> {
   handleClick = (exercise: Exercise) => {
     this.props.onClick(exercise);
+    this.props.finish();
   }
   componentDidMount() {
     if (this.props.getExerciseStarted) {
@@ -77,7 +80,8 @@ const mapDispatchToProps = (dispatch: Dispatch<State>) => {
       dispatch(editExerciseStarted(exercise));
     },
     getExerciseStarted: (exId: string) => dispatch(getExerciseStarted(exId)),
-    getMuscleListStarted: () => dispatch(getMusclesStarted())
+    getMuscleListStarted: () => dispatch(getMusclesStarted()),
+    finish: () => dispatch(goBack())
   };
 };
 

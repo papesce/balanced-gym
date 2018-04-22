@@ -66,7 +66,10 @@ class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState>
           alt="No Image"
         />
         <CardBody>
-          <CardTitle>{exercise.name}</CardTitle>
+          <CardTitle>
+              {exercise.links && (<a href={exercise.links[0]} target="_blank">{exercise.name}</a>)}
+              {!exercise.links && (exercise.name)}
+          </CardTitle>
           <CardSubtitle>
             <b>Group:</b> {exercise.muscleGroup}
           </CardSubtitle>
@@ -80,7 +83,8 @@ class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState>
             <b> Weight:</b> {formatWeight(exercise.suggestedSerie.weight)}<br/>
             <b> Routine:</b> {(exercise.routineId) ? exercise.routineId.name : "No Routine"}<br/>
             <b> Last Updated:</b> {getLastUpdated(exercise)}<br/>
-            <b> Syn: </b> {getSyn(exercise.synergists)}
+            <b> Syn: </b> {getSyn(exercise.synergists)}<br/>
+            <b> Stab: </b> {getSyn(exercise.stabilizers)}<br/>
           </CardText>
           <Button className="exercise-button" onClick={() => editExercise(exercise._id)}>Edit</Button>
           <Button onClick={() => showMuscles(exercise._id)}>Muscles</Button>

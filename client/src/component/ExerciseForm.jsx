@@ -33,6 +33,9 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
   onNameChange = (value: string) => {
     this.setState({ name: value });
   };
+  onExternalLinkChange = (value: string) => {
+    this.setState({ links: [value] });
+  };
   onMuscleGroupChange = (value: string) => {
     this.setState({ muscleGroup: value });
   };
@@ -48,6 +51,9 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
   onSynergistsChange = (value: Array<Muscle>) => {
     this.setState({ synergists: value });
   };
+  onStabilizersChange = (value: Array<Muscle>) => {
+    this.setState({ stabilizers: value });
+  };
   handleClick = () => {
     const exercise = this.state;
     this.props.handleClick(exercise);
@@ -60,18 +66,27 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
     const muscleGroups = ["Back","Biceps","Calves","Chest","Forearms","Hips","Lats-Neck-Traps","Shoulders","Thighs","Triceps","Waist"]
     return (
       <div className="exercise-form">
-        <RoutineSelect
-          onChange={this.onRoutineIdChange}
-          initialValue={this.state.routineId}
-        />
-        <br />
         <TextEntryField
+          style={{width: "600px"}}
           label="Name"
           placeholder="Enter exercise name"
           initialValue={this.state.name}
           onChange={this.onNameChange}
         />
-        <br />
+        <br/>
+        <TextEntryField
+          style={{width: "600px"}}
+          label="External Link"
+          // placeholder="Enter exercise name"
+          initialValue={this.state.links?this.state.links[0]:""}
+          onChange={this.onExternalLinkChange}
+        />
+        <br/>
+        <RoutineSelect
+          onChange={this.onRoutineIdChange}
+          initialValue={this.state.routineId}
+        />
+        <span style={{margin:"10px"}}>&nbsp;</span>
         <MuscleGroupSelect 
           label="Muscle Group (required)"
           placeholder="Enter the muscle group (reuqired)"
@@ -85,37 +100,39 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
           initialValue={this.state.muscleGroup}
           onChange={this.onMuscleGroupChange}
         /> */}
-        <br />
+        <br/>
         <TargetSelect
+          style={{width: "300px"}}
           muscles={this.props.muscles}
           initialValue={targetId}
           onChange={this.onTargetChange}
         />
-        <br />
         <img alt="muscleURL" style={{ width: "auto", maxHeight: "250px" }} src={muscleURL} />
-        <br />
+        <br/>
         <TextEntryField
+          style={{width: "300px"}}
           label="Gif URL"
           placeholder="Enter Gif URL"
           initialValue={this.state.gifURL}
           onChange={this.onGifURLChange}
         />
-        <br />
+        <span style={{margin:"10px"}}>&nbsp;</span>
         <img alt="gif URL" style={{ width: "200px" }} src={this.state.gifURL} />
-        <br />
+        <br/>
         <TextEntryField
+          style={{width: "300px"}}
           label="Exercise URL"
           placeholder="Enter Exercise URL"
           initialValue={this.state.exerciseURL}
           onChange={this.onExerciseURLChange}
         />
-        <br />
+        <span style={{margin:"10px"}}>&nbsp;</span>
         <img
           alt="exerciseURL"
           style={{ width: "400px" }}
           src={this.state.exerciseURL}
         />
-        <br />
+        <br/>
         <MuscleSelect
           label="Synergists"
           placeholder="Select the Synergists"
@@ -123,7 +140,13 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
           initialValues={this.state.synergists}
           onChange={this.onSynergistsChange}
         />
-        <br />
+        <MuscleSelect
+          label="Stabilizers"
+          placeholder="Select the Stabilizers"
+          muscles={this.props.muscles}
+          initialValues={this.state.stabilizers}
+          onChange={this.onStabilizersChange}
+        />
         <EquipmentSelect 
          onChange={this.onEquipmentChange}
          initialValue={this.state.equipment}

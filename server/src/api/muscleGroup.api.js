@@ -7,7 +7,8 @@ const getMuscleGroup = async query => {
   const exercisesQuery = ExerciseModel.find(query)
     .populate("series")
     .populate("target")
-    .populate("synergists");
+    .populate("synergists")
+    .populate("stabilizers");
   const exercisesResult = await exercisesQuery.lean().exec();
   const res = exerciseApi.addLastUpdatedToExercises(exercisesResult);
   const muscleGroup = {

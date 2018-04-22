@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem/MenuItem";
 import { MusclesResult } from "../../redux/model";
@@ -30,9 +30,9 @@ class TargetSelect extends Component<TargetSelectProps> {
     if (muscles.muscles) {
       const musclesList = muscles.muscles;
       return (
-        
-        <div>
+        <Fragment>
           <SelectField
+            style={this.props.style}
             floatingLabelText="Target"
             value={initialValue}
             onChange={this.handleChange}
@@ -47,7 +47,7 @@ class TargetSelect extends Component<TargetSelectProps> {
             ))}
           </SelectField>
          
-        </div>
+        </Fragment>
       );
     }
     return <div> Error loading muscles </div>;

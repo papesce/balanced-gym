@@ -12,10 +12,11 @@ const exerciseSchema = new mongoose.Schema(
     series: [{ type: mongoose.Schema.Types.ObjectId, ref: "serie" }],
     gifURL: { type: String, required: true },
     exerciseURL: { type: String },
-    // synergists: { type: String },
     synergists: [{ type: mongoose.Schema.Types.ObjectId, ref: "muscle" }],
+    stabilizers: [{ type: mongoose.Schema.Types.ObjectId, ref: "muscle" }],
     equipment: { type: String },
-    routineId: { type: mongoose.Schema.Types.ObjectId, ref: "routine" }
+    routineId: { type: mongoose.Schema.Types.ObjectId, ref: "routine" },
+    links: [{ type: String }]
     // lastUpdated: Date  //last date of creation of the series
   },
   {

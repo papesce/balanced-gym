@@ -24,7 +24,9 @@ interface Exercise {
   target: Muscle;
   gifURL: string;
   exerciseURL?: string;
-  synergists?: string;
+  synergists?: [string];
+  links: [string];
+  stabilizers?: [string];
   equipment?: string;
   lastReps?: string;
   lastWeight?: string;

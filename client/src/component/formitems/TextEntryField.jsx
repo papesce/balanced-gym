@@ -20,13 +20,15 @@ class TextEntryField extends Component<CustomProps> {
     this.props.onChange( event.target.value)
   }
   render() {
-    const { label, placeholder } = this.props;
+    const { label } = this.props;
     const {initialValue = "" } = this.props;
       return (
       <TextField
+      style={this.props.style}
       defaultValue={initialValue}
       floatingLabelText={label}
-      hintText={placeholder}
+      hintText={""}
+      placeholder={""}
       onChange={this.handleChange}
       fullWidth={true}
        />

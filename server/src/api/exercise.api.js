@@ -1,3 +1,4 @@
+
 const exerciseModel = require("../model/exercise.model");
 
 const computeExtraWeight = equip => {
@@ -23,7 +24,7 @@ const denormalizeWeight = (weight, exercise) => {
 
 const normalizeWeight = (weight, exercise) => {
   const { extraWeight, multiplier } = computeExtraWeight(exercise.equipment);
-  return weight * multiplier + extraWeight;
+  return (weight * multiplier) + extraWeight;
 };
 
 const areSimilar = (musc1s, musc2s) => {
@@ -158,7 +159,7 @@ const addLastUpdatedToExercises = exercises => {
       if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
         maxLastUpdated = exercise.lastUpdated;
       }
-      const hours = (today.getTime() - exercise.lastUpdated.getTime()) / 3600000
+      const hours = (today.getTime() - exercise.lastUpdated.getTime()) / 3600000;
       if (hours < 24) {
         updatedToday += 1;
       }
@@ -179,7 +180,8 @@ const getExercises = async query => {
     .populate("routineId", "name")
     .populate("series")
     .populate("target", "name")
-    .populate("synergists", "name");
+    .populate("synergists", "name")
+    .populate("stabilizers", "name");
   exQuery.sort({ muscleGroup: 1, target: 1 });
   const exResult = await exQuery.lean().exec();
   addLastUpdatedToExercises(exResult);
@@ -210,6 +212,7 @@ const newExercise = async (routineId, exercise) => {
     equipment: exercise.equipment,
     exerciseURL: exercise.exerciseURL,
     synergists: exercise.synergists,
+    stabilizers: exercise.stabilizers,
     routineId: exercise.routineId
   }).save();
 };
@@ -220,7 +223,8 @@ const getExercise = async exId => {
     .findOne({ _id: exId })
     .populate("routineId", "name")
     .populate("target")
-    .populate("synergists");
+    .populate("synergists")
+    .populate("stabilizers");
 
   const exResult = await exQuery.lean().exec();
   return exResult;
@@ -228,13 +232,24 @@ const getExercise = async exId => {
 
 const api = app => {
   app.get("/exercise", async (req, res) => {
-    const exercises = await getExercises(req.query);
-    res.send(exercises);
+    try {
+      const exercises = await getExercises(req.query);
+      res.send(exercises);
+    } catch (error) {
+      console.log("Error handling /exercise API");
+    }
   });
 
   app.get("/exercise/:id", async (req, res) => {
-    const exercises = await getExercise(req.params.id);
-    res.send(exercises);
+    try {
+      const exercises = await getExercise(req.params.id);
+      res.send(exercises);
+    } catch (error) {
+      console.log("Error handling /exercise/:id API");
+      res.type('text/plain');
+      res.status(500);
+      res.send('Error handling /exercise/:id API');
+    }
   });
 
   app.patch("/exercise/:id", async (req, res) => {
