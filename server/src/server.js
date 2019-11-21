@@ -26,6 +26,11 @@ mongoose.connect(MONGODB_API, { useMongoClient: true }, (error) => {
 });
 mongoose.Promise = Promise;
 
+// Enable cors for dev
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,12 +58,6 @@ app.use(express.static(path.join(__dirname, "./assets")));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
-});
-
-// Enable cors for dev
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
 });
 
 /**
