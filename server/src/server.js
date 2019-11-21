@@ -55,6 +55,12 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
+// Enable cors for dev
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 /**
  * Start Express server.
  */
