@@ -102,9 +102,30 @@ const api = app => {
     res.send(routines);
   });
 
+  const getRoutineSummary = async (routine) => {
+    const newRoutine = routine;
+    delete newRoutine.exercises;
+    const exercisesQuery = exerciseModel.getModel()
+      .find({ routineId: routine._id });
+    const exercisesResult = await exercisesQuery.lean().exec();
+    const targets = new Set();
+    exercisesResult.forEach(item => targets.add(item.target.toString()));
+    // console.log(targets);
+    // const exercisesArray = routineResult.exercises;
+    newRoutine.targetsCount = targets.size;
+    newRoutine.exercisesCount = exercisesResult.length;
+    return newRoutine;
+  };
+
   app.get("/routines", async (req, res) => {
     const routines = await getRoutines(false);
-    res.send(routines);
+    const results = [];
+    for (const routineResult of routines) {
+      const routine = getRoutineSummary(routineResult);
+      results.push(routine);
+    }
+    const newRoutines = await Promise.all(results);
+    res.send(newRoutines);
   });
 
 
