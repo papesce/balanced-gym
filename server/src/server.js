@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "production") {
   MONGODB_API = process.env.MONGODB_LOCAL_API;
 }
 console.log("connecting to db:", MONGODB_API);
-mongoose.connect(MONGODB_API, { useMongoClient: true }, (error) => {
+mongoose.connect(MONGODB_API, { useNewUrlParser: true }, (error) => {
   if (error) {
     console.log("Error: cannot connect to mongo db. Exiting...", error);
     process.exit(0);
