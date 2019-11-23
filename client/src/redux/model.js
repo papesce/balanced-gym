@@ -107,14 +107,14 @@ interface Routine {
 
 
 export {
-  NewExerciseStatus,
-  SetMuscleStatus,
-  Routine,
-  Muscle,
-  Exercise,
-  MusclesResult,
-  State,
-  ExerciseQuery,
+  // NewExerciseStatus,
+  // SetMuscleStatus,
+  // Routine,
+  // Muscle,
+  // Exercise,
+  // MusclesResult,
+  // State,
+  // ExerciseQuery,
   DEFAULT_STATE,
-  GetExerciseStatus
+  // GetExerciseStatus
 };
