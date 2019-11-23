@@ -104,9 +104,9 @@ const api = app => {
 
   const getRoutineSummary = async (routine) => {
     const newRoutine = routine;
-    delete newRoutine.exercises;
     const exercisesQuery = exerciseModel.getModel()
-      .find({ routineId: routine._id });
+      .find({ routineId: routine._id })
+      .populate("series");
     const exercisesResult = await exercisesQuery.lean().exec();
     const targets = new Set();
     exercisesResult.forEach(item => targets.add(item.target.toString()));
@@ -114,6 +114,9 @@ const api = app => {
     // const exercisesArray = routineResult.exercises;
     newRoutine.targetsCount = targets.size;
     newRoutine.exercisesCount = exercisesResult.length;
+    newRoutine.exercises = exercisesResult;
+    addLastUpdatedToRoutine(newRoutine);
+    delete newRoutine.exercises;
     return newRoutine;
   };
 
