@@ -1,4 +1,4 @@
-const backup = require("mongodb-backup");
+const backup = require("mongodb-backup-4x");
 const restore = require("mongodb-restore");
 const path = require("path");
 
@@ -13,7 +13,7 @@ class MongoDBUtils {
     backup({
       uri: API, // mongodb://<dbuser>:<dbpassword>@<dbdomain>.mongolab.com:<dbport>/<dbdatabase>
       root: path.join(__dirname, "/dbbackup"),
-      tar: `${name}.tar`
+      // tar: `${name}.tar`
     });
   }
 
@@ -21,9 +21,10 @@ class MongoDBUtils {
     console.log(`restoring the database ${API} from ${name}`);
     restore({
       uri: API, // mongodb://<dbuser>:<dbpassword>@<dbdomain>.mongolab.com:<dbport>/<dbdatabase>
-      root: path.join(__dirname, "/dbbackup"),
-      tar: `${name}.tar`,
-      drop: true
+      root: path.join(__dirname, "/dbbackup/balanced_gym_api"),
+      // tar: `${name}.tar`,
+      drop: true,
+      logger: path.join(__dirname, "/log"),
     });
   }
 }

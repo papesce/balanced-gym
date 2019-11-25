@@ -93,6 +93,7 @@ const getRoutine = async routineId => {
   const routineQuery = routineModel.getModel().findOne({ _id: routineId });
   const routineResult = await routineQuery.lean().exec();
   await addExercisesToRoutine(routineResult);
+  delete routineResult.exercises;
   return routineResult;
 };
 
@@ -117,6 +118,8 @@ const api = app => {
     newRoutine.exercises = exercisesResult;
     addLastUpdatedToRoutine(newRoutine);
     delete newRoutine.exercises;
+    delete newRoutine.createdAt;
+    delete newRoutine.updatedAt;
     return newRoutine;
   };
 
