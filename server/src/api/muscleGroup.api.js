@@ -47,17 +47,17 @@ const createMuscleDictionary = (muscleGroupResult) => {
 
 const api = app => {
   app.get("/newMuscleGroupTable", async (req, res) => {
-    // await newMuscleGroup("Chest");
-    // await newMuscleGroup("Triceps");
-    // await newMuscleGroup("Forearms");
-    // await newMuscleGroup("Thighs");
-    // await newMuscleGroup("Shoulders");
-    // await newMuscleGroup("Calves");
-    // await newMuscleGroup("Back");
-    // await newMuscleGroup("Biceps");
-    // await newMuscleGroup("Waist");
-    // await newMuscleGroup("Lats-Neck-Traps");
-    // await newMuscleGroup("Hips");
+    await newMuscleGroup("Chest");
+    await newMuscleGroup("Triceps");
+    await newMuscleGroup("Forearms");
+    await newMuscleGroup("Thighs");
+    await newMuscleGroup("Shoulders");
+    await newMuscleGroup("Calves");
+    await newMuscleGroup("Back");
+    await newMuscleGroup("Biceps");
+    await newMuscleGroup("Waist");
+    await newMuscleGroup("Lats-Neck-Traps");
+    await newMuscleGroup("Hips");
     res.status(200).send("done !");
   });
   app.get("/refatorExercises", async (req, res) => {
