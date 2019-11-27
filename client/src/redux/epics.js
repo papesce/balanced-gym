@@ -24,8 +24,8 @@ import { Exercise } from "./model";
 const NEW_EXERCISE_URL: string = "/newExercise";
 const NEW_MUSCLE_URL: string = "/newMuscle";
 const GET_MUSCLE_URL: string = "/muscle";
-const GET_MUSCLES_URL: string = "/muscle";
-const GET_EXERCISES_URL: string = "/exercise";
+const GET_MUSCLES_URL: string = "/muscles";
+const GET_EXERCISES_URL: string = "/exercises";
 const GET_EXERCISE_URL: string = "/exercise";
 const GET_MUSCLE_GROUPS_URL: string = "/muscleGroups";
 const GET_ROUTINES_URL: string = "/routines";
@@ -74,7 +74,8 @@ const getExercises = (action$) => {
     ofType(T.GET_EXERCISES_STARTED),
     mergeMap(action => {
           let QUERY_URL = GET_EXERCISES_URL;
-          if (action.payload) {
+          debugger;
+          if (Object.keys(action.payload)) {
             QUERY_URL = new URLQueryBuilder(
               GET_EXERCISES_URL,
               action.payload

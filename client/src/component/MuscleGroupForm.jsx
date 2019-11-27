@@ -5,7 +5,7 @@ import { Label, FormGroup, Input, Form } from "reactstrap";
 export interface MuscleGroupFormProps {
   handleChange: (value: string) => void;
   defaultValue: string;
-  muscleGroups: Array<string>;
+  muscleGroups: Array<MuscleGroup>;
   loading: boolean;
 }
 
@@ -35,10 +35,10 @@ class MuscleGroupForm extends Component<MuscleGroupFormProps> {
             </option>
             {muscleGroups.map((muscleGroup, index) => (
               <option
-                key={index}
-                value={muscleGroup}
+                key={muscleGroup._id}
+                value={muscleGroup._id}
               >
-                {muscleGroup}
+                {muscleGroup.name}
               </option>
             ))}
           </Input>}

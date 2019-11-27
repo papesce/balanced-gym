@@ -28,10 +28,11 @@ export class TargetRC extends React.Component<TargetRCProps> {
     }
   }
   render() {
-    const { targets = [], selectedTarget = "", loading } = this.props;
+    const { targets = [], availableTargets, selectedTarget = "", loading } = this.props;
+    const ftargets = availableTargets.length > 0 ? availableTargets : targets;
     return (
       <TargetForm
-        targets={targets}
+        targets={ftargets}
         handleChange={this.handleChange}
         defaultValue={selectedTarget}
         loading={loading !== undefined}

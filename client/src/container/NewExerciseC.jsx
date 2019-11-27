@@ -8,7 +8,7 @@ import {
   NewExerciseStatus,
   MusclesResult
 } from "../redux/model";
-import { newExerciseStarted, getMusclesStarted } from "../redux/actions";
+import { newExerciseStarted, getMusclesStarted, getMuscleGroupsStarted } from "../redux/actions";
 import { goBack } from "react-router-redux";
 
 interface NewExerciseCProps {
@@ -31,9 +31,16 @@ export class NewExerciseC extends React.Component<NewExerciseCProps> {
     ) {
       this.props.getMuscleListStarted();
     }
+    if (
+      this.props.muscleGroups &&
+      this.props.muscleGroups.loading &&
+      this.props.getMuscleGroupsStarted
+    ) {
+      this.props.getMuscleGroupsStarted();
+    }
   }
   render() {
-    const { newExerciseStatus, muscles } = this.props;
+    const { newExerciseStatus, muscles, muscleGroups } = this.props;
     const started: boolean = newExerciseStatus
       ? newExerciseStatus.started === true
       : false;
@@ -48,6 +55,7 @@ export class NewExerciseC extends React.Component<NewExerciseCProps> {
         buttonLabel="Add New Exercise"
         initialValue={null}
         muscles={muscles}
+        muscleGroups={muscleGroups}
       />
     );
   }
@@ -56,7 +64,8 @@ export class NewExerciseC extends React.Component<NewExerciseCProps> {
 const mapStateToProps = (state: State) => {
   return {
     newExerciseStatus: state.newExerciseStatus,
-    muscles: state.filter.muscles
+    muscles: state.filter.muscles,
+    muscleGroups: state.filter.muscleGroups
   };
 };
 
@@ -66,6 +75,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(newExerciseStarted(newExerciseForm));
     },
     getMuscleListStarted: () => dispatch(getMusclesStarted()),
+    getMuscleGroupsStarted: () => dispatch(getMuscleGroupsStarted()),
     finish: () => dispatch(goBack())
   };
 };

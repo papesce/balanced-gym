@@ -47,10 +47,10 @@ interface GetMuscleStatus {
 }
 
 
-interface ExerciseQuery {
-  muscleGroup?: string;
-  target?: string;
-}
+// interface ExerciseQuery {
+//   muscleGroup?: string;
+//   target?: string;
+// }
 
 export interface MuscleGroupsResult {
   muscleGroups?: Array<string>;
@@ -99,10 +99,10 @@ const DEFAULT_STATE: State = {
   }
 };
 
-interface Routine {
-  _id: string;
-  name: string;
-}
+// interface Routine {
+//   _id: string;
+//   name: string;
+// }
 
 
 

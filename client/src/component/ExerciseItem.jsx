@@ -67,11 +67,11 @@ class ExerciseItem extends React.Component<ExerciseItemProps, ExerciseItemState>
         />
         <CardBody>
           <CardTitle>
-              {exercise.links && (<a href={exercise.links[0]} target="_blank">{exercise.name}</a>)}
+              {exercise.links && (<a href={exercise.links[0]} target="_blank" rel="noopener noreferrer">{exercise.name}</a>)}
               {!exercise.links && (exercise.name)}
           </CardTitle>
           <CardSubtitle>
-            <b>Group:</b> {exercise.muscleGroup}
+            <b>Group:</b> {exercise.muscleGroup.name}
           </CardSubtitle>
           <CardText>
             <b>Target:</b> {exercise.target.name}<br/>

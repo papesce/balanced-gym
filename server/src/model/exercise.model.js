@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const exerciseSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    muscleGroup: { type: String, required: true },
+    muscleGroup: { type: mongoose.Schema.Types.ObjectId, ref: "muscleGroup" },
     // target: { type: String },
     target: { type: mongoose.Schema.Types.ObjectId, ref: "muscle" },
     series: [{ type: mongoose.Schema.Types.ObjectId, ref: "serie" }],

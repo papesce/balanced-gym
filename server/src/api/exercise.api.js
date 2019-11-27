@@ -178,6 +178,7 @@ const getExercises = async query => {
     .getModel()
     .find(query)
     .populate("routineId", "name")
+    .populate("muscleGroup", "name")
     .populate("series")
     .populate("target", "name")
     .populate("synergists", "name")
@@ -222,6 +223,7 @@ const getExercise = async exId => {
     .getModel()
     .findOne({ _id: exId })
     .populate("routineId", "name")
+    .populate("muscleGroup")
     .populate("target")
     .populate("synergists")
     .populate("stabilizers");
@@ -231,12 +233,13 @@ const getExercise = async exId => {
 };
 
 const api = app => {
-  app.get("/exercise", async (req, res) => {
+  app.get("/exercises", async (req, res) => {
     try {
       const exercises = await getExercises(req.query);
       res.send(exercises);
     } catch (error) {
-      console.log("Error handling /exercise API");
+      console.log("Error handling /exercise API:", error);
+      res.status(500).send("inernal server error");
     }
   });
 
@@ -266,5 +269,6 @@ const api = app => {
 module.exports = {
   api,
   addLastUpdatedToExercises,
+  updateExercise,
   sortByTarget
 };

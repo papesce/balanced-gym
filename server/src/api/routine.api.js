@@ -24,10 +24,12 @@ const groupByMuscleGroupExercises = exercises => {
   const newExercises = {};
   exercises.forEach(exercise => {
     const { muscleGroup } = exercise;
-    if (!newExercises[muscleGroup]) {
-      newExercises[muscleGroup] = [];
+    // TODO: group by muscle group ID
+    const muscleGroupName = muscleGroup.name;
+    if (!newExercises[muscleGroupName]) {
+      newExercises[muscleGroupName] = [];
     }
-    newExercises[muscleGroup].push(exercise);
+    newExercises[muscleGroupName].push(exercise);
   });
   return newExercises;
 };
@@ -66,6 +68,7 @@ const addExercisesToRoutine = async routine => {
   const exercisesQuery = exerciseModel
     .getModel()
     .find({ routineId: routine._id })
+    .populate("muscleGroup")
     .populate("series")
     .populate("target")
     .populate("synergists")

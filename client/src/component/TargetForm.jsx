@@ -37,7 +37,7 @@ class TargetForm extends Component<TargetFormProps> {
             </option>
             {targets.map((muscleGroup, index) => (
               <option
-                key={index}
+                key={muscleGroup._id}
                 value={muscleGroup._id}
               >
                 {muscleGroup.name}

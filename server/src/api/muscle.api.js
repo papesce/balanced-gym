@@ -12,14 +12,13 @@ const getTargets = async () => {
 const getMuscle = async muscleId => {
   const exQuery = muscleModel
     .getModel()
-    .findOne({ _id: muscleId });
+    .findOne({ _id: muscleId }).select('name muscleURL');
   const exResult = await exQuery.lean().exec();
   return exResult;
 };
 
 const getMuscles = async () => {
-  const exQuery = muscleModel.getModel().find();
-  // exQuery.distinct("target"); // , { muscleGroup: "Chest" });
+  const exQuery = muscleModel.getModel().find().select('name muscleURL');
   exQuery.sort("name");
   const exResult = await exQuery.lean().exec();
   return exResult;
@@ -46,7 +45,7 @@ const api = app => {
   //   res.send(targets);
   // });
 
-  app.get("/muscle", async (req, res) => {
+  app.get("/muscles", async (req, res) => {
     const targets = await getMuscles();
     res.send(targets);
   });

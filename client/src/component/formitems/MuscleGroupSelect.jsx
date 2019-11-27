@@ -16,14 +16,14 @@ class MuscleGroupSelect extends Component<MuscleGroupSelectProps> {
     this.props.onChange(value);
   }
   menuItems(values, muscleList) {
-    return muscleList.map((muscle, index) => {
+    return muscleList.muscleGroups.map((muscle, index) => {
        return (
          <MenuItem
-           key={index}
+           key={muscle._id}
            insetChildren={true}
     //       checked={values && values.indexOf(muscle) > -1}
-           value={muscle}
-           primaryText={muscle}
+           value={muscle._id}
+           primaryText={muscle.name}
          />
        );
      });
@@ -31,7 +31,7 @@ class MuscleGroupSelect extends Component<MuscleGroupSelectProps> {
   render() {
     const { muscleGroups, initialValue = "", label, placeholder } = this.props;
      if (muscleGroups.loading) {
-       return <div> loading... </div>;
+       return <div> loading muscle groups... </div>;
      }
      if (muscleGroups) {
        return (

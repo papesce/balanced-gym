@@ -29,13 +29,15 @@ class FiltersRC extends React.Component<FilterRC> {
     }
   }
   render() {
+    const { availableTargets } = this.props;
+    // console.log('available targets', this.props.availableTargets);
     return (
       <Row className="app-row">
         <Col xs={10} md={5}>
           <MuscleGroupC />
         </Col>
         <Col xs={10} md={5}>
-          <TargetC />
+          <TargetC availableTargets={availableTargets}/>
         </Col>
         <Col className="filter-button" xs={10} md={2}>
           <Button onClick={() => this.filter()}>Filter</Button>
@@ -45,9 +47,15 @@ class FiltersRC extends React.Component<FilterRC> {
   }
 }
 
+const getAvailableTargets = (groupedExercises) => {
+   const { targets = [] } = groupedExercises;
+  return targets.map(targetMix => targetMix.target);
+}
+
 const mapStateToProps = (state: State): FilterRC => {
   return {
-    filter: state.filter
+    filter: state.filter,
+    availableTargets: getAvailableTargets(state.groupedExercises)
   };
 };
 

@@ -60,10 +60,10 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
   };
   render() {
 
-    const { buttonLabel } = this.props;
+    const { buttonLabel, muscles, muscleGroups } = this.props;
     const muscleURL = this.state.target ? this.state.target.muscleURL : "";
     const targetId = this.state.target ? this.state.target._id : "";
-    const muscleGroups = ["Back","Biceps","Calves","Chest","Forearms","Hips","Lats-Neck-Traps","Shoulders","Thighs","Triceps","Waist"]
+   //  debugger;
     return (
       <div className="exercise-form">
         <TextEntryField
@@ -103,7 +103,7 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
         <br/>
         <TargetSelect
           style={{width: "300px"}}
-          muscles={this.props.muscles}
+          muscles={muscles}
           initialValue={targetId}
           onChange={this.onTargetChange}
         />

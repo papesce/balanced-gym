@@ -11,7 +11,8 @@ import {
 import {
   getExerciseStarted,
   editExerciseStarted,
-  getMusclesStarted
+  getMusclesStarted,
+  getMuscleGroupsStarted
 } from "../redux/actions";
 import { goBack } from "react-router-redux";
 
@@ -42,9 +43,16 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
     ) {
       this.props.getMuscleListStarted();
     }
+    if (
+      this.props.muscleGroups &&
+      this.props.muscleGroups.loading &&
+      this.props.getMuscleGroupsStarted
+    ) {
+      this.props.getMuscleGroupsStarted();
+    }
   }
   render() {
-    const { getExerciseStatus = {} } = this.props;
+    const { getExerciseStatus = {}, muscleGroups, muscles } = this.props;
     const loading: boolean = getExerciseStatus.loading === true;
     const started: boolean = getExerciseStatus.started === true;
     if (loading) {
@@ -58,7 +66,8 @@ export class EditExerciseC extends React.Component<EditExerciseCProps> {
           started={started}
           buttonLabel="Save"
           initialValue={exercise}
-          muscles={this.props.muscles}
+          muscles={muscles}
+          muscleGroups={muscleGroups}
         />
       );
     }
@@ -70,7 +79,8 @@ const mapStateToProps = (state: State) => {
 
   return {
     getExerciseStatus: state.getExerciseStatus,
-    muscles: state.filter.muscles
+    muscles: state.filter.muscles,
+    muscleGroups: state.filter.muscleGroups
   };
 };
 
@@ -80,7 +90,8 @@ const mapDispatchToProps = (dispatch: Dispatch<State>) => {
       dispatch(editExerciseStarted(exercise));
     },
     getExerciseStarted: (exId: string) => dispatch(getExerciseStarted(exId)),
-    getMuscleListStarted: () => dispatch(getMusclesStarted()),
+    getMuscleStarted: () => dispatch(getMusclesStarted()),
+    getMuscleGroupsStarted: () => dispatch(getMuscleGroupsStarted()),
     finish: () => dispatch(goBack())
   };
 };
