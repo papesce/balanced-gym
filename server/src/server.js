@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
+const routinesApi = require("./api/routines.api");
 const routineApi = require("./api/routine.api");
 const exerciseApi = require("./api/exercise.api");
 const muscleApi = require("./api/muscle.api");
@@ -18,7 +19,7 @@ if (process.env.NODE_ENV === "production") {
   MONGODB_API = process.env.MONGODB_LOCAL_API;
 }
 console.log("connecting to db:", MONGODB_API);
-mongoose.connect(MONGODB_API, { useNewUrlParser: true }, (error) => {
+mongoose.connect(MONGODB_API, { useNewUrlParser: true, useUnifiedTopology: true }, (error) => {
   if (error) {
     console.log("Error: cannot connect to mongo db. Exiting...", error);
     process.exit(0);
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+routinesApi.api(app);
 routineApi.api(app);
 exerciseApi.api(app);
 muscleApi.api(app);
