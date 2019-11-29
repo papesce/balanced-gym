@@ -7,6 +7,7 @@ const routineApi = require("./api/routine.api");
 const exerciseApi = require("./api/exercise.api");
 const muscleApi = require("./api/muscle.api");
 const muscleGroupApi = require("./api/muscleGroup.api");
+const muscleGroupsApi = require("./api/muscleGroups.api");
 const serieApi = require("./api/serie.api");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -41,6 +42,7 @@ routineApi.api(app);
 exerciseApi.api(app);
 muscleApi.api(app);
 muscleGroupApi.api(app);
+muscleGroupsApi.api(app);
 serieApi.api(app);
 
 /**
