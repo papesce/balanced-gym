@@ -30,20 +30,20 @@ const getMuscleGroups = async () => {
   return mResult.sort();
 };
 
-const newMuscleGroup = async (name) => {
-  const MuscleGroupModel = muscleGroupModel.getModel();
-  await new MuscleGroupModel({
-    name,
-  }).save();
-};
+// const newMuscleGroup = async (name) => {
+//   const MuscleGroupModel = muscleGroupModel.getModel();
+//   await new MuscleGroupModel({
+//     name,
+//   }).save();
+// };
 
-const createMuscleDictionary = (muscleGroupResult) => {
-  const result = {};
-  muscleGroupResult.forEach(muscleGroup => {
-    result[muscleGroup.name] = muscleGroup._id;
-  });
-  return result;
-}
+// const createMuscleDictionary = (muscleGroupResult) => {
+//   const result = {};
+//   muscleGroupResult.forEach(muscleGroup => {
+//     result[muscleGroup.name] = muscleGroup._id;
+//   });
+//   return result;
+// }
 
 const api = app => {
   // app.get("/newMuscleGroupTable", async (req, res) => {
