@@ -1,5 +1,5 @@
 const exerciseModel = require("../model/exercise.model");
-// const exerciseApi = require("./exercise.api");
+const exerciseApi = require("./exercise.api");
 // const routineApi = require("./routine.api");
 
 
@@ -27,15 +27,14 @@ const groupExercisesByTarget = exercisesResult => {
     if (targetId) {
       const target = targetsById[targetId];
       const { exercises } = target;
-      //     const { maxLastUpdated, updatedToday } =
-      //       exercisesApi.addLastUpdatedToExercises(exercises);
+      const { maxLastUpdated, updatedToday } =
+           exerciseApi.addLastUpdatedToExercises(exercises);
       const newTarget = {
         ...target,
         //       // targets: exerciseApi.sortByTarget(exercises),
         exercisesCount: exercises.length,
-        //       targetsCount: targets.size,
-        //       lastUpdated: maxLastUpdated,
-        //       doneToday: updatedToday
+        lastUpdated: maxLastUpdated,
+        doneToday: updatedToday
       };
       delete newTarget.exercises;
       //     delete newMuscleGroup.targets;
@@ -49,7 +48,7 @@ const getMuscleGroup = async (routineId, muscleGroupId) => {
   const ExerciseModel = exerciseModel.getModel();
   const exercisesQuery = ExerciseModel.find({ routineId, muscleGroup: muscleGroupId }).select('name target')
     //.populate("muscleGroup")
-    //.populate("series")
+    .populate("series")
     .populate("target", "name");
     //.populate("synergists")
     //.populate("stabilizers");
