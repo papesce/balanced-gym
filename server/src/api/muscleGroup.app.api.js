@@ -47,11 +47,11 @@ const groupExercisesByTarget = exercisesResult => {
 const getMuscleGroup = async (routineId, muscleGroupId) => {
   const ExerciseModel = exerciseModel.getModel();
   const exercisesQuery = ExerciseModel.find({ routineId, muscleGroup: muscleGroupId }).select('name target')
-    //.populate("muscleGroup")
+    // .populate("muscleGroup")
     .populate("series")
     .populate("target", "name");
-    //.populate("synergists")
-    //.populate("stabilizers");
+    // .populate("synergists")
+    // .populate("stabilizers");
   const exercisesResult = await exercisesQuery.lean().exec();
   const targets = groupExercisesByTarget(exercisesResult);
   // const res = exerciseApi.addLastUpdatedToExercises(exercisesResult);
