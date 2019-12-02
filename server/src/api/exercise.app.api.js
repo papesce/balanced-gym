@@ -8,7 +8,7 @@ const getExercises = (exercisesResult) => {
   return exercisesResult.map(exercise => {
     const newExercise = {
       ...exercise,
-      repsCount: exercise.series.length
+      seriesCount: exercise.series.length
     };
 
     delete newExercise.series;
