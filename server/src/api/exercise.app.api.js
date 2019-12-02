@@ -6,7 +6,11 @@ const getExercises = (exercisesResult) => {
   // const { maxLastUpdated, updatedToday } =
   exerciseApi.addLastUpdatedToExercises(exercisesResult);
   return exercisesResult.map(exercise => {
-    const newExercise = { ...exercise };
+    const newExercise = {
+      ...exercise,
+      repsCount: exercise.series.length
+    };
+
     delete newExercise.series;
     delete newExercise.target;
     return newExercise;
