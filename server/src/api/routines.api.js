@@ -79,22 +79,30 @@ const addExercisesToRoutine = async routine => {
   groupByMuscleGroup(newRoutine);
 };
 
-const getRoutines = async (withExercises) => {
+
+const getRoutines = async () => {
   const routinesQuery = routineModel.getModel().find();
   const routines = await routinesQuery.lean().exec();
-  const results = [];
-  if (withExercises) {
-    for (const routineResult of routines) {
-      results.push(addExercisesToRoutine(routineResult));
-    }
-    await Promise.all(results);
-  }
   return routines;
+};
+
+const getRoutinesAndExercises = async () => {
+  const routines = await getRoutines();
+  const results = [];
+  for (const routineResult of routines) {
+    results.push(addExercisesToRoutine(routineResult));
+  }
+  await Promise.all(results);
+  return routines;
+};
+
+const sortRoutines = (routines) => {
+  return routines.sort((r1, r2) => new Date(r1.lastUpdated) > new Date(r2.lastUpdated));
 };
 
 const api = app => {
   app.get("/routine", async (req, res) => {
-    const routines = await getRoutines(true);
+    const routines = await getRoutinesAndExercises();
     res.send(routines);
   });
 
@@ -119,14 +127,14 @@ const api = app => {
   };
 
   app.get("/routines", async (req, res) => {
-    const routines = await getRoutines(false);
+    const routines = await getRoutines();
     const results = [];
     for (const routineResult of routines) {
       const routine = getRoutineSummary(routineResult);
       results.push(routine);
     }
     const newRoutines = await Promise.all(results);
-    res.send(newRoutines);
+    res.send(sortRoutines(newRoutines));
   });
 };
 
