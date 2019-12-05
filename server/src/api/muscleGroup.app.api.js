@@ -1,6 +1,6 @@
 const exerciseModel = require("../model/exercise.model");
 const exerciseApi = require("./exercise.api");
-// const routineApi = require("./routine.api");
+const utils = require("./utils");
 
 
 // TODO: In the future this can be avoided with a many2many relationship between
@@ -49,12 +49,12 @@ const getMuscleGroup = async (routineId, muscleGroupId) => {
   const exercisesQuery = ExerciseModel.find({ routineId, muscleGroup: muscleGroupId }).select('name target')
     // .populate("muscleGroup")
     .populate("series")
-    .populate("target", "name");
+    .populate("target", "name muscleURL");
     // .populate("synergists")
     // .populate("stabilizers");
   const exercisesResult = await exercisesQuery.lean().exec();
   const targets = groupExercisesByTarget(exercisesResult);
-  // const res = exerciseApi.addLastUpdatedToExercises(exercisesResult);
+  utils.sortTargets(targets);
   const muscleGroup = {
     // tempResult: exercisesResult
     targets

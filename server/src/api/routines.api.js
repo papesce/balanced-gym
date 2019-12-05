@@ -1,6 +1,8 @@
 const routineModel = require("../model/routine.model");
 const exerciseModel = require("../model/exercise.model");
 const exerciseApi = require("./exercise.api");
+const utils = require("./utils");
+
 
 const getLasUpdatedFromExercises = exercises => {
   let maxLastUpdated;
@@ -96,10 +98,6 @@ const getRoutinesAndExercises = async () => {
   return routines;
 };
 
-const sortRoutines = (routines) => {
-  return routines.sort((r1, r2) => new Date(r1.lastUpdated) > new Date(r2.lastUpdated));
-};
-
 const api = app => {
   app.get("/routine", async (req, res) => {
     const routines = await getRoutinesAndExercises();
@@ -134,7 +132,8 @@ const api = app => {
       results.push(routine);
     }
     const newRoutines = await Promise.all(results);
-    res.send(sortRoutines(newRoutines));
+    utils.sortByLastUpdated(newRoutines);
+    res.send(newRoutines);
   });
 };
 
