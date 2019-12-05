@@ -3,6 +3,12 @@ const exerciseApi = require("./exercise.api");
 const utils = require("./utils");
 
 
+const addAll = (set, array) => {
+  if (array) {
+    array.forEach(item => set.add(item.toString()));
+  }
+};
+
 // TODO: In the future this can be avoided with a many2many relationship between
 // ecercise and muscleGrup
 const groupByTargetExercises = exercises => {
@@ -12,9 +18,17 @@ const groupByTargetExercises = exercises => {
     // TODO: group by muscle group ID
     const targetId = target._id;
     if (!targetsById[targetId]) {
-      targetsById[targetId] = { ...target, exercises: [] };
+      targetsById[targetId] = {
+        ...target,
+        exercises: [],
+        synergists: new Set(),
+        stabilizers: new Set()
+      };
     }
-    targetsById[targetId].exercises.push(exercise);
+    const t = targetsById[targetId];
+    t.exercises.push(exercise);
+    addAll(t.stabilizers, exercise.stabilizers);
+    addAll(t.synergists, exercise.synergists);
   });
   return targetsById;
 };
@@ -26,7 +40,7 @@ const groupExercisesByTarget = exercisesResult => {
   for (const targetId in targetsById) {
     if (targetId) {
       const target = targetsById[targetId];
-      const { exercises } = target;
+      const { exercises, synergists, stabilizers } = target;
       const { maxLastUpdated, updatedToday } =
            exerciseApi.addLastUpdatedToExercises(exercises);
       const newTarget = {
@@ -34,10 +48,13 @@ const groupExercisesByTarget = exercisesResult => {
         //       // targets: exerciseApi.sortByTarget(exercises),
         exercisesCount: exercises.length,
         lastUpdated: maxLastUpdated,
-        doneToday: updatedToday
+        doneToday: updatedToday,
+        synergistsCount: synergists.size,
+        stabilizersCount: stabilizers.size
       };
       delete newTarget.exercises;
-      //     delete newMuscleGroup.targets;
+      delete newTarget.synergists;
+      delete newTarget.stabilizers;
       targets.push(newTarget);
     }
   }
@@ -46,7 +63,10 @@ const groupExercisesByTarget = exercisesResult => {
 
 const getMuscleGroup = async (routineId, muscleGroupId) => {
   const ExerciseModel = exerciseModel.getModel();
-  const exercisesQuery = ExerciseModel.find({ routineId, muscleGroup: muscleGroupId }).select('name target')
+  const exercisesQuery = ExerciseModel.find({
+    routineId,
+    muscleGroup: muscleGroupId
+  }).select('name target synergists stabilizers')
     // .populate("muscleGroup")
     .populate("series")
     .populate("target", "name muscleURL");
@@ -56,12 +76,8 @@ const getMuscleGroup = async (routineId, muscleGroupId) => {
   const targets = groupExercisesByTarget(exercisesResult);
   utils.sortTargets(targets);
   const muscleGroup = {
-    // tempResult: exercisesResult
+    // tempResult: exercisesResult,
     targets
-    // ...muscleGroup: query.muscleGroup,
-    // targets: exerciseApi.sortByTarget(exercisesResult),
-    // lastUpdated: routineApi.getLasUpdatedFromExercises(exercisesResult),
-    // doneToday: res.updatedToday
   };
   return muscleGroup;
 };
