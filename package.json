@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "npm install --prefix client && npm install --prefix server && npm run build:server --prefix client",
     "start": "npm start --prefix server",
-    "watch": "cd server && npm run watch && cd .."
+    "watch": "cd server && npm run watch && cd ..",
+    "client": "cd client && npm start && cd.."
   },
   "engines": {
     "node": "10.15.0",

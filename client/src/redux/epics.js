@@ -74,7 +74,6 @@ const getExercises = (action$) => {
     ofType(T.GET_EXERCISES_STARTED),
     mergeMap(action => {
           let QUERY_URL = GET_EXERCISES_URL;
-          debugger;
           if (Object.keys(action.payload)) {
             QUERY_URL = new URLQueryBuilder(
               GET_EXERCISES_URL,

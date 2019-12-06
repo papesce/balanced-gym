@@ -63,7 +63,7 @@ class ExerciseForm extends Component<ExerciseFormProps, Exercise> {
     const { buttonLabel, muscles, muscleGroups } = this.props;
     const muscleURL = this.state.target ? this.state.target.muscleURL : "";
     const targetId = this.state.target ? this.state.target._id : "";
-   //  debugger;
+
     return (
       <div className="exercise-form">
         <TextEntryField

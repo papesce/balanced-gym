@@ -105,9 +105,6 @@ const sortByTarget = exercises => {
     if (key) {
       const groupedExercises = targetGroups[key];
       groupedExercises.forEach(ex => {
-        // if (ex.name.startsWith("Lever Leg")) {
-        //  debugger
-        // }
         const suggestedSerie = computeSuggestedSerie(ex, groupedExercises);
         const exerc = ex;
         if (suggestedSerie) {
