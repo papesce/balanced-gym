@@ -147,4 +147,4 @@ const api = app => {
   // });
 };
 
-module.exports = { api };
+module.exports = { api, getMuscle };

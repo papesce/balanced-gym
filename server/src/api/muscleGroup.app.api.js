@@ -90,8 +90,8 @@ const getMuscleGroupForRoutine = async (routineId, muscleGroupId) => {
     // tempResult: exercisesResult,
     routineId,
     routineName: routineResult.name,
-    muscleGroupId,
-    muscleGroupName: muscleGroupResult.name,
+    _id: muscleGroupId,
+    name: muscleGroupResult.name,
     targets
   };
   return muscleGroup;
@@ -107,4 +107,4 @@ const api = app => {
 };
 
 
-module.exports = { api };
+module.exports = { api, getMuscleGroup };
