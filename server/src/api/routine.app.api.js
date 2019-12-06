@@ -71,6 +71,11 @@ const getRoutine = async routineId => {
     .findOne({ _id: routineId })
     .select('name');
   const routineResult = await routineQuery.lean().exec();
+  return routineResult;
+};
+
+const getRoutineAndMuscles = async routineId => {
+  const routineResult = await getRoutine(routineId);
   await addMuscleGroups(routineResult);
   // await addExercisesToRoutine(routineResult);
   // delete routineResult.exercises;
@@ -78,10 +83,10 @@ const getRoutine = async routineId => {
 };
 
 const api = app => {
-  app.get("/routine/:id", async (req, res) => {
+  app.get("/api/routine/:id", async (req, res) => {
     try {
     // next here for app
-      const routines = await getRoutine(req.params.id);
+      const routines = await getRoutineAndMuscles(req.params.id);
       res.send(routines);
     } catch (error) {
       res.status(500).json(error);
@@ -89,4 +94,4 @@ const api = app => {
   });
 };
 
-module.exports = { api };
+module.exports = { api, getRoutine };

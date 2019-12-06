@@ -99,7 +99,7 @@ const getRoutinesAndExercises = async () => {
 };
 
 const api = app => {
-  app.get("/routine", async (req, res) => {
+  app.get("/api/routine", async (req, res) => {
     const routines = await getRoutinesAndExercises();
     res.send(routines);
   });
@@ -124,7 +124,7 @@ const api = app => {
     return newRoutine;
   };
 
-  app.get("/routines", async (req, res) => {
+  app.get("/api/routines", async (req, res) => {
     const routines = await getRoutines();
     const results = [];
     for (const routineResult of routines) {

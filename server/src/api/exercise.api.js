@@ -233,7 +233,7 @@ const getExercise = async exId => {
 };
 
 const api = app => {
-  app.get("/exercises", async (req, res) => {
+  app.get("/api/exercises", async (req, res) => {
     try {
       const exercises = await getExercises(req.query);
       res.send(exercises);
@@ -243,7 +243,7 @@ const api = app => {
     }
   });
 
-  app.get("/exercise/:id", async (req, res) => {
+  app.get("/api/exercise/:id", async (req, res) => {
     try {
       const exercises = await getExercise(req.params.id);
       res.send(exercises);
@@ -255,12 +255,12 @@ const api = app => {
     }
   });
 
-  app.patch("/exercise/:id", async (req, res) => {
+  app.patch("/api/exercise/:id", async (req, res) => {
     const updatedExercise = await updateExercise(req.params.id, req.body);
     res.send(updatedExercise);
   });
 
-  app.post("/newExercise/:routineId", async (req, res) => {
+  app.post("/api/newExercise/:routineId", async (req, res) => {
     const exercise = await newExercise(req.params.routineId, req.body);
     res.send(exercise);
   });

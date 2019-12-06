@@ -34,7 +34,7 @@ const getTarget = async (routineId, muscleGroupId, targetId) => {
 };
 
 const api = app => {
-  app.get("/routine/:routineId/muscleGroup/:muscleGroupId/target/:targetId", async (req, res) => {
+  app.get("/api/routine/:routineId/muscleGroup/:muscleGroupId/target/:targetId", async (req, res) => {
     const { routineId, muscleGroupId, targetId } = req.params;
     const target = await getTarget(routineId, muscleGroupId, targetId);
     res.send(target);

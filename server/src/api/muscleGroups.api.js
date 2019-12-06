@@ -57,7 +57,7 @@ const api = app => {
   //   res.status(200).send("Done ! check the results");
   // });
 
-  app.get("/muscleGroups", async (req, res) => {
+  app.get("/api/muscleGroups", async (req, res) => {
     const muscleGroups = await getMuscleGroups();
     res.send(muscleGroups);
   });

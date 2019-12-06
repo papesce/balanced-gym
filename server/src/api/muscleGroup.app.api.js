@@ -1,7 +1,8 @@
+const muscleGroupModel = require("../model/muscleGroup.model");
 const exerciseModel = require("../model/exercise.model");
 const exerciseApi = require("./exercise.api");
+const routineApi = require("./routine.app.api");
 const utils = require("./utils");
-
 
 const addAll = (set, array) => {
   if (array) {
@@ -61,7 +62,17 @@ const groupExercisesByTarget = exercisesResult => {
   return targets;
 };
 
-const getMuscleGroup = async (routineId, muscleGroupId) => {
+
+const getMuscleGroup = async (muscleGroupId) => {
+  const MuscleGroupModel = muscleGroupModel.getModel();
+  const mQuery = MuscleGroupModel.findOne({ _id: muscleGroupId }).select('name');
+  const mResult = await mQuery.lean().exec();
+  return mResult;
+};
+
+const getMuscleGroupForRoutine = async (routineId, muscleGroupId) => {
+  const routineResult = await routineApi.getRoutine(routineId);
+  const muscleGroupResult = await getMuscleGroup(muscleGroupId);
   const ExerciseModel = exerciseModel.getModel();
   const exercisesQuery = ExerciseModel.find({
     routineId,
@@ -77,14 +88,20 @@ const getMuscleGroup = async (routineId, muscleGroupId) => {
   utils.sortTargets(targets);
   const muscleGroup = {
     // tempResult: exercisesResult,
+    routineId,
+    routineName: routineResult.name,
+    muscleGroupId,
+    muscleGroupName: muscleGroupResult.name,
     targets
   };
   return muscleGroup;
 };
 
 const api = app => {
-  app.get("/routine/:routineId/muscleGroup/:muscleGroupId", async (req, res) => {
-    const muscleGroup = await getMuscleGroup(req.params.routineId, req.params.muscleGroupId);
+  app.get("/api/routine/:routineId/muscleGroup/:muscleGroupId", async (req, res) => {
+    const muscleGroup =
+      await getMuscleGroupForRoutine(req.params.routineId,
+        req.params.muscleGroupId);
     res.send(muscleGroup);
   });
 };

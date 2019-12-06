@@ -37,17 +37,17 @@ const deleteSerie = async serieId => {
 
 
 const api = app => {
-  app.patch("/serie/:id", async (req, res) => {
+  app.patch("/api/serie/:id", async (req, res) => {
     const updatedSerie = await updateSerie(req.params.id, req.body);
     res.send(updatedSerie);
   });
 
-  app.delete("/serie/:id", async (req, res) => {
+  app.delete("/api/serie/:id", async (req, res) => {
     const deletedSerie = await deleteSerie(req.params.id);
     res.send(deletedSerie);
   });
 
-  app.post("/newSerie/:exerciseId", async (req, res) => {
+  app.post("/api/newSerie/:exerciseId", async (req, res) => {
     const serie = await newSerie(req.params.exerciseId);
     res.send(serie);
   });

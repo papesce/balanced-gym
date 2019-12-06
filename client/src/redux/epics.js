@@ -21,14 +21,14 @@ import { ajax } from "rxjs/observable/dom/ajax";
 import { Action } from "redux-actions";
 import { Exercise } from "./model";
 
-const NEW_EXERCISE_URL: string = "/newExercise";
-const NEW_MUSCLE_URL: string = "/newMuscle";
-const GET_MUSCLE_URL: string = "/muscle";
-const GET_MUSCLES_URL: string = "/muscles";
-const GET_EXERCISES_URL: string = "/exercises";
-const GET_EXERCISE_URL: string = "/exercise";
-const GET_MUSCLE_GROUPS_URL: string = "/muscleGroups";
-const GET_ROUTINES_URL: string = "/routines";
+const NEW_EXERCISE_URL: string = "/api/newExercise";
+const NEW_MUSCLE_URL: string = "/api/newMuscle";
+const GET_MUSCLE_URL: string = "/api/muscle";
+const GET_MUSCLES_URL: string = "/api/muscles";
+const GET_EXERCISES_URL: string = "/api/exercises";
+const GET_EXERCISE_URL: string = "/api/exercise";
+const GET_MUSCLE_GROUPS_URL: string = "/api/muscleGroups";
+const GET_ROUTINES_URL: string = "/api/routines";
 // const GET_TARGETS_URL: string = "/target"; //deprecated
 
 const addExercise = (action$: ActionsObservable<Action<Exercise>>) => {

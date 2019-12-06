@@ -45,23 +45,23 @@ const api = app => {
   //   res.send(targets);
   // });
 
-  app.get("/muscles", async (req, res) => {
+  app.get("/api/muscles", async (req, res) => {
     const targets = await getMuscles();
     res.send(targets);
   });
 
-  app.get("/muscle/:id", async (req, res) => {
+  app.get("/api/muscle/:id", async (req, res) => {
     const muscle = await getMuscle(req.params.id);
     res.send(muscle);
   });
 
-  app.patch("/muscle/:id", async (req, res) => {
+  app.patch("/api/muscle/:id", async (req, res) => {
     const updatedMuscle = await updateMuscle(req.params.id, req.body);
     res.send(updatedMuscle);
   });
 
 
-  app.post("/newMuscle", async (req, res) => {
+  app.post("/api/newMuscle", async (req, res) => {
     const muscle = await newMuscle(req.body);
     res.send(muscle);
   });
