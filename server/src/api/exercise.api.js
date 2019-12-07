@@ -83,6 +83,20 @@ const sortExercises = exercises => {
   return exercises;
 };
 
+const addSuggestedSerieToExercise = (exercises) => {
+  exercises.forEach(ex => {
+    const suggestedSerie = computeSuggestedSerie(ex, exercises);
+    const exerc = ex;
+    if (suggestedSerie) {
+      const denormalizedSerie = {
+        reps: suggestedSerie.reps,
+        weight: denormalizeWeight(suggestedSerie.weight, exerc)
+      };
+      exerc.suggestedSerie = denormalizedSerie;
+    }
+  });
+};
+
 const sortByTarget = exercises => {
   // group by target
   const targetGroups = {};
@@ -104,17 +118,7 @@ const sortByTarget = exercises => {
   for (const key in targetGroups) {
     if (key) {
       const groupedExercises = targetGroups[key];
-      groupedExercises.forEach(ex => {
-        const suggestedSerie = computeSuggestedSerie(ex, groupedExercises);
-        const exerc = ex;
-        if (suggestedSerie) {
-          const denormalizedSerie = {
-            reps: suggestedSerie.reps,
-            weight: denormalizeWeight(suggestedSerie.weight, exerc)
-          };
-          exerc.suggestedSerie = denormalizedSerie;
-        }
-      });
+      addSuggestedSerieToExercise(groupedExercises);
       targets.push({
         target: targetObjs[key],
         exercises: sortExercises(groupedExercises)
@@ -266,6 +270,7 @@ const api = app => {
 module.exports = {
   api,
   addLastUpdatedToExercises,
+  addSuggestedSerieToExercise,
   updateExercise,
   sortByTarget
 };

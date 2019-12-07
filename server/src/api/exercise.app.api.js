@@ -3,10 +3,12 @@ const exerciseApi = require("./exercise.api");
 const muscleApi = require("./muscle.api");
 const routineApi = require("./routine.app.api");
 const muscleGroupApi = require("./muscleGroup.app.api");
+const utils = require("./utils");
 
 const getExercises = (exercisesResult) => {
   // const { maxLastUpdated, updatedToday } =
   exerciseApi.addLastUpdatedToExercises(exercisesResult);
+  exerciseApi.addSuggestedSerieToExercise(exercisesResult);
   return exercisesResult.map(exercise => {
     const newExercise = {
       ...exercise,
@@ -25,10 +27,16 @@ const getTarget = async (routineId, muscleGroupId, targetId) => {
   const routineResult = await routineApi.getRoutine(routineId);
   const muscleGroupResult = await muscleGroupApi.getMuscleGroup(muscleGroupId);
   const ExerciseModel = exerciseModel.getModel();
-  const exercisesQuery = ExerciseModel.find({ routineId, muscleGroup: muscleGroupId, target: targetId }).select('name target')
-    .populate("series");
+  const exercisesQuery =
+    ExerciseModel.find({
+      routineId,
+      muscleGroup: muscleGroupId,
+      target: targetId
+    }).select('name target gifURL')
+      .populate("series");
   const exercisesResult = await exercisesQuery.lean().exec();
   const exercises = getExercises(exercisesResult);
+  utils.sortByLastUpdated(exercises);
   const newTarget = {
     _id: targetId,
     name: muscleResult.name,
