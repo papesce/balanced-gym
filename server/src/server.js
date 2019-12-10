@@ -4,8 +4,9 @@ const app = express();
 
 const routinesApi = require("./api/routines.api");
 const routineApi = require("./api/routine.app.api");
-const exerciseApi = require("./api/exercise.api");
-const exerciseAppApi = require("./api/exercise.app.api");
+const exercisesApi = require("./api/exercises.api");
+const exerciseApi = require("./api/exercise.app.api");
+const targetApi = require("./api/target.app.api");
 const muscleApi = require("./api/muscle.api");
 const muscleGroupApi = require("./api/muscleGroup.app.api");
 const muscleGroupsApi = require("./api/muscleGroups.api");
@@ -40,8 +41,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 routinesApi.api(app);
 routineApi.api(app);
+targetApi.api(app);
+exercisesApi.api(app);
 exerciseApi.api(app);
-exerciseAppApi.api(app);
 muscleApi.api(app);
 muscleGroupApi.api(app);
 muscleGroupsApi.api(app);

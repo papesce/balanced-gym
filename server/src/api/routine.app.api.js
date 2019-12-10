@@ -1,6 +1,6 @@
 const routineModel = require("../model/routine.model");
 const exerciseModel = require("../model/exercise.model");
-const exercisesApi = require("./exercise.api");
+const exercisesApi = require("./exercises.api");
 const utils = require("./utils");
 
 // TODO: In the future this can be avoided with a many2many relationship between

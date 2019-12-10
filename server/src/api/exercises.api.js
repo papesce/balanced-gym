@@ -47,10 +47,13 @@ const computeSuggestedSerie = (exercise, targetGroup) => {
   let serie = {};
   const maxserie = { reps: 0, weight: 0 };
   targetGroup.forEach(ex => {
+    // console.log('eq:', ex.equipment);
     if (isSimilar(exercise, ex) && ex.series.length > 0) {
+      ex.series.sort((s1, s2) => s1.createdAt < s2.createdAt);
       [serie] = ex.series;
       if (exercise.equipment !== "TRX" || ex.equipment === "TRX") {
         const nweight = normalizeWeight(serie.weight, ex);
+        // console.log('nweight', nweight);
         if (nweight > maxserie.weight) {
           maxserie.weight = nweight;
           maxserie.reps = serie.reps;
@@ -83,17 +86,21 @@ const sortExercises = exercises => {
   return exercises;
 };
 
-const addSuggestedSerieToExercise = (exercises) => {
+const addSuggestedSerieToExercise = (exercise, exercises) => {
+  const suggestedSerie = computeSuggestedSerie(exercise, exercises);
+  const exerc = exercise;
+  if (suggestedSerie) {
+    const denormalizedSerie = {
+      reps: suggestedSerie.reps,
+      weight: denormalizeWeight(suggestedSerie.weight, exerc)
+    };
+    exerc.suggestedSerie = denormalizedSerie;
+  }
+};
+
+const addSuggestedSerieToExercises = (exercises) => {
   exercises.forEach(ex => {
-    const suggestedSerie = computeSuggestedSerie(ex, exercises);
-    const exerc = ex;
-    if (suggestedSerie) {
-      const denormalizedSerie = {
-        reps: suggestedSerie.reps,
-        weight: denormalizeWeight(suggestedSerie.weight, exerc)
-      };
-      exerc.suggestedSerie = denormalizedSerie;
-    }
+    addSuggestedSerieToExercise(ex, exercises);
   });
 };
 
@@ -118,7 +125,7 @@ const sortByTarget = exercises => {
   for (const key in targetGroups) {
     if (key) {
       const groupedExercises = targetGroups[key];
-      addSuggestedSerieToExercise(groupedExercises);
+      addSuggestedSerieToExercises(groupedExercises);
       targets.push({
         target: targetObjs[key],
         exercises: sortExercises(groupedExercises)
@@ -131,14 +138,23 @@ const sortByTarget = exercises => {
   targets.sort((tg1, tg2) =>
     compareExercises(tg1.exercises[0], tg2.exercises[0])
   );
-  // flatMap
-  // let flatMap = [];
-  // targets.forEach(tg => {
-  //  const exs = tg.exercises;
-  //  flatMap = flatMap.concat(exs);
-  // });
-  // return flatMap;
   return targets;
+};
+
+const addLastUpdatedToExercise = (exerciseResult) => {
+  const exercise = exerciseResult;
+  if (exercise.series.length > 0) {
+    exercise.series.sort((s1, s2) => s1.createdAt < s2.createdAt);
+    exercise.lastUpdated = exercise.series[0].createdAt;
+    const bestSerie = exercise.series[0];
+    exercise.lastReps = bestSerie.reps;
+    exercise.lastWeight = bestSerie.weight;
+    exercise.normalizedWeight = normalizeWeight(bestSerie.weight, exercise);
+  } else {
+    exercise.lastReps = 0;
+    exercise.lastWeight = 0;
+    exercise.normalizedWeight = 0;
+  }
 };
 
 const addLastUpdatedToExercises = exercises => {
@@ -147,28 +163,15 @@ const addLastUpdatedToExercises = exercises => {
   let updatedToday = 0;
   exercises.forEach(exerciseResult => {
     const exercise = exerciseResult;
-    if (exerciseResult.series.length > 0) {
-      exerciseResult.series.sort((s1, s2) => s1.createdAt < s2.createdAt);
-      exercise.lastUpdated = exerciseResult.series[0].createdAt;
-      // let newSeries = exerciseResult.series.map((serie) => {return {_id: serie._id}});
-      // exerciseResult.seriesSize = newSeries.length;
-      const bestSerie = exerciseResult.series[0];
-      exercise.lastReps = bestSerie.reps;
-      exercise.lastWeight = bestSerie.weight;
-      exercise.normalizedWeight = normalizeWeight(bestSerie.weight, exercise);
-      // exerciseResult.series = newSeries;
+    addLastUpdatedToExercise(exercise);
+    if (exercise.lastUpdated) {
       if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
         maxLastUpdated = exercise.lastUpdated;
-      }
+      };
       const hours = (today.getTime() - exercise.lastUpdated.getTime()) / 3600000;
       if (hours < 24) {
         updatedToday += 1;
       }
-    } else {
-      // exercise.lastUpdated = exerciseResult.createdAt;
-      exercise.lastReps = 0;
-      exercise.lastWeight = 0;
-      exercise.normalizedWeight = 0;
     }
   });
   return { maxLastUpdated, updatedToday };
@@ -219,20 +222,6 @@ const newExercise = async (routineId, exercise) => {
   }).save();
 };
 
-const getExercise = async exId => {
-  const exQuery = exerciseModel
-    .getModel()
-    .findOne({ _id: exId })
-    .populate("routineId", "name")
-    .populate("muscleGroup")
-    .populate("target")
-    .populate("synergists")
-    .populate("stabilizers");
-
-  const exResult = await exQuery.lean().exec();
-  return exResult;
-};
-
 const api = app => {
   app.get("/api/exercises", async (req, res) => {
     try {
@@ -241,18 +230,6 @@ const api = app => {
     } catch (error) {
       console.log("Error handling /exercise API:", error);
       res.status(500).send("inernal server error");
-    }
-  });
-
-  app.get("/api/exercise/:id", async (req, res) => {
-    try {
-      const exercises = await getExercise(req.params.id);
-      res.send(exercises);
-    } catch (error) {
-      console.log("Error handling /exercise/:id API");
-      res.type('text/plain');
-      res.status(500);
-      res.send('Error handling /exercise/:id API');
     }
   });
 
@@ -270,7 +247,9 @@ const api = app => {
 module.exports = {
   api,
   addLastUpdatedToExercises,
+  addLastUpdatedToExercise,
   addSuggestedSerieToExercise,
+  addSuggestedSerieToExercises,
   updateExercise,
   sortByTarget
 };

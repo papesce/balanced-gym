@@ -1,6 +1,6 @@
 const routineModel = require("../model/routine.model");
 const exerciseModel = require("../model/exercise.model");
-const exerciseApi = require("./exercise.api");
+const exerciseApi = require("./exercises.api");
 const utils = require("./utils");
 
 

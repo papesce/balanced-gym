@@ -1,6 +1,6 @@
 const muscleGroupModel = require("../model/muscleGroup.model");
 const exerciseModel = require("../model/exercise.model");
-const exerciseApi = require("./exercise.api");
+const exercisesApi = require("./exercises.api");
 const routineApi = require("./routine.app.api");
 const utils = require("./utils");
 
@@ -43,7 +43,7 @@ const groupExercisesByTarget = exercisesResult => {
       const target = targetsById[targetId];
       const { exercises, synergists, stabilizers } = target;
       const { maxLastUpdated, updatedToday } =
-           exerciseApi.addLastUpdatedToExercises(exercises);
+           exercisesApi.addLastUpdatedToExercises(exercises);
       const newTarget = {
         ...target,
         //       // targets: exerciseApi.sortByTarget(exercises),

@@ -1,61 +1,43 @@
 const exerciseModel = require("../model/exercise.model");
-const exerciseApi = require("./exercise.api");
-const muscleApi = require("./muscle.api");
-const routineApi = require("./routine.app.api");
-const muscleGroupApi = require("./muscleGroup.app.api");
-const utils = require("./utils");
+const exercisesApi = require("./exercises.api");
 
-const getExercises = (exercisesResult) => {
-  // const { maxLastUpdated, updatedToday } =
-  exerciseApi.addLastUpdatedToExercises(exercisesResult);
-  exerciseApi.addSuggestedSerieToExercise(exercisesResult);
-  return exercisesResult.map(exercise => {
-    const newExercise = {
-      ...exercise,
-      seriesCount: exercise.series.length
-    };
-
-    delete newExercise.series;
-    delete newExercise.target;
-    return newExercise;
-  });
-};
-
-
-const getTarget = async (routineId, muscleGroupId, targetId) => {
-  const muscleResult = await muscleApi.getMuscle(targetId);
-  const routineResult = await routineApi.getRoutine(routineId);
-  const muscleGroupResult = await muscleGroupApi.getMuscleGroup(muscleGroupId);
-  const ExerciseModel = exerciseModel.getModel();
-  const exercisesQuery =
-    ExerciseModel.find({
-      routineId,
-      muscleGroup: muscleGroupId,
-      target: targetId
-    }).select('name target gifURL')
-      .populate("series");
+const getExercise = async exId => {
+  const exQuery = exerciseModel
+    .getModel()
+    .findOne({ _id: exId })
+    .populate("routineId", "name")
+    .populate("muscleGroup", "name")
+    .populate("target", "name")
+    .populate("synergists", "name")
+    .populate("stabilizers", "name")
+    .populate("series");
+  const exResult = await exQuery.lean().exec();
+  const exercisesQuery = exerciseModel.getModel().find({
+    routineId: exResult.routineId,
+    muscleGroup: exResult.muscleGroup,
+    target: exResult.target
+  }).select('name equipment')
+    .populate("series")
+    .populate("synergists", "name")
+    .populate("stabilizers", "name");
   const exercisesResult = await exercisesQuery.lean().exec();
-  const exercises = getExercises(exercisesResult);
-  utils.sortByLastUpdated(exercises);
-  const newTarget = {
-    _id: targetId,
-    name: muscleResult.name,
-    routineId,
-    routineName: routineResult.name,
-    muscleGroupId,
-    muscleGroupName: muscleGroupResult.name,
-    exercises,
-    // lastUpdated: maxLastUpdated,
-    // doneToday: updatedToday
-  };
-  return newTarget;
+  exercisesApi.addLastUpdatedToExercise(exResult);
+  exercisesApi.addSuggestedSerieToExercise(exResult, exercisesResult);
+  return exResult;
+  // return exercisesResult
 };
 
 const api = app => {
-  app.get("/api/routine/:routineId/muscleGroup/:muscleGroupId/target/:targetId", async (req, res) => {
-    const { routineId, muscleGroupId, targetId } = req.params;
-    const target = await getTarget(routineId, muscleGroupId, targetId);
-    res.send(target);
+  app.get("/api/exercise/:id", async (req, res) => {
+    try {
+      const exercises = await getExercise(req.params.id);
+      res.send(exercises);
+    } catch (error) {
+      console.log("Error handling /exercise/:id API", error);
+      res.type('text/plain');
+      res.status(500);
+      res.send('Error handling /exercise/:id API');
+    }
   });
 };
 
