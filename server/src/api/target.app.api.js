@@ -10,13 +10,17 @@ const getExercises = (exercisesResult) => {
   exercisesApi.addLastUpdatedToExercises(exercisesResult);
   exercisesApi.addSuggestedSerieToExercises(exercisesResult);
   return exercisesResult.map(exercise => {
+    const { series = [], synergists = [], stabilizers = [] } = exercise;
     const newExercise = {
       ...exercise,
-      seriesCount: exercise.series.length
+      seriesCount: series.length,
+      synergistsCount: synergists.length,
+      stabilizersCount: stabilizers.length
     };
 
     delete newExercise.series;
     delete newExercise.target;
+    delete newExercise.synergists;
     return newExercise;
   });
 };
@@ -32,7 +36,7 @@ const getTarget = async (routineId, muscleGroupId, targetId) => {
       routineId,
       muscleGroup: muscleGroupId,
       target: targetId
-    }).select('name target gifURL')
+    }).select('name target gifURL synergists stabilizers')
       .populate("series");
   const exercisesResult = await exercisesQuery.lean().exec();
   const exercises = getExercises(exercisesResult);
