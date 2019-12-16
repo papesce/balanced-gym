@@ -45,7 +45,7 @@ const isSimilar = (ex1, ex2) => {
 
 const computeSuggestedSerie = (exercise, targetGroup) => {
   let serie = {};
-  const maxserie = { reps: 0, weight: 0 };
+  const maxserie = { reps: 0, weight: -1 };
   targetGroup.forEach(ex => {
     // console.log('eq:', ex.equipment);
     if (isSimilar(exercise, ex) && ex.series.length > 0) {
@@ -53,7 +53,7 @@ const computeSuggestedSerie = (exercise, targetGroup) => {
       [serie] = ex.series;
       if (exercise.equipment !== "TRX" || ex.equipment === "TRX") {
         const nweight = normalizeWeight(serie.weight, ex);
-        // console.log('nweight', nweight);
+        console.log('nweight', nweight);
         if (nweight > maxserie.weight) {
           maxserie.weight = nweight;
           maxserie.reps = serie.reps;
@@ -61,6 +61,9 @@ const computeSuggestedSerie = (exercise, targetGroup) => {
       }
     }
   });
+  if (maxserie.weight === -1) {
+    maxserie.weight = 0;
+  }
   return maxserie;
 };
 

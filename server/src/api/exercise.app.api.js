@@ -5,20 +5,20 @@ const getExercise = async exId => {
   const exQuery = exerciseModel
     .getModel()
     .findOne({ _id: exId })
-    .select('name')
+    .select('name equipment')
     .populate("routineId", "name")
     .populate("muscleGroup", "name")
     .populate("target", "name muscleURL")
     .populate("synergists", "name")
     .populate("stabilizers", "name")
-    .populate("series");
+    .populate("series", 'name createdAt reps weight');
   const exResult = await exQuery.lean().exec();
   const exercisesQuery = exerciseModel.getModel().find({
     routineId: exResult.routineId,
     muscleGroup: exResult.muscleGroup,
     target: exResult.target
   }).select('name equipment')
-    .populate("series")
+    .populate("series", 'name createdAt reps weight')
     .populate("synergists", "name")
     .populate("stabilizers", "name");
   const exercisesResult = await exercisesQuery.lean().exec();
