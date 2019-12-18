@@ -53,7 +53,7 @@ const computeSuggestedSerie = (exercise, targetGroup) => {
       [serie] = ex.series;
       if (exercise.equipment !== "TRX" || ex.equipment === "TRX") {
         const nweight = normalizeWeight(serie.weight, ex);
-        console.log('nweight', nweight);
+        // console.log('nweight', nweight);
         if (nweight > maxserie.weight) {
           maxserie.weight = nweight;
           maxserie.reps = serie.reps;
