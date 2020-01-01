@@ -38,17 +38,17 @@ const deleteSerie = async serieId => {
 
 
 const api = app => {
-  app.patch("/api/serie/:id", async (req, res) => {
+  app.patch("/api/exercise/:exerciseId/serie/:id", async (req, res) => {
     const updatedSerie = await updateSerie(req.params.id, req.body);
+    const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
+    res.send({ exercise, serie: updatedSerie });
     res.send(updatedSerie);
   });
 
   app.delete("/api/exercise/:exerciseId/serie/:id", async (req, res) => {
     const deletedSerie = await deleteSerie(req.params.id);
     const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
-    res.send({ exercise, deletedSerie });
-    // setTimeout(() => res.send({ exercise, deletedSerie }), 2000);
-    // res.send(deletedSerie);
+    res.send({ exercise, serie: deletedSerie });
   });
 
   app.post("/api/newSerie/:exerciseId", async (req, res) => {
