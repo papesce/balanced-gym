@@ -37,8 +37,8 @@ mongoose.Promise = Promise;
 // Enable cors for dev
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, HEAD, PATCH, DELETE");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "OPTIONS, GET, PUT, POST, HEAD, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, content-type, Accept");
   next();
 });
 // parse body params and attache them to req.body

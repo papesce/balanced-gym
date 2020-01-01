@@ -40,11 +40,14 @@ const deleteSerie = async serieId => {
 
 const api = app => {
   app.patch("/api/updateSerie/:id/exercise/:exerciseId", async (req, res) => {
-    console.log('received patch update');
-    const updatedSerie = await updateSerie(req.params.id, req.body);
-    const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
-    res.send({ exercise, serie: updatedSerie });
-    res.send(updatedSerie);
+    try {
+      const updatedSerie = await updateSerie(req.params.id, req.body);
+      const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
+      res.send({ exercise, serie: updatedSerie });
+    } catch (error) {
+      console.log('Error in api/updateSerie/:id/exercise/:exerciseId', error.msg);
+      res.status(500).send();
+    }
   });
 
   app.delete("/api/deleteSerie/:id/exercise/:exerciseId", async (req, res) => {
@@ -54,9 +57,14 @@ const api = app => {
   });
 
   app.post("/api/newSerie/:exerciseId", async (req, res) => {
-    const serie = await newSerie(req.params.exerciseId);
-    const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
-    res.send({ exercise, serie });
+    try { 
+      const serie = await newSerie(req.params.exerciseId);
+      const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
+      res.send({ exercise, serie });
+    } catch (error) {
+       console.log('erro in api/');
+       res.status(500).send();
+    }
     // res.send(serie);
   });
 };
