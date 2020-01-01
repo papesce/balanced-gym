@@ -19,6 +19,7 @@ const newSerie = async exerciseId => {
 
 const updateSerie = async (serieId, serieUpdate) => {
   // in the future see node-mongoose-es7 starter book
+  console.log('updating serie:', serieId, serieUpdate);
   const SerieModel = serieModel.getModel();
   const serieQuery = SerieModel.findOneAndUpdate(
     { _id: serieId },
@@ -38,14 +39,15 @@ const deleteSerie = async serieId => {
 
 
 const api = app => {
-  app.patch("/api/exercise/:exerciseId/serie/:id", async (req, res) => {
+  app.patch("/api/updateSerie/:id/exercise/:exerciseId", async (req, res) => {
+    console.log('received patch update');
     const updatedSerie = await updateSerie(req.params.id, req.body);
     const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
     res.send({ exercise, serie: updatedSerie });
     res.send(updatedSerie);
   });
 
-  app.delete("/api/exercise/:exerciseId/serie/:id", async (req, res) => {
+  app.delete("/api/deleteSerie/:id/exercise/:exerciseId", async (req, res) => {
     const deletedSerie = await deleteSerie(req.params.id);
     const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
     res.send({ exercise, serie: deletedSerie });

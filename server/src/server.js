@@ -25,7 +25,7 @@ console.log("connecting to db:", MONGODB_API);
 mongoose.connect(MONGODB_API, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: true
+  useFindAndModify: false
 }, (error) => {
   if (error) {
     console.log("Error: cannot connect to mongo db. Exiting...", error);
@@ -37,9 +37,8 @@ mongoose.Promise = Promise;
 // Enable cors for dev
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
-  // res.header("Access-Control-Allow-Headers",
-  // "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, HEAD, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 // parse body params and attache them to req.body
