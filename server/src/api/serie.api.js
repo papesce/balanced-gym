@@ -1,5 +1,6 @@
 const serieModel = require("../model/serie.model");
 const exerciseModel = require("../model/exercise.model");
+const exerciseAppApi = require("./exercise.app.api");
 
 const newSerie = async exerciseId => {
   const SerieModel = serieModel.getModel();
@@ -42,14 +43,19 @@ const api = app => {
     res.send(updatedSerie);
   });
 
-  app.delete("/api/serie/:id", async (req, res) => {
+  app.delete("/api/exercise/:exerciseId/serie/:id", async (req, res) => {
     const deletedSerie = await deleteSerie(req.params.id);
-    res.send(deletedSerie);
+    const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
+    res.send({ exercise, deletedSerie });
+    // setTimeout(() => res.send({ exercise, deletedSerie }), 2000);
+    // res.send(deletedSerie);
   });
 
   app.post("/api/newSerie/:exerciseId", async (req, res) => {
     const serie = await newSerie(req.params.exerciseId);
-    res.send(serie);
+    const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
+    res.send({ exercise, serie });
+    // res.send(serie);
   });
 };
 

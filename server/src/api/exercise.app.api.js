@@ -31,8 +31,8 @@ const getExercise = async exId => {
 const api = app => {
   app.get("/api/exercise/:id", async (req, res) => {
     try {
-      const exercises = await getExercise(req.params.id);
-      res.send(exercises);
+      const exercise = await getExercise(req.params.id);
+      res.send(exercise);
     } catch (error) {
       console.log("Error handling /exercise/:id API", error);
       res.type('text/plain');
@@ -43,5 +43,6 @@ const api = app => {
 };
 
 module.exports = {
-  api
+  api,
+  getExercise
 };

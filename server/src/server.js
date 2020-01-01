@@ -22,7 +22,11 @@ if (process.env.NODE_ENV === "production") {
   MONGODB_API = process.env.MONGODB_LOCAL_API;
 }
 console.log("connecting to db:", MONGODB_API);
-mongoose.connect(MONGODB_API, { useNewUrlParser: true, useUnifiedTopology: true }, (error) => {
+mongoose.connect(MONGODB_API, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true
+}, (error) => {
   if (error) {
     console.log("Error: cannot connect to mongo db. Exiting...", error);
     process.exit(0);
@@ -33,11 +37,15 @@ mongoose.Promise = Promise;
 // Enable cors for dev
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  // res.header("Access-Control-Allow-Headers",
+  // "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req, res, next) => setTimeout(next, 1000));
 
 routinesApi.api(app);
 routineApi.api(app);
@@ -63,7 +71,6 @@ app.use(
 
 console.log(path.join(__dirname, "./assets"));
 app.use(express.static(path.join(__dirname, "./assets")));
-
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
