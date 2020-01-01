@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use((req, res, next) => setTimeout(next, 1000));
+// app.use((req, res, next) => setTimeout(next, 1000));
 
 routinesApi.api(app);
 routineApi.api(app);

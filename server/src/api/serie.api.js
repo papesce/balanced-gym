@@ -19,7 +19,7 @@ const newSerie = async exerciseId => {
 
 const updateSerie = async (serieId, serieUpdate) => {
   // in the future see node-mongoose-es7 starter book
-  console.log('updating serie:', serieId, serieUpdate);
+  // console.log('updating serie:', serieId, serieUpdate);
   const SerieModel = serieModel.getModel();
   const serieQuery = SerieModel.findOneAndUpdate(
     { _id: serieId },
