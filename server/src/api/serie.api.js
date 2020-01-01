@@ -2,9 +2,10 @@ const serieModel = require("../model/serie.model");
 const exerciseModel = require("../model/exercise.model");
 const exerciseAppApi = require("./exercise.app.api");
 
-const newSerie = async exerciseId => {
+const newSerie = async (exerciseId, exercise) => {
   const SerieModel = serieModel.getModel();
-  const nSerie = await new SerieModel({ reps: 10, weight: 1 }).save();
+  const { suggestedSerie = { reps: 10, weight: 1 } } = exercise;
+  const nSerie = await new SerieModel(suggestedSerie).save();
   const ExerciseModel = exerciseModel.getModel();
   const ex = await ExerciseModel.findById(exerciseId).exec();
   ex.series.push(nSerie);
@@ -57,13 +58,14 @@ const api = app => {
   });
 
   app.post("/api/newSerie/:exerciseId", async (req, res) => {
-    try { 
-      const serie = await newSerie(req.params.exerciseId);
+    try {
       const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
+      const serie = await newSerie(req.params.exerciseId, exercise);
+      
       res.send({ exercise, serie });
     } catch (error) {
-       console.log('erro in api/');
-       res.status(500).send();
+      console.log('erro in api/newSerie');
+      res.status(500).send();
     }
     // res.send(serie);
   });
