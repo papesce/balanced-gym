@@ -11,14 +11,19 @@ const getExercise = async exId => {
     .populate("target", "name muscleURL")
     .populate("synergists", "name")
     .populate("stabilizers", "name")
-    .populate("series", 'name createdAt reps weight');
+    // .populate("series", 'createdAt reps weight')
+    .populate({
+      path: 'series',
+      select: 'createdAt reps weight',
+      options: { limit: 6, sort: { createdAt: -1 } }
+    });
   const exResult = await exQuery.lean().exec();
   const exercisesQuery = exerciseModel.getModel().find({
     routineId: exResult.routineId,
     muscleGroup: exResult.muscleGroup,
     target: exResult.target
   }).select('name equipment')
-    .populate("series", 'name createdAt reps weight')
+    .populate('series', 'createdAt reps weight')
     .populate("synergists", "name")
     .populate("stabilizers", "name");
   const exercisesResult = await exercisesQuery.lean().exec();

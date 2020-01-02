@@ -2,18 +2,19 @@ const serieModel = require("../model/serie.model");
 const exerciseModel = require("../model/exercise.model");
 const exerciseAppApi = require("./exercise.app.api");
 
-const newSerie = async (exerciseId, exercise) => {
+const newSerie = async (exerciseId, body) => {
+  // console.log('newserie body', body);
   const SerieModel = serieModel.getModel();
-  const { suggestedSerie = { reps: 10, weight: 1 } } = exercise;
+  const { suggestedSerie = { reps: 10, weight: 1 } } = body;
   const nSerie = await new SerieModel(suggestedSerie).save();
   const ExerciseModel = exerciseModel.getModel();
   const ex = await ExerciseModel.findById(exerciseId).exec();
   ex.series.push(nSerie);
   ex.lastUpdated = nSerie.createdAt;
   // temporary hack"
-  if (!ex.target) ex.target = "";
-  if (!ex.gifURL) ex.gifURL = "";
-  if (!ex.equipment) ex.equipment = "";
+  // if (!ex.target) ex.target = "";
+  // if (!ex.gifURL) ex.gifURL = "";
+  // if (!ex.equipment) ex.equipment = "";
   await ex.save();
   return nSerie;
 };
@@ -59,9 +60,8 @@ const api = app => {
 
   app.post("/api/newSerie/:exerciseId", async (req, res) => {
     try {
+      const serie = await newSerie(req.params.exerciseId, req.body);
       const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
-      const serie = await newSerie(req.params.exerciseId, exercise);
-      
       res.send({ exercise, serie });
     } catch (error) {
       console.log('erro in api/newSerie');
