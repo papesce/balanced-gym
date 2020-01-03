@@ -5,7 +5,7 @@ const getExercise = async exId => {
   const exQuery = exerciseModel
     .getModel()
     .findOne({ _id: exId })
-    .select('name equipment')
+    .select('name equipment gifURL')
     .populate("routineId", "name")
     .populate("muscleGroup", "name")
     .populate("target", "name muscleURL")
