@@ -9,8 +9,8 @@ const getExercise = async exId => {
     .populate("routineId", "name")
     .populate("muscleGroup", "name")
     .populate("target", "name muscleURL")
-    .populate("synergists", "name")
-    .populate("stabilizers", "name")
+    .populate("synergists", "name muscleURL")
+    .populate("stabilizers", "name muscleURL")
     // .populate("series", 'createdAt reps weight')
     .populate({
       path: 'series',
