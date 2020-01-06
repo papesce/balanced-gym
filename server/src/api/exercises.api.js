@@ -1,4 +1,3 @@
-
 const exerciseModel = require("../model/exercise.model");
 
 const computeExtraWeight = equip => {
@@ -24,7 +23,7 @@ const denormalizeWeight = (weight, exercise) => {
 
 const normalizeWeight = (weight, exercise) => {
   const { extraWeight, multiplier } = computeExtraWeight(exercise.equipment);
-  return (weight * multiplier) + extraWeight;
+  return weight * multiplier + extraWeight;
 };
 
 const areSimilar = (musc1s, musc2s) => {
@@ -93,15 +92,15 @@ const addSuggestedSerieToExercise = (exercise, exercises) => {
   const suggestedSerie = computeSuggestedSerie(exercise, exercises);
   const exerc = exercise;
   if (suggestedSerie) {
-    const denormalizedSerie = {
-      reps: suggestedSerie.reps,
-      weight: denormalizeWeight(suggestedSerie.weight, exerc)
-    };
+    const reps = Math.round(suggestedSerie.reps);
+    const weight =
+      Math.round(denormalizeWeight(suggestedSerie.weight, exerc) * 100) / 100;
+    const denormalizedSerie = { reps, weight };
     exerc.suggestedSerie = denormalizedSerie;
   }
 };
 
-const addSuggestedSerieToExercises = (exercises) => {
+const addSuggestedSerieToExercises = exercises => {
   exercises.forEach(ex => {
     addSuggestedSerieToExercise(ex, exercises);
   });
@@ -144,7 +143,7 @@ const sortByTarget = exercises => {
   return targets;
 };
 
-const addLastUpdatedToExercise = (exerciseResult) => {
+const addLastUpdatedToExercise = exerciseResult => {
   const exercise = exerciseResult;
   if (exercise.series.length > 0) {
     exercise.series.sort((s1, s2) => s1.createdAt < s2.createdAt);
@@ -170,8 +169,9 @@ const addLastUpdatedToExercises = exercises => {
     if (exercise.lastUpdated) {
       if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
         maxLastUpdated = exercise.lastUpdated;
-      };
-      const hours = (today.getTime() - exercise.lastUpdated.getTime()) / 3600000;
+      }
+      const hours =
+        (today.getTime() - exercise.lastUpdated.getTime()) / 3600000;
       if (hours < 24) {
         updatedToday += 1;
       }
