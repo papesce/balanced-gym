@@ -10,4 +10,14 @@ const sort = (list, comp) => {
   list.sort((r1, r2) => comp(r1) > comp(r2));
 };
 
-module.exports = { sort, sortByLastUpdated, sortTargets };
+const isToday = (someDate) => {
+  const today = new Date();
+  return someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear();
+};
+
+
+module.exports = {
+  sort, sortByLastUpdated, sortTargets, isToday
+};

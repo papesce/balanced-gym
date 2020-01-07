@@ -1,4 +1,6 @@
 const exerciseModel = require("../model/exercise.model");
+const utils = require("./utils");
+
 
 const computeExtraWeight = equip => {
   switch (equip) {
@@ -161,7 +163,7 @@ const addLastUpdatedToExercise = exerciseResult => {
 
 const addLastUpdatedToExercises = exercises => {
   let maxLastUpdated;
-  const today = new Date();
+  // const today = new Date();
   let updatedToday = 0;
   exercises.forEach(exerciseResult => {
     const exercise = exerciseResult;
@@ -170,9 +172,10 @@ const addLastUpdatedToExercises = exercises => {
       if (!maxLastUpdated || maxLastUpdated < exercise.lastUpdated) {
         maxLastUpdated = exercise.lastUpdated;
       }
-      const hours =
-        (today.getTime() - exercise.lastUpdated.getTime()) / 3600000;
-      if (hours < 24) {
+      // const hours =
+      //  (today.getTime() - exercise.lastUpdated.getTime()) / 3600000;
+      // if (hours < 24) {
+      if (utils.isToday(exercise.lastUpdated))  {
         updatedToday += 1;
       }
     }
