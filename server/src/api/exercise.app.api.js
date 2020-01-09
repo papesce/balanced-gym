@@ -15,7 +15,7 @@ const getExercise = async exId => {
     .populate({
       path: 'series',
       select: 'createdAt reps weight',
-      options: { limit: 6, sort: { createdAt: -1 } }
+      options: { limit: 100, sort: { createdAt: -1 } }
     });
   const exResult = await exQuery.lean().exec();
   const exercisesQuery = exerciseModel.getModel().find({
