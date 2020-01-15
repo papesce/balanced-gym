@@ -257,5 +257,6 @@ module.exports = {
   addSuggestedSerieToExercise,
   addSuggestedSerieToExercises,
   updateExercise,
+  getExercises,
   sortByTarget
 };

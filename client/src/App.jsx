@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { configureStore, history } from "./redux/configureStore";
 import { Home } from "./routes/Home";
 import { ConnectedRouter } from "react-router-redux";
-import { Route } from "react-router";
+import { Route, Switch } from "react-router";
 import { AddExercise } from "./routes/AddExercise";
 import { AddMuscle } from "./routes/AddMuscle";
 import { EditExercise } from "./routes/EditExercise";
@@ -45,15 +45,18 @@ class App extends React.Component {
       <Provider store={store}>
       <MuiThemeProvider>
         <ConnectedRouter history={history}>
-          <div>
-            <Route exact={true} path="/" component={Home} />
+          <Switch>
+            <Route exact path="/" component={Home} />
             <Route path="/addExercise" component={AddExercise} />
             <Route path="/editExercise/:exId" component={EditExercise} />
             <Route path="/showExercise/:exId" component={ShowExercise} />
             <Route path="/muscles" component={Muscles} />
             <Route path="/addMuscle" component={AddMuscle} />
             <Route path="/editMuscle/:muscleId" component={EditMuscle} />
-          </div>
+            <Route path="*">
+                <div style={{margin: 20}}>Wrong URL</div>
+            </Route>
+          </Switch>
         </ConnectedRouter>
         </MuiThemeProvider>
       </Provider>

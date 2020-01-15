@@ -39,6 +39,35 @@ const deleteSerie = async serieId => {
   return serieResult;
 };
 
+// const getSeries = async (ex) => {
+//   const seriesQuery = serieModel.getModel().find();
+//   const series = await seriesQuery.lean().exec();
+//   return series;
+// };
+
+const addRestTime = async (ex) => {
+  // const series = await getSeries();
+  const { series } = ex;
+  console.log('series', series.length);
+  for (let index = 0; index < series.length; index++) {
+    console.log('analyzing pair:', index, index + 1);
+    if (index < series.length - 1) {
+      const serieOlder = series[index];
+      const serieNewer = series[index + 1];
+      const ms1 = new Date(serieOlder.createdAt).getTime();
+      const ms2 = new Date(serieNewer.createdAt).getTime();
+      const diff = ms2 - ms1;
+      console.log("diff:", diff / 1000, diff / 60000);
+      const secs = Math.round(diff / 1000);
+      if (diff > 0 && diff < 1000 * 60 * 60) {
+        console.log('add rest time !');
+        return updateSerie(serieNewer._id, { restTime: secs });
+      }
+    }
+    //     console.log('older', serieOlder.reps);
+    //     console.log('newer', serieNewer.reps);
+  }
+};
 
 const api = app => {
   app.patch("/api/updateSerie/:id/exercise/:exerciseId", async (req, res) => {
@@ -68,6 +97,15 @@ const api = app => {
       res.status(500).send();
     }
     // res.send(serie);
+  });
+  app.get('/populateRestTime', async (req, res) => {
+    const exQuery = exerciseModel.getModel().find()
+      .populate('series');
+    const exercises = await exQuery.lean().exec();
+    console.log('exercises', exercises.length);
+    const proms = exercises.map(ex => addRestTime(ex));
+    await Promise.all(proms);
+    res.status(200).send('done 3');
   });
 };
 

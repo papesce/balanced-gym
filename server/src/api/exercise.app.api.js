@@ -23,7 +23,7 @@ const getExercise = async exId => {
     muscleGroup: exResult.muscleGroup,
     target: exResult.target
   }).select('name equipment')
-    .populate('series', 'createdAt reps weight')
+    .populate('series', 'createdAt reps weight restTime')
     .populate("synergists", "name")
     .populate("stabilizers", "name");
   const exercisesResult = await exercisesQuery.lean().exec();

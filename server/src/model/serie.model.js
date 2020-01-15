@@ -6,7 +6,8 @@ const mongoose = require("mongoose");
 const serieSchema = new mongoose.Schema(
   {
     reps: Number,
-    weight: Number
+    weight: Number,
+    restTime: Number
   },
   {
     timestamps: true,
