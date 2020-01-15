@@ -48,19 +48,19 @@ const deleteSerie = async serieId => {
 const addRestTime = async (ex) => {
   // const series = await getSeries();
   const { series } = ex;
-  console.log('series', series.length);
+  // console.log('series', series.length);
   for (let index = 0; index < series.length; index++) {
-    console.log('analyzing pair:', index, index + 1);
+    // console.log('analyzing pair:', index, index + 1);
     if (index < series.length - 1) {
       const serieOlder = series[index];
       const serieNewer = series[index + 1];
       const ms1 = new Date(serieOlder.createdAt).getTime();
       const ms2 = new Date(serieNewer.createdAt).getTime();
       const diff = ms2 - ms1;
-      console.log("diff:", diff / 1000, diff / 60000);
+      // console.log("diff:", diff / 1000, diff / 60000);
       const secs = Math.round(diff / 1000);
       if (diff > 0 && diff < 1000 * 60 * 60) {
-        console.log('add rest time !');
+        // console.log('add rest time !');
         return updateSerie(serieNewer._id, { restTime: secs });
       }
     }
