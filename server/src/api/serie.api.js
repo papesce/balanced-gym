@@ -45,9 +45,8 @@ const deleteSerie = async serieId => {
 //   return series;
 // };
 
-const addRestTime = async (proms, ex) => {
+const addRestTime = async (proms, series) => {
   // const series = await getSeries();
-  const { series } = ex;
   // console.log(ex._id);
   // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
   //   console.log('series', series.length);
@@ -69,7 +68,6 @@ const addRestTime = async (proms, ex) => {
         //   console.log('add rest time !');
         // }
         proms.push(updateSerie(serieOlder._id, { restTime: secs }));
-        proms.push(updateSerie(serieNewer._id, { restTime: undefined }));
       }
     }
     //     console.log('older', serieOlder.reps);
@@ -107,20 +105,21 @@ const api = app => {
     // res.send(serie);
   });
   app.get('/populateRestTime', async (req, res) => {
-    const exQuery = exerciseModel.getModel().find()
-      .populate({
-        path: 'series',
-        select: 'createdAt reps weight restTime',
-        options: { limit: 100, sort: { createdAt: -1 } }
-      });
-    const exercises = await exQuery.lean().exec();
-    console.log('exercises', exercises.length);
-    const proms = [];
-    exercises.forEach(ex => {
-      addRestTime(proms, ex);
+    const seriesQuery = serieModel.getModel().find().sort({
+      createdAt: -1
     });
+    // const Query = exerciseModel.getModel().find();
+    // .populate({
+    //   path: 'series',
+    //   select: 'createdAt reps weight restTime',
+    //   options: { limit: 100, sort: { createdAt: -1 } }
+    // });
+    const series = await seriesQuery.lean().exec();
+    console.log('series', series.length);
+    const proms = [];
+    addRestTime(proms, series);
     await Promise.all(proms);
-    res.status(200).send('done 5');
+    res.status(200).send('done 6');
   });
 };
 
