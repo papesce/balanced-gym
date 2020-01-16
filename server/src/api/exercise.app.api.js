@@ -1,5 +1,17 @@
 const exerciseModel = require("../model/exercise.model");
 const exercisesApi = require("./exercises.api");
+const serieModel = require("../model/serie.model");
+
+const addLastCreateDateToExercise = async exercise => {
+  const newExercise = exercise;
+  const seriesQuery = serieModel.getModel().find().sort({
+    createdAt: -1
+  }).limit(1);
+  const series = await seriesQuery.lean().exec();
+  if (series.length === 1) {
+    newExercise.lastCreateDate = series[0].createdAt;
+  }
+};
 
 const getExercise = async exId => {
   const exQuery = exerciseModel
@@ -29,6 +41,7 @@ const getExercise = async exId => {
   const exercisesResult = await exercisesQuery.lean().exec();
   exercisesApi.addLastUpdatedToExercise(exResult);
   exercisesApi.addSuggestedSerieToExercise(exResult, exercisesResult);
+  await addLastCreateDateToExercise(exResult);
   return exResult;
   // return exercisesResult
 };
