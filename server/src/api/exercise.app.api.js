@@ -9,7 +9,7 @@ const addLastCreateDateToExercise = async exercise => {
   }).limit(1);
   const series = await seriesQuery.lean().exec();
   if (series.length === 1) {
-    newExercise.lastCreateDate = series[0].createdAt;
+    newExercise.lastCreationDate = series[0].createdAt;
   }
 };
 
