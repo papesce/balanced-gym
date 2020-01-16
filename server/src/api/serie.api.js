@@ -45,23 +45,31 @@ const deleteSerie = async serieId => {
 //   return series;
 // };
 
-const addRestTime = async (ex) => {
+const addRestTime = async (proms, ex) => {
   // const series = await getSeries();
   const { series } = ex;
-  // console.log('series', series.length);
-  for (let index = 0; index < series.length; index++) {
+  // console.log(ex._id);
+  // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
+  //   console.log('series', series.length);
+  // }
+  for (let index = 0; index < series.length; index += 1) {
     // console.log('analyzing pair:', index, index + 1);
     if (index < series.length - 1) {
       const serieOlder = series[index];
       const serieNewer = series[index + 1];
       const ms1 = new Date(serieOlder.createdAt).getTime();
       const ms2 = new Date(serieNewer.createdAt).getTime();
-      const diff = ms2 - ms1;
-      // console.log("diff:", diff / 1000, diff / 60000);
+      const diff = ms1 - ms2;
+      // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
+      //   console.log("diff:", diff / 1000, diff / 60000);
+      // }
       const secs = Math.round(diff / 1000);
       if (diff > 0 && diff < 1000 * 60 * 60) {
-        // console.log('add rest time !');
-        return updateSerie(serieNewer._id, { restTime: secs });
+        // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
+        //   console.log('add rest time !');
+        // }
+        proms.push(updateSerie(serieOlder._id, { restTime: secs }));
+        proms.push(updateSerie(serieNewer._id, { restTime: undefined }));
       }
     }
     //     console.log('older', serieOlder.reps);
@@ -93,19 +101,26 @@ const api = app => {
       const exercise = await exerciseAppApi.getExercise(req.params.exerciseId);
       res.send({ exercise, serie });
     } catch (error) {
-      console.log('erro in api/newSerie');
+      console.log('error in api/newSerie');
       res.status(500).send();
     }
     // res.send(serie);
   });
   app.get('/populateRestTime', async (req, res) => {
     const exQuery = exerciseModel.getModel().find()
-      .populate('series');
+      .populate({
+        path: 'series',
+        select: 'createdAt reps weight restTime',
+        options: { limit: 100, sort: { createdAt: -1 } }
+      });
     const exercises = await exQuery.lean().exec();
     console.log('exercises', exercises.length);
-    const proms = exercises.map(ex => addRestTime(ex));
+    const proms = [];
+    exercises.forEach(ex => {
+      addRestTime(proms, ex);
+    });
     await Promise.all(proms);
-    res.status(200).send('done 3');
+    res.status(200).send('done 5');
   });
 };
 
