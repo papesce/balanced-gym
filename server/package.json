@@ -10,7 +10,7 @@
     "backup": "node src/backup/backup.js",
     "backup:remote": "NODE_ENV=production npm run backup",
     "restore": "node src/backup/restore.js",
-    "restore:remote": ""
+    "restore:remote": "NODE_ENV=production node src/backup/restore.js"
   },
   "author": "",
   "license": "ISC",

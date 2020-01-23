@@ -21,7 +21,7 @@ class MongoDBUtils {
     console.log(`restoring the database ${API} from ${name}`);
     restore({
       uri: API, // mongodb://<dbuser>:<dbpassword>@<dbdomain>.mongolab.com:<dbport>/<dbdatabase>
-      root: path.join(__dirname, "/dbbackup/balanced_gym_api"),
+      root: path.join(__dirname, "/dbbackup/balanced_gym"),
       // tar: `${name}.tar`,
       drop: true,
       logger: path.join(__dirname, "/log"),
