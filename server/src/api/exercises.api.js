@@ -148,9 +148,10 @@ const sortByTarget = exercises => {
 const addLastUpdatedToExercise = exerciseResult => {
   const exercise = exerciseResult;
   if (exercise.series.length > 0) {
-    exercise.series.sort((s1, s2) => s1.createdAt < s2.createdAt);
-    exercise.lastUpdated = exercise.series[0].createdAt;
-    const bestSerie = exercise.series[0];
+    const { series = [] } = exercise;
+    utils.sortByCreatedAt(series);
+    exercise.lastUpdated = series[0].createdAt;
+    const bestSerie = series[0];
     exercise.lastReps = bestSerie.reps;
     exercise.lastWeight = bestSerie.weight;
     exercise.normalizedWeight = normalizeWeight(bestSerie.weight, exercise);

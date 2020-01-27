@@ -36,9 +36,10 @@ const getTarget = async (routineId, muscleGroupId, targetId) => {
       routineId,
       muscleGroup: muscleGroupId,
       target: targetId
-    }).select('name target gifURL synergists stabilizers')
+    }).select('name target gifURL synergists stabilizers series')
       .populate("series");
   const exercisesResult = await exercisesQuery.lean().exec();
+  // return exercisesResult;
   const exercises = getExercises(exercisesResult);
   utils.sortByLastUpdated(exercises);
   const newTarget = {
@@ -48,9 +49,7 @@ const getTarget = async (routineId, muscleGroupId, targetId) => {
     routineName: routineResult.name,
     muscleGroupId,
     muscleGroupName: muscleGroupResult.name,
-    exercises,
-    // lastUpdated: maxLastUpdated,
-    // doneToday: updatedToday
+    exercises
   };
   return newTarget;
 };
