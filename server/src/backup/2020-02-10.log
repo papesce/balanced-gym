@@ -1,0 +1,24 @@
+2020-02-10T21:02:06.585Z - info: restore start
+2020-02-10T21:02:06.659Z - info: [INFO-Server:1298] 1581368526659 server localhost:27017 fired event connect out with message {}
+2020-02-10T21:02:06.664Z - info: [INFO-Server:1298] 1581368526664 server localhost:27017 connected with ismaster [{"ismaster":true,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWriteBatchSize":100000,"localTime":"2020-02-10T21:02:06.662Z","logicalSessionTimeoutMinutes":30,"connectionId":300,"minWireVersion":0,"maxWireVersion":8,"readOnly":false,"ok":1}]
+2020-02-10T21:02:06.665Z - info: db open
+2020-02-10T21:02:06.665Z - info: drop database
+2020-02-10T21:02:06.790Z - info: select collection exercises
+2020-02-10T21:02:06.889Z - info: select collection musclegroups
+2020-02-10T21:02:06.890Z - info: select collection muscles
+2020-02-10T21:02:06.895Z - info: select collection routines
+2020-02-10T21:02:06.900Z - info: select collection series
+2020-02-10T21:02:06.959Z - info: db close
+2020-02-10T21:02:06.962Z - info: restore stop
+2020-02-10T21:20:18.794Z - info: restore start
+2020-02-10T21:20:18.881Z - info: [INFO-Server:1891] 1581369618881 server localhost:27017 fired event connect out with message {}
+2020-02-10T21:20:18.894Z - info: [INFO-Server:1891] 1581369618894 server localhost:27017 connected with ismaster [{"ismaster":true,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWriteBatchSize":100000,"localTime":"2020-02-10T21:20:18.891Z","logicalSessionTimeoutMinutes":30,"connectionId":313,"minWireVersion":0,"maxWireVersion":8,"readOnly":false,"ok":1}]
+2020-02-10T21:20:18.894Z - info: db open
+2020-02-10T21:20:18.894Z - info: drop database
+2020-02-10T21:20:19.022Z - info: select collection exercises
+2020-02-10T21:20:19.118Z - info: select collection musclegroups
+2020-02-10T21:20:19.119Z - info: select collection muscles
+2020-02-10T21:20:19.124Z - info: select collection routines
+2020-02-10T21:20:19.130Z - info: select collection series
+2020-02-10T21:20:19.187Z - info: db close
+2020-02-10T21:20:19.189Z - info: restore stop

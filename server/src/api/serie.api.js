@@ -45,35 +45,35 @@ const deleteSerie = async serieId => {
 //   return series;
 // };
 
-const addRestTime = async (proms, series) => {
-  // const series = await getSeries();
-  // console.log(ex._id);
-  // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
-  //   console.log('series', series.length);
-  // }
-  for (let index = 0; index < series.length; index += 1) {
-    // console.log('analyzing pair:', index, index + 1);
-    if (index < series.length - 1) {
-      const serieOlder = series[index];
-      const serieNewer = series[index + 1];
-      const ms1 = new Date(serieOlder.createdAt).getTime();
-      const ms2 = new Date(serieNewer.createdAt).getTime();
-      const diff = ms1 - ms2;
-      // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
-      //   console.log("diff:", diff / 1000, diff / 60000);
-      // }
-      const secs = Math.round(diff / 1000);
-      if (diff > 0 && diff < 1000 * 60 * 60) {
-        // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
-        //   console.log('add rest time !');
-        // }
-        proms.push(updateSerie(serieOlder._id, { restTime: secs }));
-      }
-    }
-    //     console.log('older', serieOlder.reps);
-    //     console.log('newer', serieNewer.reps);
-  }
-};
+// const addRestTime = async (proms, series) => {
+//   // const series = await getSeries();
+//   // console.log(ex._id);
+//   // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
+//   //   console.log('series', series.length);
+//   // }
+//   for (let index = 0; index < series.length; index += 1) {
+//     // console.log('analyzing pair:', index, index + 1);
+//     if (index < series.length - 1) {
+//       const serieOlder = series[index];
+//       const serieNewer = series[index + 1];
+//       const ms1 = new Date(serieOlder.createdAt).getTime();
+//       const ms2 = new Date(serieNewer.createdAt).getTime();
+//       const diff = ms1 - ms2;
+//       // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
+//       //   console.log("diff:", diff / 1000, diff / 60000);
+//       // }
+//       const secs = Math.round(diff / 1000);
+//       if (diff > 0 && diff < 1000 * 60 * 60) {
+//         // if (ex._id.toString() === '59ee3dde243a5977dab96c2d') {
+//         //   console.log('add rest time !');
+//         // }
+//         proms.push(updateSerie(serieOlder._id, { restTime: secs }));
+//       }
+//     }
+//     //     console.log('older', serieOlder.reps);
+//     //     console.log('newer', serieNewer.reps);
+//   }
+// };
 
 const api = app => {
   app.patch("/api/updateSerie/:id/exercise/:exerciseId", async (req, res) => {
@@ -104,23 +104,23 @@ const api = app => {
     }
     // res.send(serie);
   });
-  app.get('/populateRestTime', async (req, res) => {
-    const seriesQuery = serieModel.getModel().find().sort({
-      createdAt: -1
-    });
-    // const Query = exerciseModel.getModel().find();
-    // .populate({
-    //   path: 'series',
-    //   select: 'createdAt reps weight restTime',
-    //   options: { limit: 100, sort: { createdAt: -1 } }
-    // });
-    const series = await seriesQuery.lean().exec();
-    console.log('series', series.length);
-    const proms = [];
-    addRestTime(proms, series);
-    await Promise.all(proms);
-    res.status(200).send('done 6');
-  });
+  // app.get('/populateRestTime', async (req, res) => {
+  //   const seriesQuery = serieModel.getModel().find().sort({
+  //     createdAt: -1
+  //   });
+  //   // const Query = exerciseModel.getModel().find();
+  //   // .populate({
+  //   //   path: 'series',
+  //   //   select: 'createdAt reps weight restTime',
+  //   //   options: { limit: 100, sort: { createdAt: -1 } }
+  //   // });
+  //   const series = await seriesQuery.lean().exec();
+  //   console.log('series', series.length);
+  //   const proms = [];
+  //   addRestTime(proms, series);
+  //   await Promise.all(proms);
+  //   res.status(200).send('done 6');
+  // });
 };
 
 module.exports = { api };

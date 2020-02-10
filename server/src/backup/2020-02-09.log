@@ -1,0 +1,12 @@
+2020-02-09T20:38:36.588Z - info: restore start
+2020-02-09T20:38:36.695Z - info: [INFO-Server:89757] 1581280716695 server localhost:27017 fired event connect out with message {}
+2020-02-09T20:38:36.701Z - info: [INFO-Server:89757] 1581280716701 server localhost:27017 connected with ismaster [{"ismaster":true,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWriteBatchSize":100000,"localTime":"2020-02-09T20:38:36.699Z","logicalSessionTimeoutMinutes":30,"connectionId":198,"minWireVersion":0,"maxWireVersion":8,"readOnly":false,"ok":1}]
+2020-02-09T20:38:36.702Z - info: db open
+2020-02-09T20:38:36.702Z - info: drop database
+2020-02-09T20:38:36.869Z - info: select collection exercises
+2020-02-09T20:38:36.972Z - info: select collection musclegroups
+2020-02-09T20:38:36.974Z - info: select collection muscles
+2020-02-09T20:38:36.978Z - info: select collection routines
+2020-02-09T20:38:36.983Z - info: select collection series
+2020-02-09T20:38:37.039Z - info: db close
+2020-02-09T20:38:37.041Z - info: restore stop
