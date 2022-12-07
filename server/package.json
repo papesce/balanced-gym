@@ -26,7 +26,7 @@
     "babel-eslint": "8.0.3",
     "body-parser": "1.18.2",
     "dotenv": "4.0.0",
-    "express": "4.16.2",
+    "express": "4.17.3",
     "mongodb-backup-4x": "^3.2.1",
     "mongodb-restore": "1.6.2",
     "mongoose": "^5.7.12",
