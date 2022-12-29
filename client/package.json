@@ -27,7 +27,7 @@
     "react-redux": "5.0.6",
     "react-router": "4.2.0",
     "react-router-redux": "5.0.0-alpha.8",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^5.0.1",
     "react-sizeme": "2.3.6",
     "react-stack-grid": "0.7.0",
     "reactstrap": "5.0.0-alpha.4",
